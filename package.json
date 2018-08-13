@@ -3,11 +3,12 @@
   "version": "2.0.0",
   "private": true,
   "dependencies": {
+    "create-react-class": "^15.5.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-motion": "^0.5.2",
     "react-scripts": "1.1.4",
-    "react-touch": "^0.4.4"
+    "react-tappable": "^1.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
