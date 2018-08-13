@@ -1,2 +1,3 @@
 # VeekasMeansProgress.com
+
 personal website
