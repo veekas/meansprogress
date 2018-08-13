@@ -1,2 +1,2 @@
-# veekas.github.io
+# VeekasMeansProgress.com
 personal website
