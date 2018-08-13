@@ -1,0 +1,14 @@
+.world {
+  max-width: 3.3%;
+  width: 3.3%;
+}
+
+.platform {
+  max-width: 27%;
+  width: 27%;
+}
+
+.lever {
+  max-width: 15%;
+  width: 15%;
+}
