@@ -2,32 +2,37 @@ import React, { Component } from 'react';
 import Tappable from 'react-tappable';
 import { Motion, spring } from 'react-motion';
 
+import { FLAT, LEFT_DOWN, RIGHT_DOWN } from '../utils';
+
 export default class Platform extends Component {
-  state = { show: false }
+  initialState = { position: FLAT }
+  state = this.initialState;
 
   handleTapEvent = (e) => {
-    const { show } = this.state;
-    this.setState({ show: !show });
+    const position = this.state.position >= FLAT ? LEFT_DOWN : RIGHT_DOWN;
+    this.setState({ position });
   };
 
   render() {
-    const { show } = this.state;
+    const { position } = this.state;
 
     return (
-      <Tappable onTap={this.handleTapEvent}>
-        <Motion
-          defaultStyle={{ x: -100 }}
-          style={{ x: spring(show ? 100 : -100) }}>
-          {style => (
-            <img
-              style={{ transform: `translateX(${style.x}px)` }}
-              className="platform"
-              src="assets/vmp-logo-platform.png"
-              alt="platform icon"
-            />
-          )}
-        </Motion>
-      </Tappable>
+      <div className='give-me-a-lever-object'>
+        <Tappable onTap={this.handleTapEvent}>
+          <Motion
+            defaultStyle={{ position }}
+            style={{ position: spring(position) }}>
+            {style => (
+              <img
+                style={{ transform: `rotate(${style.position}deg)` }}
+                className="platform"
+                src="assets/vmp-logo-platform.png"
+                alt="platform icon"
+              />
+            )}
+          </Motion>
+        </Tappable>
+      </div>
     );
   }
 }

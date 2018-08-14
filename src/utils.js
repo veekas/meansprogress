@@ -3,6 +3,10 @@ export const QUOTE = `
 ― John Steinbeck, East of Eden
 `;
 
+export const FLAT = 0;
+export const LEFT_DOWN = -10;
+export const RIGHT_DOWN = Math.abs(LEFT_DOWN);
+
 export const VMP_ASCII = `
 ██╗   ██╗███████╗███████╗██╗  ██╗ █████╗ ███████╗
 ██║   ██║██╔════╝██╔════╝██║ ██╔╝██╔══██╗██╔════╝
