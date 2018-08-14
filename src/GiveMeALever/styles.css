@@ -1,14 +1,25 @@
+:root {
+  --platform-size: 27vw;
+  --relative-size-world: calc((var(--platform-size))/8.8);
+  --relative-size-lever: calc((var(--platform-size))/1.8);
+}
+
+.give-me-a-lever-object {
+  line-height: 0;
+  /* margin-top: 5px; */
+}
+
 .world {
-  max-width: 3.3%;
-  width: 3.3%;
+  width: var(--relative-size-world);
+  /* min-width: var(--relative-size-world); */
 }
 
 .platform {
-  max-width: 27%;
-  width: 27%;
+  width: var(--platform-size);
+  /* min-width: var(--platform-size); */
 }
 
 .lever {
-  max-width: 15%;
-  width: 15%;
+  width: var(--relative-size-lever);
+  /* min-width: var(--relative-size-lever); */
 }
