@@ -6,14 +6,15 @@ import Lever from './Lever';
 
 import './styles.css';
 
-export const GiveMeALever = () => {
-  return (
-    <Fragment>
-      <World />
-      <Platform />
-      <Lever />
-    </Fragment>
-  );
-}
+export const GiveMeALever = ({ handleTapEvent, position }) => (
+  <Fragment>
+    <World />
+    <Platform
+      handleTapEvent={handleTapEvent}
+      position={position}
+    />
+    <Lever />
+  </Fragment>
+);
 
 export default GiveMeALever;
