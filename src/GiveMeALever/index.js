@@ -1,15 +1,13 @@
 import React, { Fragment } from 'react';
 
-import World from './World';
-import Platform from './Platform';
+import PlatformAndWorld from './PlatformAndWorld';
 import Lever from './Lever';
 
 import './styles.css';
 
 export const GiveMeALever = ({ handleTapEvent, position }) => (
   <Fragment>
-    <World />
-    <Platform
+    <PlatformAndWorld
       handleTapEvent={handleTapEvent}
       position={position}
     />

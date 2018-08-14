@@ -1,25 +1,22 @@
 :root {
-  --platform-size: 27vw;
+  --platform-size: 25vh;
   --relative-size-world: calc((var(--platform-size))/8.8);
   --relative-size-lever: calc((var(--platform-size))/1.8);
 }
 
 .give-me-a-lever-object {
+  /* TODO: decide whether I prefer spacing or not */
   line-height: 0;
-  /* margin-top: 5px; */
 }
 
 .world {
   width: var(--relative-size-world);
-  /* min-width: var(--relative-size-world); */
 }
 
 .platform {
   width: var(--platform-size);
-  /* min-width: var(--platform-size); */
 }
 
 .lever {
   width: var(--relative-size-lever);
-  /* min-width: var(--relative-size-lever); */
 }

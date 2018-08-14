@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-// import { QUOTE, VMP_ASCII, VMP_ASCII_VERT, FLAT, LEFT_DOWN, RIGHT_DOWN } from './utils';
 import utils from './utils';
 import GiveMeALever from './GiveMeALever';
 
@@ -12,6 +11,10 @@ export default class App extends Component {
   initialState = { position: FLAT }
   state = this.initialState;
 
+  componentDidMount = () => {
+    console.log(QUOTE, '\n', VMP_ASCII);
+  }
+
   handleTapEvent = () => {
     const position = this.state.position >= FLAT ? LEFT_DOWN : RIGHT_DOWN;
     this.setState({ position });
@@ -19,8 +22,6 @@ export default class App extends Component {
 
   render() {
     const { position } = this.state;
-    console.log(QUOTE, '\n', VMP_ASCII);
-    console.log(position);
 
     return (
       <div className='give-me-a-lever-container'>
