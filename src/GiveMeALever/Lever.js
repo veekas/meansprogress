@@ -1,13 +1,19 @@
 import React from 'react';
 
-export const Lever = () => (
-  <div className='give-me-a-lever-object'>
-    <img
-      className='lever'
-      src='assets/vmp-logo-lever.png'
-      alt='lever icon'
-    />
-  </div>
-);
+import { UP } from '../utils';
+
+const Lever = ({ view }) => {
+  const leverClassNames = view === UP ? 'upright lever' : 'lever';
+
+  return (
+    <div className='give-me-a-lever-object'>
+      <img
+        alt='lever icon'
+        className={leverClassNames}
+        src='assets/vmp-logo-lever.png'
+      />
+    </div>
+  );
+}
 
 export default Lever;

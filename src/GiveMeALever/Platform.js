@@ -1,11 +1,12 @@
 import React from 'react';
 
 const Platform = ({ style }) => (
-  <div className='give-me-a-lever-object' style={style}>
+  <div className='give-me-a-lever-object'>
     <img
+      alt="platform icon"
       className="platform"
       src="assets/vmp-logo-platform.png"
-      alt="platform icon"
+      style={style}
     />
   </div>
 );
