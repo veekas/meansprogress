@@ -3,9 +3,7 @@ import React from 'react';
 const Content = ({ style }) => (
   <div className="wrap" style={style}>
 
-    <div>
-      hello
-    </div>
+    <h1 class="wrap">Veekas Shrivastava</h1>
 
   </div>
 );
@@ -13,7 +11,7 @@ const Content = ({ style }) => (
 export default Content;
 
 // <img style={{'max-width':'25%'}} src="images/vmp-logo-gold.png" />
-//     <h1 class="wrap">Veekas Shrivastava</h1>
+//
 //     <p class="definition">
 //       <span class="semibold">विकास (veekas)</span>
 //       <span class="regular">

@@ -45,6 +45,7 @@ img {
 
 .motion-container {
   padding-top: 10vh;
+  line-height: 0;
   flex: 1;
 
   display: flex;
@@ -54,6 +55,7 @@ img {
 }
 
 .platform {
+  display: inline;
   width: var(--platform-size);
 }
 
