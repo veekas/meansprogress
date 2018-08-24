@@ -1,0 +1,125 @@
+h1 {
+  font-weight: 700;
+  color: #0098aa;
+  font-size: 42px;
+  line-height: 40px;
+}
+
+h2 {
+  font-weight: 600;
+  color: #0098aa;
+  font-size: 36px;
+  line-height: 40px;
+}
+
+h3 {
+  font-weight: 500;
+  color: #0098aa;
+  font-size: 30px;
+  line-height: 40px;
+}
+
+h4 {
+  font-weight: 400;
+  color: #0098aa;
+  font-size: 24px;
+  line-height: 20px;
+}
+
+h5 {
+  font-weight: 300;
+  color: #0098aa;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+h6 {
+  font-weight: 300;
+  color: #0098aa;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+a {
+  color: #016a77;
+}
+
+.wrap {
+  text-align: center;
+  /* max-height: 75vh;
+  max-width: 75vw; */
+  margin: 10vh;
+}
+
+.definition {
+  text-align: left;
+  max-width: 500px;
+  padding: 5px;
+}
+
+.light {
+  font-weight: 300;
+}
+
+.regular {
+  font-weight: 400;
+}
+
+.medium {
+  font-weight: 500;
+}
+
+.semibold {
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
+}
+
+.link {
+  padding: 0px;
+}
+
+.content-world {
+  float: unset;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 24px/1 FontAwesome;
+  /* font-size: inherit; */
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+.fa-envelope:before {
+  content: "\f0e0"
+}
+
+.fa-linkedin:before {
+  content: "\f0e1"
+}
+
+.fa-github:before {
+  content: "\f09b"
+}
+
+.fa-twitter:before {
+  content: "\f099"
+}
+
+.fa-file-text:before {
+  content: "\f15c"
+}
+
+/* .vmp-logo { */
+  /* position: relative; */
+/* } */
