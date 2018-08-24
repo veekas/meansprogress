@@ -1,3 +1,93 @@
+:root {
+  --platform-size: 25vh;
+  --relative-size-world: calc((var(--platform-size))/8.8);
+  --relative-size-lever: calc((var(--platform-size))/2);
+}
+
+img {
+  display: block;
+}
+
+.give-me-a-lever-container {
+  text-align: center;
+  width: 100%;
+}
+
+.layout {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lever {
+  width: var(--relative-size-lever);
+}
+
+/* .lever-container-footer {} */
+
+.lever-container-header {
+  height: 100%;
+}
+
+.lever-footer {
+  height: 100%;
+}
+
+.lever-header {
+  position: relative;
+  transform: rotate(180deg);
+}
+
+.motion-container {
+  padding-top: 10vh;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.platform {
+  width: var(--platform-size);
+}
+
+.vmp-logo {
+  height: auto;
+  padding-top: 10vh;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+}
+
+.world {
+  width: var(--relative-size-world);
+}
+
+.world-container-gmal {
+  line-height: 0;
+}
+
+.world-container-vmp {
+  position: absolute;
+  padding-top: 1.5vh;
+}
+
+.world-footer {
+  display: inline;
+}
+
+/*
+
+
+
+
 h1 {
   font-weight: 700;
   color: #0098aa;
@@ -46,8 +136,8 @@ a {
 
 .wrap {
   text-align: center;
-  /* max-height: 75vh;
-  max-width: 75vw; */
+  max-height: 75vh;
+  max-width: 75vw;
   margin: 10vh;
 }
 
@@ -87,14 +177,10 @@ a {
   padding: 0px;
 }
 
-.content-world {
-  float: unset;
-}
-
 .fa {
   display: inline-block;
   font: normal normal normal 24px/1 FontAwesome;
-  /* font-size: inherit; */
+  font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale
@@ -118,8 +204,4 @@ a {
 
 .fa-file-text:before {
   content: "\f15c"
-}
-
-/* .vmp-logo { */
-  /* position: relative; */
-/* } */
+} */

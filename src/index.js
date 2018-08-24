@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+
+import Layout from './Layout';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+import './index.css';
 
+ReactDOM.render(
+  <Layout />,
+  document.getElementById('progress'),
+);
+// TODO: make service worker save everything
 registerServiceWorker();
