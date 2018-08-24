@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import VMPLogo from '../VMPLogo';
-import MotionContainer from '../MotionContainer';
+import ContentMotionContainer from '../ContentMotionContainer';
 import Lever from '../Lever';
 
 import { QUOTE, VMP_ASCII } from '../utils';
@@ -19,7 +19,7 @@ export default class Layout extends Component {
     return (
       <div className="layout">
         <VMPLogo />
-        <MotionContainer />
+        <ContentMotionContainer />
         <Lever footer />
       </div>
     );

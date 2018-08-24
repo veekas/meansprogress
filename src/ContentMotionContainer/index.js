@@ -9,7 +9,7 @@ const { FLAT, ANGLE_LEFT, ANGLE_RIGHT } = utils;
 const TRANSLATE_X_LEFT = -9;
 const TRANSLATE_X_RIGHT = Math.abs(TRANSLATE_X_LEFT);
 
-export default class MotionContainer extends Component {
+export default class ContentMotionContainer extends Component {
   initialState = { position: FLAT }
   state = this.initialState;
 
