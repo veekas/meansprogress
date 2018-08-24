@@ -40,6 +40,30 @@ h1 {
   line-height: 40px;
 }
 
+.headshot-container {
+  height: 100%;
+  visibility: hidden;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  padding-top: 1.5vh;
+  border-radius: 50%;
+  height: var(--relative-size-world);
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  padding-top: 0px;
+  height: 12vh;
+  border-radius: 50%;
+  transition: all 1s ease-in-out;
+}
+
 .layout {
   height: 100%;
   width: 100%;
@@ -58,6 +82,7 @@ h1 {
 /* .lever-container-footer {} */
 
 .lever-container-header {
+  cursor: pointer;
   height: 100%;
 }
 
@@ -86,7 +111,12 @@ h1 {
 }
 
 .platform {
-  display: inline;
+  display: inline-block;
+  width: var(--platform-size);
+}
+
+.platform-container {
+  line-height: 0;
 }
 
 .regular {
@@ -99,8 +129,9 @@ h1 {
 
 .vmp-logo {
   height: auto;
-  padding-top: 10vh;
+  margin-top: 10vh;
   position: relative;
+  cursor: pointer;
 
   display: flex;
   justify-content: center;
