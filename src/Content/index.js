@@ -1,20 +1,9 @@
 import React from 'react';
 
-import World from '../GiveMeALever/World';
-import Lever from '../GiveMeALever/Lever';
-import { UP } from '../utils';
-
-import './styles.css';
-
 const Content = ({ style }) => (
-  <div className="wrap">
+  <div className="wrap" style={style}>
 
-    <div className='vmp-logo'>
-      <World className='world content-world' overlap />
-      <Lever view={UP} />
-    </div>
-
-    <div style={style}>
+    <div>
       hello
     </div>
 
