@@ -58,8 +58,8 @@ h1 {
 .visible {
   opacity: 1;
   visibility: visible;
-  padding-top: 0px;
-  height: 12vh;
+  margin-top: -2.1vh;
+  height: 13vh;
   border-radius: 50%;
   transition: all 1s ease-in-out;
 }
