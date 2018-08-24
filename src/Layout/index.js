@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import VMPLogo from '../VMPLogo';
+import Header from '../Header';
 import ContentMotionContainer from '../ContentMotionContainer';
 import Lever from '../Lever';
 
@@ -18,7 +18,7 @@ export default class Layout extends Component {
   render() {
     return (
       <div className="layout">
-        <VMPLogo />
+        <Header />
         <ContentMotionContainer />
         <Lever footer />
       </div>

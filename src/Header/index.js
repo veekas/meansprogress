@@ -4,7 +4,7 @@ import Headshot from '../Headshot';
 import Lever from '../Lever';
 import World from '../World';
 
-class VMPLogo extends Component {
+class Header extends Component {
   state = { showHeadshot: false };
 
   onClick = () => {
@@ -26,4 +26,4 @@ class VMPLogo extends Component {
   }
 }
 
-export default VMPLogo;
+export default Header;
