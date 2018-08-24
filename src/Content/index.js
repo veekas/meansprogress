@@ -2,69 +2,68 @@ import React from 'react';
 
 const Content = ({ style }) => (
   <div className="wrap" style={style}>
+    <h1>Veekas Shrivastava</h1>
 
-    <h1 class="wrap">Veekas Shrivastava</h1>
+    <div className="definition">
+      <div className="semibold">
+        विकास (veekas)
+        <span className="regular"><i>, n</i> :</span>
+      </div>
+      1. progress.&nbsp;&nbsp;2. growth.&nbsp;&nbsp;3. development.
+    </div>
+
+    <div className="footer-links">
+      <div className="link">
+        <i className="fas fa-at"></i>&nbsp;
+        <a href="mailto:veekas@veekasmeansprogress.com">
+          Email
+        </a>
+      </div>
+
+      <div className="link">
+        <i className="fab fa-github"></i>&nbsp;
+        <a href="https://www.github.com/veekas">
+          Github
+        </a>
+      </div>
+
+      <div className="link">
+        <i className="fab fa-twitter"></i>&nbsp;
+        <a href="https://www.twitter.com/veekas">
+          Twitter
+        </a>
+      </div>
+
+      <div className="link">
+        <i className="fab fa-linkedin"> </i>&nbsp;
+        <a href="https://www.linkedin.com/in/veekas">
+          LinkedIn
+        </a>
+      </div>
+
+      <div className="link">
+        <i className="fas fa-file"></i>&nbsp;
+        <a href="http://veekasmeansprogress.com/resume.pdf">
+          Resume
+        </a>
+      </div>
+
+      <div className="link">
+        <i className="fas fa-envelope"></i>&nbsp;
+        <a href="https://tinyletter.com/veekas">
+          Newsletter
+        </a>
+      </div>
+
+      <div className="link">
+        <i className="fas fa-book"></i>&nbsp;
+        <a href="http://www.goodreads.com/veekas">
+          Goodreads
+        </a>
+      </div>
+    </div>
 
   </div>
 );
 
 export default Content;
-
-// <img style={{'max-width':'25%'}} src="images/vmp-logo-gold.png" />
-//
-//     <p class="definition">
-//       <span class="semibold">विकास (veekas)</span>
-//       <span class="regular">
-//         <i>, n</i> :</span>
-//       <br />1. progress. 2. growth. 3. development.
-//       <br />
-//       <i>Give Veekas a place to stand, and he shall move the world.
-//         <a href="https://en.wikipedia.org/wiki/Archimedes#Other_discoveries_and_inventions">(source)</a>
-//       </i>
-//     </p>
-//     <p class="wrap">
-//       <div class="footer-links">
-//         <div class="link">
-//           <i class="fa fa-envelope"></i>
-//           <a href="mailto:veekas@veekasmeansprogress.com">
-//             Email
-//           </a>
-//         </div>
-//         <div class="link">
-//           <i class="fa fa-file-text"></i>
-//           <a href="http://veekasmeansprogress.com/react-resume/resume.pdf">
-//             Resume
-//           </a>
-//         </div>
-//         <div class="link">
-//           <i class="fa fa-github"></i>
-//           <a href="https://www.github.com/veekas">
-//             Github
-//           </a>
-//         </div>
-//         <div class="link">
-//           <i class="fa fa-twitter"></i>
-//           <a href="https://www.twitter.com/veekas">
-//             Twitter
-//           </a>
-//         </div>
-//         <div class="link">
-//           <i class="fa fa-linkedin"></i>
-//           <a href="https://www.linkedin.com/in/veekas">
-//             LinkedIn
-//           </a>
-//         </div>
-//         <div class="link">
-//           <i class="fa fa-heart"></i>
-//           <a href="http://veekasmeansprogress.com/year-in-review">
-//             Year in Review
-//           </a>
-//         </div>
-//         <div class="link">
-//           <i class="fa fa-paper-plane"></i>
-//           <a href="https://tinyletter.com/veekas">
-//             Email Updates
-//           </a>
-//         </div>
-//       </div>
-//     </p>
