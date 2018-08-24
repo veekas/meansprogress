@@ -15,4 +15,5 @@ body {
   height: 100%;
   color: #0098aa;
   font-family: 'Poppins', Helvetica, sans-serif;
+  overflow: hidden;
 }
