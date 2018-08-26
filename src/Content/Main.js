@@ -7,7 +7,7 @@ const Main = () => (
     <div className="definition">
       <p className="font-weight-semibold no-margin-line">
         विकास (veekas)
-        <span className="regular"><i>, n</i> :</span>
+        <span className="font-weight-regular"><i>, n</i> :</span>
       </p>
       <p className="no-margin-line">1. progress.&nbsp;&nbsp;2. growth.&nbsp;&nbsp;3. development.</p>
     </div>

@@ -8,28 +8,6 @@ a {
   color: #016a77;
 }
 
-.bio-paragraph {
-  width: 100%;
-  padding-top: 2vmin;
-  text-align: left;
-  font-family: 'Helvetica Neue', Helvetica;
-  font-size: 3vmin;
-  line-height: 3vmin;
-}
-
-.view-container {
-  height: 100%;
-  max-height: 100%;
-  text-align: center;
-  padding: 0 7.5vw;
-  width: 100vw;
-  z-index: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .content-container {
   width: 300vw;
   height: 100%;
@@ -46,17 +24,25 @@ a {
   line-height: 1.2;
 }
 
-.no-margin-line {
-  margin: 0;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-img {
-  display: block;
+.font-weight-bold {
+  font-weight: 700;
+}
+
+.font-weight-light {
+  font-weight: 300;
+}
+
+.font-weight-regular {
+  font-weight: 400;
+}
+
+.font-weight-semibold {
+  font-weight: 600;
 }
 
 .footer-links {
@@ -140,9 +126,8 @@ h2 {
   animation: fadeIn 2s linear 5s alternate infinite;
 }
 
-.lever-container {
-  position: absolute;
-  height: 100%;
+img {
+  display: block;
 }
 
 .layout {
@@ -160,9 +145,9 @@ h2 {
   width: var(--relative-size-lever);
 }
 
-.lever-header {
-  transform: rotate(180deg);
-  transition: all 1s ease-in-out;
+.lever-container {
+  position: absolute;
+  height: 100%;
 }
 
 .lever-footer {
@@ -172,6 +157,11 @@ h2 {
   margin-left: auto;
   transform: rotate(0deg);
   transition: all 1s ease-in;
+}
+
+.lever-header {
+  transform: rotate(180deg);
+  transition: all 1s ease-in-out;
 }
 
 .link {
@@ -186,6 +176,10 @@ h2 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.no-margin-line {
+  margin: 0;
 }
 
 .platform {
@@ -225,20 +219,26 @@ h2 {
   bottom: 2vh;
 }
 
-.font-weight-light {
-  font-weight: 300;
+.side-view-paragraph {
+  width: 100%;
+  padding-bottom: 2vmin;
+  text-align: left;
+  font-family: 'Helvetica Neue', Helvetica;
+  font-size: 3vmin;
+  line-height: 3vmin;
 }
 
-.regular {
-  font-weight: 400;
-}
+.view-container {
+  height: 100%;
+  max-height: 100%;
+  text-align: center;
+  padding: 0 7.5vw;
+  width: 100vw;
+  z-index: 0;
 
-.font-weight-semibold {
-  font-weight: 600;
-}
-
-.font-weight-bold {
-  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .world {
@@ -264,12 +264,12 @@ h2 {
   transition:  all 0.9s ease-in-out 0.1s;
 }
 
-.world-hide {
-  visibility: hidden;
-}
-
 .world-header-fall {
   margin-top: 73vh;
   padding-top: 0;
   transition: all 1s ease-in;
+}
+
+.world-hide {
+  visibility: hidden;
 }
