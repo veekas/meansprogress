@@ -2,14 +2,14 @@ import React from 'react';
 
 const Main = () => (
   <div className="view-container">
-    <h1>Veekas Shrivastava</h1>
+    <h1 className="font-weight-bold">Veekas Shrivastava</h1>
 
     <div className="definition">
-      <div className="semibold">
+      <p className="font-weight-semibold definition-line">
         विकास (veekas)
         <span className="regular"><i>, n</i> :</span>
-      </div>
-      1. progress.&nbsp;&nbsp;2. growth.&nbsp;&nbsp;3. development.
+      </p>
+      <p className="definition-line">1. progress.&nbsp;&nbsp;2. growth.&nbsp;&nbsp;3. development.</p>
     </div>
 
     <div className="footer-links">
