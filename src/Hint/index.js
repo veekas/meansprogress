@@ -2,28 +2,21 @@ import React from 'react';
 
 import { FLAT } from '../utils';
 
-const Hint = ({ showGMAL, worldPosition }) => {
+const Hint = ({ platformAngle, previousView, showGMAL }) => {
   let hintContent = '';
-  let hintLabel = '';
-  const platformPristine = worldPosition === FLAT;
+  let hintLabel = null;
+  const platformPristine = platformAngle === FLAT && !previousView;
 
 
   if (!showGMAL && platformPristine) {
     hintContent = 'find a lever';
-    hintLabel = (<b className="dark">hint&nbsp;&nbsp;</b>);
+    hintLabel = (<span className='font-weight-bold'>hint</span>);
   } else if (showGMAL && platformPristine) {
     hintContent = 'find a place to stand';
-    hintLabel = (<b className="dark">hint&nbsp;&nbsp;</b>);
-  } else {
-    hintContent = 'move the world';
+    hintLabel = (<span className='font-weight-bold'>hint</span>);
   };
 
-  return (
-    <p className="hint">
-      {hintLabel}
-      {hintContent}
-    </p>
-  );
+  return <p className="hint">{hintLabel} <span className="font-weight-light">{hintContent}</span></p>;
 }
 
 export default Hint;

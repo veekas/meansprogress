@@ -8,28 +8,46 @@ a {
   color: #016a77;
 }
 
-.content-container {
-  z-index: 0;
-  text-align: center;
-  padding: 10vh 0;
+.bio-paragraph {
+  width: 100%;
+  padding-top: 2vmin;
+  text-align: left;
+  font-family: 'Helvetica Neue', Helvetica;
+  font-size: 3vmin;
+  line-height: 3vmin;
+}
+
+.view-container {
   height: 100%;
   max-height: 100%;
-  max-width: 85vw;
+  text-align: center;
+  padding: 0 7.5vw;
+  width: 100vw;
+  z-index: 0;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-.dark {
-  color: #016a77;
+.content-container {
+  width: 300vw;
+  height: 100%;
+  max-height: 100%;
+  padding: 25vh 0;
+  z-index: 0;
+
+  display: flex;
 }
 
 .definition {
-  margin: 28px 0;
+  margin: 7vmin 0;
   text-align: left;
-  font-weight: 400;
+  line-height: 1.2;
+}
+
+.no-margin-line {
+  margin: 0;
 }
 
 @keyframes fadeIn {
@@ -42,11 +60,10 @@ img {
 }
 
 .footer-links {
-  max-width: 390px;
+  width: 75%;
   display: flex;
-  justify-content: space-between;
-  align-content: space-between;
   flex-flow: row wrap;
+  justify-content: center;
 }
 
 .gmal-container {
@@ -59,25 +76,28 @@ img {
 
 h1 {
   margin: 0;
-  font-weight: 700;
-  color: #0098aa;
-  font-size: 42px;
-  line-height: 40px;
+  font-size: 9vmin;
+  line-height: 9vmin;
+}
+
+h2 {
+  margin: 0;
+  padding-bottom: 5vmin;
+  font-size: 7vmin;
+  line-height: 7vmin;
 }
 
 .header-clickable-container {
   cursor: pointer;
-  margin-top: -1.5vh;
-  height: 13vh;
-  width: 100%;
+  margin-top: -2.25vh;
+  height: 14vh;
+  width: var(--relative-size-lever);
   position: absolute;
   z-index: 2;
 }
 
 .header-container {
-  margin-top: 10vh;
-  height: 90vh;
-  width: 17vw;
+  margin-top: 8vh;
   position: absolute;
 
   display: flex;
@@ -87,7 +107,7 @@ h1 {
 .headshot-hidden {
   opacity: 0;
   visibility: hidden;
-  padding-top: 1.5vh;
+  margin-top: 1.5vh;
   border-radius: 50%;
   height: var(--relative-size-world);
   transition: all 1s ease-in-out;
@@ -99,11 +119,10 @@ h1 {
   margin-top: -2.1vh;
   height: 13vh;
   border-radius: 50%;
-  transition: all 1s ease-in-out;
+  transition: all 0.9s ease-in-out;
 }
 
 .headshot-container {
-  height: 100%;
   visibility: hidden;
   border-radius: 50%;
 }
@@ -113,9 +132,10 @@ h1 {
   right: 5px;
   opacity: 0;
   margin: 0;
-  width: 40%;
-  line-height: 1;
+  width: 50%;
   position: fixed;
+  font-size: 3vmin;
+  line-height: 3vmin;
   text-align: right;
   animation: fadeIn 2s linear 5s alternate infinite;
 }
@@ -141,13 +161,12 @@ h1 {
 }
 
 .lever-header {
-  /* position: relative; */
   transform: rotate(180deg);
   transition: all 1s ease-in-out;
 }
 
 .lever-footer {
-  margin-top: 78.7vh;
+  margin-top: 80.7vh;
   left: 0;
   right: 0;
   margin-left: auto;
@@ -157,8 +176,7 @@ h1 {
 
 .link {
   text-align: left;
-  width: 120px;
-  margin: 0 5px;
+  margin: 2vmin;
 }
 
 .motion-container {
@@ -192,6 +210,7 @@ h1 {
   position: absolute;
   left: 0;
   right: 0;
+  font-size: 3vmin;
   margin-left: auto;
   transition: all 1s ease-in-out;
 }
@@ -206,12 +225,20 @@ h1 {
   bottom: 2vh;
 }
 
+.font-weight-light {
+  font-weight: 300;
+}
+
 .regular {
   font-weight: 400;
 }
 
-.semibold {
+.font-weight-semibold {
   font-weight: 600;
+}
+
+.font-weight-bold {
+  font-weight: 700;
 }
 
 .world {

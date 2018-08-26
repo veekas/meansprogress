@@ -16,6 +16,8 @@ body {
   width: 100%;
   height: 100%;
   color: #0098aa;
+  font-size: 3.4vmin;
+  line-height: 3.4vmin;
   font-family: 'Poppins', Helvetica, sans-serif;
   overflow: hidden;
 }

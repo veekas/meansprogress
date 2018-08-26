@@ -6,7 +6,7 @@ const Quote = ({ showGMAL }) => {
   const showOrHide = showGMAL ? 'quote-hide' : 'quote-show';
 
   return (
-    <div className={`quote ${showOrHide}`}>
+    <div className={`quote ${showOrHide} font-weight-light`}>
       <i>
         <p>"Give me a lever</p>
         <p>and a place to stand,</p>
