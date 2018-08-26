@@ -46,7 +46,7 @@ a {
 }
 
 .footer-links {
-  width: 75%;
+  width: 80%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -166,7 +166,7 @@ img {
 
 .link {
   text-align: left;
-  margin: 2vmin;
+  margin: 1vmin;
 }
 
 .motion-container {
