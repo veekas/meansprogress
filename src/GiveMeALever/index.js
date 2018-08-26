@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Tappable from 'react-tappable';
 
 import World from '../World';
 import Platform from '../Platform';

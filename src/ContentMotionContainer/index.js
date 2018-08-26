@@ -5,9 +5,7 @@ import Content from '../Content';
 import GiveMeALever from '../GiveMeALever';
 import utils from '../utils';
 
-const { FLAT, ANGLE_LEFT, ANGLE_RIGHT } = utils;
-const TRANSLATE_X_LEFT = -9;
-const TRANSLATE_X_RIGHT = Math.abs(TRANSLATE_X_LEFT);
+const { FLAT, ANGLE_LEFT, ANGLE_RIGHT, TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT } = utils;
 
 export default class ContentMotionContainer extends Component {
   initialState = { position: FLAT }
@@ -25,6 +23,8 @@ export default class ContentMotionContainer extends Component {
   render() {
     const { position } = this.state;
     const { showGMAL } = this.props;
+
+    console.log(TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT);
 
     let translateX = 0;
     if (position > 0) {
