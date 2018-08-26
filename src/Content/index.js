@@ -14,9 +14,9 @@ export default class Content extends React.Component {
 
     return (
     <div className="content-container" style={style}>
-      <Bio />
-      <Main />
       <Skills />
+      <Main />
+      <Bio />
     </div>
   );
   }

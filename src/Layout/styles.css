@@ -8,9 +8,18 @@ a {
   color: #016a77;
 }
 
+.bio-paragraph {
+  width: 100%;
+  padding-top: 2vmin;
+  text-align: left;
+  font-family: 'Helvetica Neue', Helvetica;
+  font-size: 3vmin;
+  line-height: 3vmin;
+}
+
 .view-container {
-  max-height: 100%;
   height: 100%;
+  max-height: 100%;
   text-align: center;
   padding: 0 7.5vw;
   width: 100vw;
@@ -19,15 +28,14 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
 }
 
 .content-container {
+  width: 300vw;
   height: 100%;
   max-height: 100%;
   padding: 25vh 0;
   z-index: 0;
-  width: 300vw;
 
   display: flex;
 }
@@ -38,7 +46,7 @@ a {
   line-height: 1.2;
 }
 
-.definition-line {
+.no-margin-line {
   margin: 0;
 }
 
@@ -70,6 +78,13 @@ h1 {
   margin: 0;
   font-size: 9vmin;
   line-height: 9vmin;
+}
+
+h2 {
+  margin: 0;
+  padding-bottom: 5vmin;
+  font-size: 7vmin;
+  line-height: 7vmin;
 }
 
 .header-clickable-container {
