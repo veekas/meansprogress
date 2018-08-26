@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
+import Hint from '../Hint';
+import Platform from '../Platform';
 import Quote from '../Quote';
 import World from '../World';
-import Platform from '../Platform';
 
 export default class GiveMeALever extends Component {
   shouldComponentUpdate(nextProps) {
@@ -30,6 +31,7 @@ export default class GiveMeALever extends Component {
           style={rotate}
         />
         <Quote showGMAL={showGMAL} />
+        <Hint showGMAL={showGMAL} worldPosition={position} />
       </div>
     );
   }

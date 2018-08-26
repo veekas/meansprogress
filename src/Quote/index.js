@@ -16,6 +16,7 @@ const Quote = ({ showGMAL }) => {
       <p>
           <a href={GMAL_QUOTE_LINK}>Archimedes</a>
       </p>
+      <br />
     </div>
   );
 }
