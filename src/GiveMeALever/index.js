@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Tappable from 'react-tappable';
 
 import World from '../World';
 import Platform from '../Platform';
 
-export const GiveMeALever = props => {
-  const { handleTapEvent, position, rotate, rotateAndFall } = props;
+export default class GiveMeALever extends Component {
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.rotateAndFall.transform !== this.props.rotateAndFall.transform
+      || nextProps.rotate.transform !== this.props.rotate.transform
+    );
+  }
 
-  return (
-    <div className='give-me-a-lever-container'>
-      <World className='world' style={rotateAndFall} />
-      <Tappable onTap={handleTapEvent}>
-        <Platform
-          style={rotate}
-          position={position}
-        />
-      </Tappable>
-    </div>
-  );
+  render() {
+    const { handleTapEvent, position, rotate, rotateAndFall, showGMAL } = this.props;
+
+    return (
+      <div className='gmal-container'>
+        <World className='world' style={rotateAndFall} />
+        <Tappable onTap={handleTapEvent}>
+          <Platform
+            style={rotate}
+            position={position}
+            showGMAL={showGMAL}
+          />
+        </Tappable>
+      </div>
+    );
+  }
 }
-
-export default GiveMeALever;
