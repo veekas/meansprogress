@@ -18,7 +18,7 @@ export const WORLD_SPRING = { stiffness: 20, damping: 4 };
 export const TRANSLATE_WORLD_LEFT = -9;
 export const TRANSLATE_WORLD_RIGHT = Math.abs(TRANSLATE_WORLD_LEFT);
 
-export const TEXT_SPRING = { stiffness: 10, damping: 6 };
+export const TEXT_SPRING = { stiffness: 300, damping: 50 };
 export const TRANSLATE_TEXT_LEFT = -100;
 export const TRANSLATE_TEXT_RIGHT = Math.abs(TRANSLATE_TEXT_LEFT);
 

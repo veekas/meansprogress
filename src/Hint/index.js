@@ -2,10 +2,10 @@ import React from 'react';
 
 import { FLAT } from '../utils';
 
-const Hint = ({ showGMAL, platformAngle }) => {
+const Hint = ({ platformAngle, previousView, showGMAL }) => {
   let hintContent = '';
   let hintLabel = null;
-  const platformPristine = platformAngle === FLAT;
+  const platformPristine = platformAngle === FLAT && !previousView;
 
 
   if (!showGMAL && platformPristine) {

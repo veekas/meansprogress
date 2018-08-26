@@ -15,7 +15,9 @@ export default class GiveMeALever extends Component {
   }
 
   render() {
-    const { moveTheWorld, rotate, rotateAngle, showGMAL, transformWorld } = this.props;
+    const {
+      moveTheWorld, previousView, rotate, rotateAngle, showGMAL, transformWorld
+    } = this.props;
 
     return (
       <div className='gmal-container'>
@@ -30,7 +32,11 @@ export default class GiveMeALever extends Component {
           style={rotate}
         />
         <Quote showGMAL={showGMAL} />
-        <Hint showGMAL={showGMAL} platformAngle={rotateAngle} />
+        <Hint
+          platformAngle={rotateAngle}
+          previousView={previousView}
+          showGMAL={showGMAL}
+        />
       </div>
     );
   }

@@ -13,7 +13,7 @@ import {
 } from '../utils';
 
 export default class ContentMotionContainer extends Component {
-  initialState = { previousView: RIGHT_VIEW, view: MAIN_VIEW }
+  initialState = { previousView: null, view: MAIN_VIEW }
   state = this.initialState;
 
   moveTheWorld = () => {
@@ -34,7 +34,7 @@ export default class ContentMotionContainer extends Component {
   }
 
   render() {
-    const { view } = this.state;
+    const { previousView, view } = this.state;
     const { showGMAL } = this.props;
 
     let rotateAngle = FLAT;
@@ -49,8 +49,6 @@ export default class ContentMotionContainer extends Component {
       translateText = TRANSLATE_TEXT_LEFT;
       translateWorld = TRANSLATE_WORLD_LEFT;
     };
-
-    console.log(rotateAngle, translateText, translateWorld)
 
     return (
       <Motion
@@ -79,6 +77,7 @@ export default class ContentMotionContainer extends Component {
                 rotate={transformRotate}
                 transformWorld={transformWorld}
                 showGMAL={showGMAL}
+                previousView={previousView}
               />
             </div>
           );
