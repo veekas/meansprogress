@@ -8,30 +8,29 @@ import World from '../World';
 export default class GiveMeALever extends Component {
   shouldComponentUpdate(nextProps) {
     return (
-      nextProps.rotateAndFallWorld.transform !== this.props.rotateAndFallWorld.transform
+      nextProps.transformWorld.transform !== this.props.transformWorld.transform
       || nextProps.rotate.transform !== this.props.rotate.transform
       || nextProps.showGMAL !== this.props.showGMAL
     );
   }
 
   render() {
-    const { moveTheWorld, position, rotate, rotateAndFallWorld, showGMAL } = this.props;
+    const { moveTheWorld, rotate, rotateAngle, showGMAL, transformWorld } = this.props;
 
     return (
       <div className='gmal-container'>
         <World
           className='world'
           showGMAL={showGMAL}
-          style={rotateAndFallWorld}
+          style={transformWorld}
         />
         <Platform
           onClick={moveTheWorld}
-          position={position}
           showGMAL={showGMAL}
           style={rotate}
         />
         <Quote showGMAL={showGMAL} />
-        <Hint showGMAL={showGMAL} worldPosition={position} />
+        <Hint showGMAL={showGMAL} platformAngle={rotateAngle} />
       </div>
     );
   }

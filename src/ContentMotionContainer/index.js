@@ -3,52 +3,81 @@ import { Motion, spring } from 'react-motion';
 
 import Content from '../Content';
 import GiveMeALever from '../GiveMeALever';
-import { FLAT, ANGLE_LEFT, ANGLE_RIGHT, TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT } from '../utils';
+
+import {
+  LEFT_VIEW, MAIN_VIEW, RIGHT_VIEW,
+  FLAT, ROTATE_LEFT, ROTATE_RIGHT,
+  TRANSLATE_WORLD_LEFT, TRANSLATE_WORLD_RIGHT,
+  TRANSLATE_TEXT_RIGHT, TRANSLATE_TEXT_LEFT,
+  TEXT_SPRING, WORLD_SPRING,
+} from '../utils';
 
 export default class ContentMotionContainer extends Component {
-  initialState = { position: FLAT }
+  initialState = { previousView: RIGHT_VIEW, view: MAIN_VIEW }
   state = this.initialState;
 
   moveTheWorld = () => {
-    const position = this.state.position >= FLAT ? ANGLE_LEFT : ANGLE_RIGHT;
-    this.setState({ position });
+    const { previousView, view } = this.state;
+
+    let nextView = null;
+    if (view === LEFT_VIEW) {
+      nextView = MAIN_VIEW;
+    } else if (view === RIGHT_VIEW) {
+      nextView = MAIN_VIEW;
+    } else if (previousView === LEFT_VIEW) {
+      nextView = RIGHT_VIEW;
+    } else {
+      nextView = LEFT_VIEW;
+    }
+
+    this.setState({ previousView: view, view: nextView });
   }
 
   render() {
-    const { position } = this.state;
+    const { view } = this.state;
     const { showGMAL } = this.props;
 
-    let translateX = 0;
-    if (position > 0) {
-      translateX = TRANSLATE_X_RIGHT;
-    } else if (position < 0) {
-      translateX = TRANSLATE_X_LEFT;
+    let rotateAngle = FLAT;
+    let translateText = FLAT;
+    let translateWorld = FLAT;
+    if (view === RIGHT_VIEW) {
+      rotateAngle = ROTATE_RIGHT;
+      translateText = TRANSLATE_TEXT_RIGHT;
+      translateWorld = TRANSLATE_WORLD_RIGHT;
+    } else if (view === LEFT_VIEW) {
+      rotateAngle = ROTATE_LEFT;
+      translateText = TRANSLATE_TEXT_LEFT;
+      translateWorld = TRANSLATE_WORLD_LEFT;
     };
+
+    console.log(rotateAngle, translateText, translateWorld)
 
     return (
       <Motion
         style={{
-          position: spring(position),
-          translateWorld: spring(translateX, { stiffness: 20, damping: 5 }),
-          translateText: spring(translateX, { stiffness: 10, damping: 6 }),
+          rotateVal: spring(rotateAngle),
+          translateWorld: spring(translateWorld, WORLD_SPRING),
+          translateText: spring(translateText, TEXT_SPRING),
         }}
       >
         {style => {
-          const rotateVal = `rotate(${style.position}deg)`;
-          const rotate = { transform: rotateVal };
-          const textFall = `translateX(${style.translateText}vh)`
+          const rotate = `rotate(${style.rotateVal}deg)`;
+          const transformRotate = { transform: rotate };
+
+          const moveText = `translateX(${style.translateText}vw)`
+          const transformText = { transform: moveText };
+
           const worldFall = `translateX(${style.translateWorld}vh)`
-          const rotateAndFallText = { transform: `${rotateVal} ${textFall}` };
-          const rotateAndFallWorld = { transform: `${rotateVal} ${worldFall}` };
+          const transformWorld = { transform: `${rotate} ${worldFall}` };
 
           return (
             <div className="motion-container">
-              <Content style={rotateAndFallText} />
+              <Content style={transformText} />
               <GiveMeALever
                 moveTheWorld={this.moveTheWorld}
-                position={position}
-                rotate={rotate}
-                rotateAndFallWorld={rotateAndFallWorld}
+                rotateAngle={rotateAngle}
+                rotate={transformRotate}
+                transformWorld={transformWorld}
                 showGMAL={showGMAL}
               />
             </div>
