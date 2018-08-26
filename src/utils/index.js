@@ -31,9 +31,3 @@ export const VMP_ASCII = `
 ██║     ██║  ██║╚██████╔╝╚██████╔╝██║  ██║███████╗███████║███████║
 ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
 `;
-
-const utils = {
-  ANGLE_LEFT, ANGLE_RIGHT, FLAT, QUOTE, TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT, VMP_ASCII
-}
-
-export default utils;

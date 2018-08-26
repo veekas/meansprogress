@@ -3,9 +3,7 @@ import { Motion, spring } from 'react-motion';
 
 import Content from '../Content';
 import GiveMeALever from '../GiveMeALever';
-import utils from '../utils';
-
-const { FLAT, ANGLE_LEFT, ANGLE_RIGHT, TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT } = utils;
+import { FLAT, ANGLE_LEFT, ANGLE_RIGHT, TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT } from '../utils';
 
 export default class ContentMotionContainer extends Component {
   initialState = { position: FLAT }
@@ -23,8 +21,6 @@ export default class ContentMotionContainer extends Component {
   render() {
     const { position } = this.state;
     const { showGMAL } = this.props;
-
-    console.log(TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT);
 
     let translateX = 0;
     if (position > 0) {
