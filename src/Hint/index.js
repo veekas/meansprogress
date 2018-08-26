@@ -16,7 +16,7 @@ const Hint = ({ showGMAL, worldPosition }) => {
 
   return (
     <p className="hint">
-      <b className="dark">➜&nbsp;&nbsp;</b>
+      <b className="dark">hint&nbsp;&nbsp;</b>
       {hintContent}
     </p>
   );
