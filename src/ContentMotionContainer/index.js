@@ -5,15 +5,13 @@ import Content from '../Content';
 import GiveMeALever from '../GiveMeALever';
 import utils from '../utils';
 
-const { FLAT, ANGLE_LEFT, ANGLE_RIGHT } = utils;
-const TRANSLATE_X_LEFT = -9;
-const TRANSLATE_X_RIGHT = Math.abs(TRANSLATE_X_LEFT);
+const { FLAT, ANGLE_LEFT, ANGLE_RIGHT, TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT } = utils;
 
-export default class MotionContainer extends Component {
+export default class ContentMotionContainer extends Component {
   initialState = { position: FLAT }
   state = this.initialState;
 
-  handleTapEvent = () => {
+  moveTheWorld = () => {
     const position = this.state.position >= FLAT ? ANGLE_LEFT : ANGLE_RIGHT;
     this.setState({ position });
   }
@@ -24,30 +22,30 @@ export default class MotionContainer extends Component {
 
   render() {
     const { position } = this.state;
+    const { showGMAL } = this.props;
 
-    let translateXText = 0;
+    console.log(TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT);
+
+    let translateX = 0;
     if (position > 0) {
-      translateXText = TRANSLATE_X_RIGHT;
+      translateX = TRANSLATE_X_RIGHT;
     } else if (position < 0) {
-      translateXText = TRANSLATE_X_LEFT;
+      translateX = TRANSLATE_X_LEFT;
     };
-
-    const translateXWorld = position >= 0 ? TRANSLATE_X_RIGHT : TRANSLATE_X_LEFT;
 
     return (
       <Motion
-        defaultStyle={{ position, translateXText, translateXWorld }}
         style={{
           position: spring(position),
-          translateXWorld: spring(translateXWorld, { stiffness: 20, damping: 5 }),
-          translateXText: spring(translateXText, { stiffness: 10, damping: 6 }),
+          translateWorld: spring(translateX, { stiffness: 20, damping: 5 }),
+          translateText: spring(translateX, { stiffness: 10, damping: 6 }),
         }}
       >
         {style => {
           const rotateVal = `rotate(${style.position}deg)`;
-          const textFall = `translateX(${style.translateXText}vh)`;
-          const worldFall = `translateX(${style.translateXWorld}vh)`
           const rotate = { transform: rotateVal };
+          const textFall = `translateX(${style.translateText}vh)`
+          const worldFall = `translateX(${style.translateWorld}vh)`
           const rotateAndFallText = { transform: `${rotateVal} ${textFall}` };
           const rotateAndFallWorld = { transform: `${rotateVal} ${worldFall}` };
 
@@ -55,10 +53,11 @@ export default class MotionContainer extends Component {
             <div className="motion-container">
               <Content style={rotateAndFallText} />
               <GiveMeALever
-                handleTapEvent={this.handleTapEvent}
+                moveTheWorld={this.moveTheWorld}
                 position={position}
                 rotate={rotate}
-                rotateAndFall={rotateAndFallWorld}
+                rotateAndFallWorld={rotateAndFallWorld}
+                showGMAL={showGMAL}
               />
             </div>
           );

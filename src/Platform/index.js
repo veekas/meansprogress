@@ -1,14 +1,17 @@
 import React from 'react';
 
-const Platform = ({ style }) => (
-  <div className='give-me-a-lever-object'>
+const Platform = ({ onClick, showGMAL, style }) => {
+  const showOrHide = showGMAL ? 'platform-show' : 'platform-hide';
+
+  return (
     <img
       alt="platform icon"
-      className="platform"
+      className={`platform ${showOrHide}`}
+      onClick={onClick}
       src="assets/vmp-logo-platform.png"
       style={style}
     />
-  </div>
-);
+  );
+}
 
 export default Platform;

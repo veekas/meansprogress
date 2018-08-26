@@ -6,6 +6,8 @@ export const QUOTE = `
 export const FLAT = 0;
 export const ANGLE_LEFT = -10;
 export const ANGLE_RIGHT = Math.abs(ANGLE_LEFT);
+export const TRANSLATE_X_LEFT = -9;
+export const TRANSLATE_X_RIGHT = Math.abs(TRANSLATE_X_LEFT);
 
 export const VMP_ASCII = `
 ██╗   ██╗███████╗███████╗██╗  ██╗ █████╗ ███████╗
@@ -31,7 +33,7 @@ export const VMP_ASCII = `
 `;
 
 const utils = {
-  QUOTE, VMP_ASCII, FLAT, ANGLE_LEFT, ANGLE_RIGHT
+  ANGLE_LEFT, ANGLE_RIGHT, FLAT, QUOTE, TRANSLATE_X_LEFT, TRANSLATE_X_RIGHT, VMP_ASCII
 }
 
 export default utils;
