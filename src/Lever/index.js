@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Lever = ({ footer }) => {
-  const leverContainerClass = footer ? 'lever-container-footer' : 'lever-container-header';
-  const leverType = footer ? 'lever-footer' : 'lever-header';
+const Lever = ({ showGMAL }) => {
+  const leverType = showGMAL ? 'lever-footer' : 'lever-header';
   const leverClasses = `lever ${leverType}`;
 
   return (
-    <div className={leverContainerClass}>
+    <div className="lever-container">
       <img
         alt='lever icon'
         className={leverClasses}

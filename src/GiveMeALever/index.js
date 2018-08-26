@@ -9,6 +9,7 @@ export default class GiveMeALever extends Component {
     return (
       nextProps.rotateAndFall.transform !== this.props.rotateAndFall.transform
       || nextProps.rotate.transform !== this.props.rotate.transform
+      || nextProps.showGMAL !== this.props.showGMAL
     );
   }
 
@@ -17,7 +18,11 @@ export default class GiveMeALever extends Component {
 
     return (
       <div className='gmal-container'>
-        <World className='world' style={rotateAndFall} />
+        <World
+          className='world'
+          showGMAL={showGMAL}
+          style={rotateAndFall}
+        />
         <Tappable onTap={handleTapEvent}>
           <Platform
             style={rotate}

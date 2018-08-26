@@ -1,15 +1,27 @@
 import React from 'react';
 
-const World = ({ logo, style }) => {
-  const worldContainerClass = logo ? 'world-container-vmp' : 'world-container-gmal';
-  const worldClass = logo ? '' : 'world-footer';
+const World = ({ logo = false, showGMAL = false, style }) => {
+  let worldContainerClass = '';
+
+  if (logo && showGMAL) {
+    worldContainerClass = 'world-container-header world-header-fall world-hide';
+  } else if (logo) {
+    worldContainerClass = 'world-container-header';
+  } else if (!logo && !showGMAL) {
+    worldContainerClass = 'world-container-gmal-hidden';
+  } else {
+    worldContainerClass = 'world-container-gmal-visible';
+  }
+
+  console.log(worldContainerClass)
 
   return (
-    <div className={worldContainerClass} style={style}>
+    <div className={worldContainerClass}>
       <img
         alt='world icon'
-        className={`world ${worldClass}`}
+        className="world"
         src='assets/vmp-logo-world.png'
+        style={style}
       />
     </div>
   );

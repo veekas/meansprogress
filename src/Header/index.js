@@ -1,29 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Headshot from '../Headshot';
 import Lever from '../Lever';
 import World from '../World';
 
-class Header extends Component {
-  state = { showHeadshot: false };
+const Header = ({ showGMAL, toggleGAML }) => {
+  const headshotVisibility = showGMAL ? 'visible' : 'hidden';
 
-  onClick = () => {
-    const showHeadshot = !this.state.showHeadshot;
-    this.setState({ showHeadshot });
-  }
-
-  render() {
-    const { showHeadshot } = this.state;
-    const headshotVisibility = showHeadshot ? 'visible' : 'hidden';
-
-    return (
-      <div className="vmp-logo" onClick={this.onClick}>
-        <World logo />
-        <Lever footer={false} />
-        <Headshot visibility={headshotVisibility} />
-      </div>
-    );
-  }
+  return (
+    <div className="header-container">
+      <div className="header-clickable-container" onClick={toggleGAML} />
+      <World logo showGMAL={showGMAL} />
+      <Lever showGMAL={showGMAL} />
+      <Headshot visibility={headshotVisibility} />
+    </div>
+  );
 }
 
 export default Header;
