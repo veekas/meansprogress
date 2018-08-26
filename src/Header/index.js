@@ -5,7 +5,7 @@ import Lever from '../Lever';
 import World from '../World';
 
 const Header = ({ showGMAL, toggleGAML }) => {
-  const headshotVisibility = showGMAL ? 'visible' : 'hidden';
+  const headshotVisibility = showGMAL ? 'headshot-visible' : 'headshot-hidden';
 
   return (
     <div className="header-container">

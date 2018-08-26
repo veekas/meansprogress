@@ -5,7 +5,7 @@ const Platform = ({ onClick, showGMAL, style }) => {
 
   return (
     <img
-      alt="platform icon"
+      alt="a place to stand"
       className={`platform ${showOrHide}`}
       onClick={onClick}
       src="assets/vmp-logo-platform.png"
