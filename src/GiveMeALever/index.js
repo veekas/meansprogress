@@ -25,9 +25,9 @@ export default class GiveMeALever extends Component {
         />
         <Tappable onTap={handleTapEvent}>
           <Platform
-            style={rotate}
             position={position}
             showGMAL={showGMAL}
+            style={rotate}
           />
         </Tappable>
       </div>

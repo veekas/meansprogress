@@ -163,15 +163,20 @@ h1 {
   width: var(--platform-size);
 }
 
-.platform-container-show {
-  line-height: 0;
-  margin-bottom: 11.3vh;
-  visibility: visible;
+.platform-container {
+  overflow: hidden;
 }
 
-.platform-container-hide {
-  display: hidden;
+.platform-show {
   margin-bottom: 11.3vh;
+  visibility: visible;
+  transition: margin 1s ease-in-out;
+}
+
+.platform-hide {
+  visibility: hidden;
+  margin-bottom: -5vh;
+  transition: all 1s ease-in-out;
 }
 
 .regular {
@@ -183,8 +188,8 @@ h1 {
 }
 
 .world {
-  width: var(--relative-size-world);
   display: inline;
+  width: var(--relative-size-world);
 }
 
 .world-container-gmal-hidden {
