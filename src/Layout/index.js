@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import ContentMotionContainer from '../ContentMotionContainer';
 
-import { QUOTE, VMP_ASCII } from '../utils';
+import { CONSOLE_QUOTE } from '../utils';
 
 import './styles.css'
 
@@ -11,7 +11,7 @@ export default class Layout extends Component {
   state = { showGMAL: false };
 
   componentDidMount = () => {
-    console.log('\n', QUOTE, '\n', VMP_ASCII);
+    console.log('\n', CONSOLE_QUOTE, '\n\n');
   }
 
   toggleGAML = () => {

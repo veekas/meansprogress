@@ -16,9 +16,9 @@ const World = ({ logo = false, showGMAL = false, style }) => {
   return (
     <div className={worldContainerClass}>
       <img
-        alt='world icon'
+        alt="the world"
         className="world"
-        src='assets/vmp-logo-world.png'
+        src="assets/vmp-logo-world.png"
         style={style}
       />
     </div>

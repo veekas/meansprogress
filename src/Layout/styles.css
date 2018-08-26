@@ -161,8 +161,15 @@ h1 {
 }
 
 .platform {
+  cursor: pointer;
   display: inline-block;
   width: var(--platform-size);
+}
+
+.platform-hide {
+  visibility: hidden;
+  margin-bottom: -10vh;
+  transition: all 1s ease-in-out;
 }
 
 .platform-show {
@@ -171,10 +178,22 @@ h1 {
   transition: margin 1s ease-in-out;
 }
 
-.platform-hide {
-  visibility: hidden;
-  margin-bottom: -5vh;
+.quote {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
   transition: all 1s ease-in-out;
+}
+
+.quote-hide {
+  visibility: hidden;
+  bottom: -10vh;
+}
+
+.quote-show {
+  visibility: visible;
+  bottom: 5vh;
 }
 
 .regular {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Quote from '../Quote';
 import World from '../World';
 import Platform from '../Platform';
 
@@ -28,6 +29,7 @@ export default class GiveMeALever extends Component {
           showGMAL={showGMAL}
           style={rotate}
         />
+        <Quote showGMAL={showGMAL} />
       </div>
     );
   }

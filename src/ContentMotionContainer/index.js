@@ -14,10 +14,6 @@ export default class ContentMotionContainer extends Component {
     this.setState({ position });
   }
 
-  // handleReset = () => {
-  //   this.setState(this.initialState);
-  // }
-
   render() {
     const { position } = this.state;
     const { showGMAL } = this.props;

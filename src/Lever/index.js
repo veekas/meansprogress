@@ -7,9 +7,9 @@ const Lever = ({ showGMAL }) => {
   return (
     <div className="lever-container">
       <img
-        alt='lever icon'
+        alt="a lever"
         className={leverClasses}
-        src='assets/vmp-logo-lever.png'
+        src="assets/vmp-logo-lever.png"
       />
     </div>
   );

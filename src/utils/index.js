@@ -1,6 +1,9 @@
-export const QUOTE = `
-“And now that you don't have to be perfect, you can be good.”
-― John Steinbeck, East of Eden
+export const CONSOLE_QUOTE = `
+“And now that you don't have to be perfect,
+ you can be good.”
+
+                           ― John Steinbeck
+                             'East of Eden'
 `;
 
 export const FLAT = 0;
