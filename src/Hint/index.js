@@ -9,10 +9,10 @@ const Hint = ({ platformAngle, previousView, showGMAL }) => {
 
 
   if (!showGMAL && platformPristine) {
-    hintContent = 'find a lever';
+    hintContent = 'click the logo';
     hintLabel = (<span className='font-weight-bold'>hint</span>);
   } else if (showGMAL && platformPristine) {
-    hintContent = 'find a place to stand';
+    hintContent = 'click the platform';
     hintLabel = (<span className='font-weight-bold'>hint</span>);
   };
 
