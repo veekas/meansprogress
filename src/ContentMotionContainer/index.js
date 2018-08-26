@@ -35,27 +35,28 @@ export default class ContentMotionContainer extends Component {
 
     return (
       <Motion
-        defaultStyle={{ position, translateX }}
         style={{
           position: spring(position),
-          translateXWorld: spring(translateX, { stiffness: 20, damping: 5 }),
-          translateX: spring(translateX, { stiffness: 10, damping: 6 }),
+          translateWorld: spring(translateX, { stiffness: 20, damping: 5 }),
+          translateText: spring(translateX, { stiffness: 10, damping: 6 }),
         }}
       >
         {style => {
           const rotateVal = `rotate(${style.position}deg)`;
-          const worldFall = `translateX(${style.translateX}vh)`
           const rotate = { transform: rotateVal };
-          const rotateAndFall = { transform: `${rotateVal} ${worldFall}` };
+          const textFall = `translateX(${style.translateText}vh)`
+          const worldFall = `translateX(${style.translateWorld}vh)`
+          const rotateAndFallText = { transform: `${rotateVal} ${textFall}` };
+          const rotateAndFallWorld = { transform: `${rotateVal} ${worldFall}` };
 
           return (
             <div className="motion-container">
-              <Content style={rotateAndFall} />
+              <Content style={rotateAndFallText} />
               <GiveMeALever
                 handleTapEvent={this.handleTapEvent}
                 position={position}
                 rotate={rotate}
-                rotateAndFall={rotateAndFall}
+                rotateAndFallWorld={rotateAndFallWorld}
                 showGMAL={showGMAL}
               />
             </div>

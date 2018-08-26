@@ -7,21 +7,21 @@ import Platform from '../Platform';
 export default class GiveMeALever extends Component {
   shouldComponentUpdate(nextProps) {
     return (
-      nextProps.rotateAndFall.transform !== this.props.rotateAndFall.transform
+      nextProps.rotateAndFallWorld.transform !== this.props.rotateAndFallWorld.transform
       || nextProps.rotate.transform !== this.props.rotate.transform
       || nextProps.showGMAL !== this.props.showGMAL
     );
   }
 
   render() {
-    const { handleTapEvent, position, rotate, rotateAndFall, showGMAL } = this.props;
+    const { handleTapEvent, position, rotate, rotateAndFallWorld, showGMAL } = this.props;
 
     return (
       <div className='gmal-container'>
         <World
           className='world'
           showGMAL={showGMAL}
-          style={rotateAndFall}
+          style={rotateAndFallWorld}
         />
         <Tappable onTap={handleTapEvent}>
           <Platform
