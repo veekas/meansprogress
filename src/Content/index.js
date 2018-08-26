@@ -51,7 +51,7 @@ export default class Content extends React.Component {
 
         <div className="link">
           <i className="fas fa-file"></i>&nbsp;
-          <a href="http://veekasmeansprogress.com/resume.pdf">
+          <a href="/resume.pdf">
             Resume
           </a>
         </div>
