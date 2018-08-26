@@ -6,7 +6,6 @@ personal website
 
 - add give me a lever quote
 - make transition from off-center gmal world to center before rising to header
-- do I actually need react-tappable??? probably not, if I'm not doing a draggable platform anymore...
 - should I change to a draggable platform?
 - use staggered motion in content section
 
@@ -27,3 +26,5 @@ personal website
       }
     </StaggeredMotion>
     ```
+
+- make platform change 3 steps? (left -> flat -> right -> flat -> etc.)

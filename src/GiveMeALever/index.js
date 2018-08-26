@@ -14,7 +14,7 @@ export default class GiveMeALever extends Component {
   }
 
   render() {
-    const { handleTapEvent, position, rotate, rotateAndFallWorld, showGMAL } = this.props;
+    const { moveTheWorld, position, rotate, rotateAndFallWorld, showGMAL } = this.props;
 
     return (
       <div className='gmal-container'>
@@ -23,13 +23,12 @@ export default class GiveMeALever extends Component {
           showGMAL={showGMAL}
           style={rotateAndFallWorld}
         />
-        <Tappable onTap={handleTapEvent}>
-          <Platform
-            position={position}
-            showGMAL={showGMAL}
-            style={rotate}
-          />
-        </Tappable>
+        <Platform
+          onClick={moveTheWorld}
+          position={position}
+          showGMAL={showGMAL}
+          style={rotate}
+        />
       </div>
     );
   }

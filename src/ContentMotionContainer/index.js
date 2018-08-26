@@ -13,7 +13,7 @@ export default class ContentMotionContainer extends Component {
   initialState = { position: FLAT }
   state = this.initialState;
 
-  handleTapEvent = () => {
+  moveTheWorld = () => {
     const position = this.state.position >= FLAT ? ANGLE_LEFT : ANGLE_RIGHT;
     this.setState({ position });
   }
@@ -53,7 +53,7 @@ export default class ContentMotionContainer extends Component {
             <div className="motion-container">
               <Content style={rotateAndFallText} />
               <GiveMeALever
-                handleTapEvent={this.handleTapEvent}
+                moveTheWorld={this.moveTheWorld}
                 position={position}
                 rotate={rotate}
                 rotateAndFallWorld={rotateAndFallWorld}
