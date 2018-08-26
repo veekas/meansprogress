@@ -41,9 +41,11 @@ img {
 }
 
 .gmal-container {
-  line-height: 0;
+  position: fixed;
   text-align: center;
+  line-height: 0;
   width: 100%;
+  bottom: 0;
 }
 
 h1 {
@@ -161,10 +163,6 @@ h1 {
 .platform {
   display: inline-block;
   width: var(--platform-size);
-}
-
-.platform-container {
-  overflow: hidden;
 }
 
 .platform-show {
