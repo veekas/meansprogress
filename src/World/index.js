@@ -13,8 +13,6 @@ const World = ({ logo = false, showGMAL = false, style }) => {
     worldContainerClass = 'world-container-gmal-visible';
   }
 
-  console.log(worldContainerClass)
-
   return (
     <div className={worldContainerClass}>
       <img
