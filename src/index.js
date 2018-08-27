@@ -6,9 +6,11 @@ import registerServiceWorker from './registerServiceWorker';
 
 import './index.css';
 
+window.scrollTo(0,document.body.scrollHeight);
+
 ReactDOM.render(
   <Layout />,
   document.getElementById('progress'),
 );
-// TODO: make service worker save everything
+
 registerServiceWorker();

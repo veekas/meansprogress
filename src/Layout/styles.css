@@ -22,6 +22,8 @@ a {
   margin: 7vmin 0;
   text-align: left;
   line-height: 1.2;
+  font-size: 2.25vmax;
+  line-height: 2.25vmax;
 }
 
 @keyframes fadeIn {
@@ -62,15 +64,15 @@ a {
 
 h1 {
   margin: 0;
-  font-size: 9vmin;
-  line-height: 9vmin;
+  font-size: 6vmax;
+  line-height: 6vmax;
 }
 
 h2 {
   margin: 0;
-  padding-bottom: 5vmin;
-  font-size: 7vmin;
-  line-height: 7vmin;
+  padding-bottom: 5vh;
+  font-size: 4vmax;
+  line-height: 4vmax;
 }
 
 .header-clickable-container {
@@ -120,10 +122,10 @@ h2 {
   margin: 0;
   width: 50%;
   position: fixed;
-  font-size: 3vmin;
-  line-height: 3vmin;
+  font-size: 2.25vmax;
+  line-height: 2.25vmax;
   text-align: right;
-  animation: fadeIn 2s linear 5s alternate infinite;
+  animation: fadeIn 2s linear 3s alternate infinite;
 }
 
 img {
@@ -146,27 +148,29 @@ img {
 }
 
 .lever-container {
-  position: absolute;
-  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  position: fixed;
 }
 
 .lever-footer {
-  margin-top: 80.7vh;
-  left: 0;
-  right: 0;
-  margin-left: auto;
+  bottom: 0;
+  /* width: 100%; */
   transform: rotate(0deg);
   transition: all 1s ease-in;
 }
 
 .lever-header {
+  top: 0;
   transform: rotate(180deg);
   transition: all 1s ease-in-out;
 }
 
 .link {
   text-align: left;
-  margin: 1vmin;
+  margin: 0 1.5vmin 3vmin;
+  font-size: 2.25vmax;
+  line-height: 2.25vmax;
 }
 
 .motion-container {
@@ -201,10 +205,10 @@ img {
 }
 
 .quote {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
-  font-size: 3vmin;
+  font-size: 2.25vmax;
   margin-left: auto;
   transition: all 1s ease-in-out;
 }
@@ -216,16 +220,16 @@ img {
 
 .quote-show {
   visibility: visible;
-  bottom: 2vh;
+  bottom: 3vh;
 }
 
 .side-view-paragraph {
   width: 100%;
-  padding-bottom: 2vmin;
+  padding-bottom: 2vh;
   text-align: left;
   font-family: 'Helvetica Neue', Helvetica;
-  font-size: 3vmin;
-  line-height: 3vmin;
+  font-size: 2.25vmax;
+  line-height: 2.25vmax;
 }
 
 .view-container {
@@ -259,7 +263,7 @@ img {
 }
 
 .world-container-header {
-  position: absolute;
+  position: fixed;
   padding-top: 1.5vh;
   transition:  all 0.9s ease-in-out 0.1s;
 }

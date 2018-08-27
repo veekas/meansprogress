@@ -30,7 +30,10 @@ export default class ContentMotionContainer extends Component {
       nextView = LEFT_VIEW;
     }
 
-    this.setState({ previousView: view, view: nextView });
+    this.setState(
+      { previousView: view, view: nextView },
+      window.scrollTo(0,document.body.scrollHeight),
+    );
   }
 
   render() {
