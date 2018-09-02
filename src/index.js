@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'normalize.css';
 
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+
+import './index.css';
 
 let page = document.getElementById('progress'),
     ua = navigator.userAgent,
@@ -52,7 +53,7 @@ let setupScroll = window.onload = function() {
   let pageWidth = page.offsetWidth;
   // Android doesn't support orientation change, so check for when the width
   // changes to figure out when the orientation changes
-  if (lastWidth == pageWidth) return;
+  if (lastWidth === pageWidth) return;
   lastWidth = pageWidth;
   setupScroll();
 })();
