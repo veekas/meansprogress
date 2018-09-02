@@ -4,6 +4,8 @@ import Headshot from '../Headshot';
 import Lever from '../Lever';
 import World from '../World';
 
+import './styles.css';
+
 const Header = ({ showGMAL, toggleGAML }) => {
   const headshotVisibility = showGMAL ? 'headshot-visible' : 'headshot-hidden';
 
