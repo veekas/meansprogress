@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FLAT } from '../utils';
+import { FLAT } from '../../../../utils';
 import './styles.css';
 
 const Hint = ({ platformAngle, previousView, showGMAL }) => {

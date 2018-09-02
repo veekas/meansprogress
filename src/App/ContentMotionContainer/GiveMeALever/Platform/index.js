@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './styles.css';
+
 const Platform = ({ onClick, showGMAL, style }) => {
   const showOrHide = showGMAL ? 'platform-show' : 'platform-hide';
 

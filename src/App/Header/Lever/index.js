@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './styles.css';
+
 const Lever = ({ showGMAL }) => {
   const leverType = showGMAL ? 'lever-footer' : 'lever-header';
   const leverClasses = `lever ${leverType}`;
