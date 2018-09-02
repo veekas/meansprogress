@@ -1,0 +1,12 @@
+.hint {
+  top: 5px;
+  right: 5px;
+  opacity: 0;
+  margin: 0;
+  width: 50%;
+  position: fixed;
+  font-size: 2.25vmax;
+  line-height: 2.25vmax;
+  text-align: right;
+  animation: fadeIn 2s linear 3s alternate infinite;
+}

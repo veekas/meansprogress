@@ -1,16 +1,18 @@
 import React from 'react';
 
+import './styles.css';
+
 const World = ({ logo = false, showGMAL = false, style }) => {
-  let worldContainerClass = '';
+  let worldContainerClass = 'world';
 
   if (logo && showGMAL) {
-    worldContainerClass = 'world-container-header world-header-fall world-hide';
+    worldContainerClass += ' world-container-header world-header-fall world-hide';
   } else if (logo) {
-    worldContainerClass = 'world-container-header';
+    worldContainerClass += ' world-container-header';
   } else if (!logo && !showGMAL) {
-    worldContainerClass = 'world-container-gmal-hidden';
+    worldContainerClass += ' world-container-gmal-hidden';
   } else {
-    worldContainerClass = 'world-container-gmal-visible';
+    worldContainerClass += ' world-container-gmal-visible';
   }
 
   return (

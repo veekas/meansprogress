@@ -1,8 +1,10 @@
 import React from 'react';
 
-import Headshot from '../Headshot';
-import Lever from '../Lever';
-import World from '../World';
+import Headshot from './Headshot';
+import Lever from './Lever';
+import World from '../shared/World';
+
+import './styles.css';
 
 const Header = ({ showGMAL, toggleGAML }) => {
   const headshotVisibility = showGMAL ? 'headshot-visible' : 'headshot-hidden';

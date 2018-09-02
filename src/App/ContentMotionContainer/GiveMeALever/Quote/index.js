@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './styles.css';
+
 const GMAL_QUOTE_LINK = 'https://en.wikipedia.org/wiki/Archimedes';
 
 const Quote = ({ showGMAL }) => {

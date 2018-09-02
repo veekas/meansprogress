@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
-import Hint from '../Hint';
-import Platform from '../Platform';
-import Quote from '../Quote';
-import World from '../World';
+import Hint from './Hint';
+import Platform from './Platform';
+import Quote from './Quote';
+import World from '../../shared/World';
+
+import './styles.css';
 
 export default class GiveMeALever extends Component {
   shouldComponentUpdate(nextProps) {
@@ -22,7 +24,6 @@ export default class GiveMeALever extends Component {
     return (
       <div className='gmal-container'>
         <World
-          className='world'
           showGMAL={showGMAL}
           style={transformWorld}
         />

@@ -1,0 +1,35 @@
+.world {
+  display: inline;
+  height: var(--relative-size-world);
+}
+
+.world-container-gmal-hidden {
+  line-height: 0;
+  visibility: hidden;
+  transition-delay: 0.1s;
+}
+
+.world-container-gmal-visible {
+  line-height: 0;
+  visibility: visible;
+  transition-delay: 1s;
+}
+
+.world-container-header {
+  /* width: var(--platform-size); */
+  position: absolute;
+  padding-top: 1.5vh;
+  display: flex;
+
+  transition:  all 0.9s ease-in-out 0.1s;
+}
+
+.world-header-fall {
+  margin-top: 73vh;
+  padding-top: 0;
+  transition: all 1s ease-in;
+}
+
+.world-hide {
+  visibility: hidden;
+}
