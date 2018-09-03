@@ -4,8 +4,8 @@ p {
 
 .quote {
   position: fixed;
-  font-size: 2vmax;
-  line-height: 2vmax;
+  font-size: 2.25vmax;
+  line-height: 2.25vmax;
   transition: all 1s ease-in-out;
 }
 

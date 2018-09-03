@@ -10,8 +10,8 @@
   margin: 0;
   width: 40vw;
   position: fixed;
-  font-size: 2vmax;
-  line-height: 2vmax;
+  font-size: 2.25vmax;
+  line-height: 2.25vmax;
   text-align: right;
   animation: fadeIn 2s linear 3s alternate infinite;
 }
