@@ -4,9 +4,9 @@ a {
 
 .content-container {
   /* width: 300vw; */
-  max-height: 50vh;
+  max-height: 60vh;
   /* max-height: 100vh; */
-  padding-top: var(--top-space);
+  margin-top: var(--top-space);
   z-index: 0;
   /* height: 50vh; */
 

@@ -11,12 +11,14 @@ const Quote = ({ showGMAL }) => {
     <div className={`quote ${showOrHide} font-weight-light`}>
       <p className="quote-text">
         <i>
-          <p>"Give me a lever</p>
-          <p>and a place to stand,</p>
-          <p>and I shall move the world."</p>
+          "Give me a lever<br />
+          and a place to stand,<br />
+          and I shall move the world."<br />
         </i>
       </p>
-    <a className="source" href={GMAL_QUOTE_LINK}>Archimedes</a>
+      <a className="source" href={GMAL_QUOTE_LINK}>
+        Archimedes
+      </a>
     </div>
   );
 }
