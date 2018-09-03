@@ -2,7 +2,7 @@
   --platform-size: 25vh;
   --relative-size-world: calc((var(--platform-size))/8.8);
   --relative-size-lever: calc((var(--platform-size))/2);
-  --top-space: 11.5vh;
+  --top-space: 5vmin;
   --world-margin-top: 1.5vh;
 }
 
