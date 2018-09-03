@@ -19,7 +19,7 @@ a {
   margin: 7vmin 0;
   text-align: left;
   font-size: 2.25vmax;
-  line-height: 2.25vmax;
+  line-height: 2.5vmax;
 }
 
 .font-weight-bold {
@@ -53,7 +53,7 @@ h1 {
 
 h2 {
   margin: 0;
-  padding-bottom: 5vmin;
+  padding-bottom: 3vmin;
   font-size: 4vmax;
   line-height: 4vmax;
 }
@@ -62,7 +62,7 @@ h2 {
   text-align: left;
   margin: 0 1.5vmin 3vmin;
   font-size: 2.25vmax;
-  line-height: 2.25vmax;
+  line-height: 2.5vmax;
 }
 
 .no-margin-line {
@@ -71,11 +71,11 @@ h2 {
 
 .side-view-paragraph {
   width: 100%;
-  padding-bottom: 2%;
+  padding-bottom: 2.5vmin;
   text-align: left;
   font-family: 'Helvetica Neue', Helvetica;
   font-size: 2.25vmax;
-  line-height: 2.25vmax;
+  line-height: 2.5vmax;
 }
 
 .view-container {
