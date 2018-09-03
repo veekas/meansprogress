@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
-import Hint from '../Hint';
-import Platform from '../Platform';
-import Quote from '../Quote';
-import World from '../World';
+import Hint from './Hint';
+import Platform from './Platform';
+import Quote from './Quote';
+import World from '../../shared/World';
+
+import './index.css';
 
 export default class GiveMeALever extends Component {
   shouldComponentUpdate(nextProps) {
@@ -20,9 +22,8 @@ export default class GiveMeALever extends Component {
     } = this.props;
 
     return (
-      <div className='gmal-container'>
+      <div className='footer-container'>
         <World
-          className='world'
           showGMAL={showGMAL}
           style={transformWorld}
         />
@@ -33,9 +34,9 @@ export default class GiveMeALever extends Component {
         />
         <Quote showGMAL={showGMAL} />
         <Hint
-          platformAngle={rotateAngle}
-          previousView={previousView}
-          showGMAL={showGMAL}
+        platformAngle={rotateAngle}
+        previousView={previousView}
+        showGMAL={showGMAL}
         />
       </div>
     );

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Motion, spring } from 'react-motion';
 
-import Content from '../Content';
-import GiveMeALever from '../GiveMeALever';
+import Content from './Content';
+import GiveMeALever from './GiveMeALever';
+
+import './index.css';
 
 import {
   LEFT_VIEW, MAIN_VIEW, RIGHT_VIEW,
@@ -10,7 +12,7 @@ import {
   TRANSLATE_WORLD_LEFT, TRANSLATE_WORLD_RIGHT,
   TRANSLATE_TEXT_RIGHT, TRANSLATE_TEXT_LEFT,
   TEXT_SPRING, WORLD_SPRING,
-} from '../utils';
+} from '../../utils';
 
 export default class ContentMotionContainer extends Component {
   initialState = { previousView: null, view: MAIN_VIEW }
@@ -30,7 +32,10 @@ export default class ContentMotionContainer extends Component {
       nextView = LEFT_VIEW;
     }
 
-    this.setState({ previousView: view, view: nextView });
+    this.setState(
+      { previousView: view, view: nextView },
+      window.scrollTo(0,document.body.scrollHeight),
+    );
   }
 
   render() {

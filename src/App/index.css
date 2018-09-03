@@ -1,0 +1,23 @@
+:root {
+  --platform-size: 25vh;
+  --relative-size-world: calc((var(--platform-size))/8.8);
+  --relative-size-lever: calc((var(--platform-size))/2);
+  --top-space: 7vmin;
+  --world-margin-top: 1.5vh;
+}
+
+img {
+  display: block;
+}
+
+.layout {
+  height: 100%;
+  overflow: hidden;
+  /* width: 100%; */
+
+  display: flex;
+  flex-direction: column;
+  /* flex: 1 100%; */
+  /* justify-content: space-between; */
+  align-items: center;
+}

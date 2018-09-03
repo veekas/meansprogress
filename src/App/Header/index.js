@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Headshot from '../Headshot';
-import Lever from '../Lever';
-import World from '../World';
+import Headshot from './Headshot';
+import Lever from './Lever';
+import World from '../shared/World';
+import './index.css';
 
 const Header = ({ showGMAL, toggleGAML }) => {
   const headshotVisibility = showGMAL ? 'headshot-visible' : 'headshot-hidden';
@@ -10,7 +11,7 @@ const Header = ({ showGMAL, toggleGAML }) => {
   return (
     <div className="header-container">
       <div className="header-clickable-container" onClick={toggleGAML} />
-      <World logo showGMAL={showGMAL} />
+      <World header showGMAL={showGMAL} />
       <Lever showGMAL={showGMAL} />
       <Headshot visibility={headshotVisibility} />
     </div>
