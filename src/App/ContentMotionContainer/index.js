@@ -4,7 +4,7 @@ import { Motion, spring } from 'react-motion';
 import Content from './Content';
 import GiveMeALever from './GiveMeALever';
 
-import './styles.css';
+import './index.css';
 
 import {
   LEFT_VIEW, MAIN_VIEW, RIGHT_VIEW,

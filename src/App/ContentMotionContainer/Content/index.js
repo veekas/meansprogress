@@ -4,7 +4,7 @@ import Bio from './Bio';
 import Main from './Main';
 import Skills from './Skills';
 
-import './styles.css';
+import './index.css';
 
 export default class Content extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -16,9 +16,9 @@ export default class Content extends React.Component {
 
     return (
     <div className="content-container" style={style}>
-      {/*<Skills />*/}
+      <Skills />
       <Main />
-      {/*<Bio />*/}
+      <Bio />
     </div>
   );
   }

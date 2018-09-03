@@ -3,11 +3,7 @@
   --relative-size-world: calc((var(--platform-size))/8.8);
   --relative-size-lever: calc((var(--platform-size))/2);
   --top-space: 11.5vh;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  --world-margin-top: 1.5vh;
 }
 
 img {
@@ -16,7 +12,7 @@ img {
 
 .layout {
   height: 100%;
-  width: 100%;
+  /* width: 100%; */
 
   display: flex;
   flex-direction: column;

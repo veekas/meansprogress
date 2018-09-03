@@ -1,25 +1,30 @@
 import React from 'react';
 
-import './styles.css';
+import './index.css';
 
-const World = ({ logo = false, showGMAL = false, style }) => {
-  let worldContainerClass = 'world';
+const World = ({ header = false, showGMAL = false, style }) => {
+  let worldClasses ='world';
+  let worldContainerClasses = '';
 
-  if (logo && showGMAL) {
-    worldContainerClass += ' world-container-header world-header-fall world-hide';
-  } else if (logo) {
-    worldContainerClass += ' world-container-header';
-  } else if (!logo && !showGMAL) {
-    worldContainerClass += ' world-container-gmal-hidden';
+  if (header && showGMAL) {
+    worldClasses += ' world-header-fall';
+    worldContainerClasses += 'world-container-header';
+  } else if (header) {
+    worldClasses += ' world-header-rise';
+    worldContainerClasses += 'world-container-header';
+  } else if (!header && !showGMAL) {
+    // worldClasses += '';
+    worldContainerClasses += 'world-container-footer world-container-footer-hidden';
   } else {
-    worldContainerClass += ' world-container-gmal-visible';
+    // worldClasses += '';
+    worldContainerClasses += 'world-container-footer world-container-footer-visible';
   }
 
   return (
-    <div className={worldContainerClass}>
+    <div className={worldContainerClasses}>
       <img
         alt="the world"
-        className="world"
+        className={worldClasses}
         src="assets/vmp-logo-world.png"
         style={style}
       />

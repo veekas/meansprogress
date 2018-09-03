@@ -9,10 +9,10 @@
 
 .quote-hide {
   visibility: hidden;
-  bottom: -20vh;
+  bottom: -20%;
 }
 
 .quote-show {
   visibility: visible;
-  bottom: 3vh;
+  bottom: 3%;
 }

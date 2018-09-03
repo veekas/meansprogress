@@ -1,0 +1,4 @@
+.motion-container {
+  /* height: 100%; */
+  padding-top: calc(var(--top-space) + var(--relative-size-lever));
+}

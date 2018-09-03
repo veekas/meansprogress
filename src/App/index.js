@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 
 import Header from './Header';
 import ContentMotionContainer from './ContentMotionContainer';
-
 import { CONSOLE_QUOTE } from '../utils';
-
-import './styles.css'
+import './index.css';
 
 export default class App extends Component {
   state = { showGMAL: false };

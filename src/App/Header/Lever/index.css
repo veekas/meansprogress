@@ -1,0 +1,23 @@
+.lever {
+  position: absolute;
+  width: var(--relative-size-lever);
+}
+
+.lever-container {
+  width: var(--relative-size-lever);
+  position: absolute;
+  height: 100%;
+}
+
+.lever-footer {
+  bottom: 0;
+  transform: rotate(0deg);
+  transition: all 1s ease-in;
+}
+
+.lever-header {
+  /* somehow 100% is greater than view height?... */
+  bottom: calc(100% - 2*(var(--top-space)));
+  transform: rotate(180deg);
+  transition: all 1s ease-in-out;
+}

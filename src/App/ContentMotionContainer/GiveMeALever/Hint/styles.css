@@ -1,3 +1,8 @@
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 .hint {
   top: 5px;
   right: 5px;
@@ -6,7 +11,7 @@
   width: 50%;
   position: fixed;
   font-size: 2.25vmax;
-  line-height: 2.25vmax;
+  line-height: 2.5vmax;
   text-align: right;
   animation: fadeIn 2s linear 3s alternate infinite;
 }

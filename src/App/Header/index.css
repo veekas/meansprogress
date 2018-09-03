@@ -1,0 +1,17 @@
+.header-clickable-container {
+  cursor: pointer;
+  margin-top: var(--top-space);
+  height: var(--relative-size-lever);
+  width: var(--relative-size-lever);
+  position: absolute;
+  z-index: 1;
+}
+
+.header-container {
+  height: 100%;
+  width: var(--platform-size);
+  position: absolute;
+
+  display: flex;
+  justify-content: center;
+}
