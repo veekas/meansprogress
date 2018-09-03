@@ -10,7 +10,7 @@
 }
 
 .world-header-fall {
-  margin-top: calc(100vh - var(--top-space) - var(--relative-size-lever) - 5.5vh);
+  margin-top: calc(100vh - var(--top-space) - var(--relative-size-lever) - 4.5vh);
   transition: all 1s ease-in;
   visibility: hidden;
 }
@@ -23,7 +23,7 @@
 
 .world-container-footer {
   /* display: flex; */
-  margin-bottom: calc(var(--relative-size-lever) + 1.6vh);
+  margin-bottom: calc(var(--relative-size-lever) + 1.5vh);
   /* position: absolute; */
   /* justify-content: center; */
 }
