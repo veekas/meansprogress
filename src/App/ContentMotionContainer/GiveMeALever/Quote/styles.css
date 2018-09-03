@@ -1,18 +1,24 @@
+p {
+  margin: auto;
+}
+
 .quote {
   position: fixed;
-  left: 0;
-  right: 0;
-  font-size: 2.25vmax;
-  margin-left: auto;
+  font-size: 2vmax;
+  line-height: 2vmax;
   transition: all 1s ease-in-out;
 }
 
 .quote-hide {
   visibility: hidden;
-  bottom: -20%;
+  bottom: -20vh;
 }
 
 .quote-show {
   visibility: visible;
-  bottom: 3%;
+  bottom: var(--top-space);
+}
+
+.quote-text {
+  margin-bottom: 1vmin;
 }

@@ -4,13 +4,14 @@ a {
 
 .content-container {
   /* width: 300vw; */
-  /* height: 100%; */
+  max-height: 50vh;
   /* max-height: 100vh; */
   padding-top: var(--top-space);
   z-index: 0;
   /* height: 50vh; */
 
   display: flex;
+  overflow: auto;
   /* justify-content: space-between; */
 }
 
@@ -18,7 +19,7 @@ a {
   margin: 7vmin 0;
   text-align: left;
   font-size: 2.25vmax;
-  line-height: 2.5vmax;
+  line-height: 2.25vmax;
 }
 
 .font-weight-bold {
@@ -61,7 +62,7 @@ h2 {
   text-align: left;
   margin: 0 1.5vmin 3vmin;
   font-size: 2.25vmax;
-  line-height: 2.5vmax;
+  line-height: 2.25vmax;
 }
 
 .no-margin-line {
@@ -74,7 +75,7 @@ h2 {
   text-align: left;
   font-family: 'Helvetica Neue', Helvetica;
   font-size: 2.25vmax;
-  line-height: 2.5vmax;
+  line-height: 2.25vmax;
 }
 
 .view-container {
