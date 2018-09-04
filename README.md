@@ -12,3 +12,4 @@ personal website
 - why does the world change color?...
 - why is there vertical overflow on iPhone X?
 - fix css when javascript is blocked
+- convert to gatsby
