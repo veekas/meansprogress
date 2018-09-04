@@ -43,7 +43,7 @@ const Main = () => (
 
       <div className="link">
         <i className="fas fa-file"></i>&nbsp;
-        <a href="/resume.pdf">
+        <a href="https://veekas.github.io/react-resume/resume.pdf">
           Resume
         </a>
       </div>
