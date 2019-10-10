@@ -1,2 +1,0 @@
-# Redirect default Netlify subdomain to primary domain
-http://veekasmeansprogress.netlify.com/* http://www.veekasmeansprogress.com/:splat 301!
