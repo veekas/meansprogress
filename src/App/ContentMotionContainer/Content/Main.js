@@ -2,7 +2,7 @@ import React from 'react';
 
 const Main = () => (
   <div className="view-container">
-    <h1 className="font-weight-bold">Veekas Shrivastava</h1>
+    <h1 className="font-weight-bold">Veekas Ashoka</h1>
 
     <div className="definition">
       <p className="font-weight-semibold no-margin-line">

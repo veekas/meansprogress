@@ -4,8 +4,8 @@ import './index.css'
 
 const Headshot = ({ visibility }) => (
   <img
-    alt="veekas shrivastava headshot"
-    src="assets/veekas-shrivastava-headshot-small.jpeg"
+    alt="veekas ashoka headshot"
+    src="assets/veekas-ashoka-headshot-small.jpeg"
     className={`headshot ${visibility}`}
   />
 );
