@@ -1,5 +1,11 @@
 <script>
   import { fly } from 'svelte/transition';
+  import { Router, Route } from 'svelte-routing';
+  import Home from './routes/Home.svelte';
+  // import About from "./routes/About.svelte";
+  import Blog from './routes/Blog.svelte';
+
+  export let url = '';
 
   const consoleQuote = `
 “And now that you don't have to be perfect,
@@ -11,139 +17,18 @@ you can be good.”
   console.log(consoleQuote);
 </script>
 
-<style>
-  /* set width, height, & min/max properties to include content, padding, & border */
-  *,
-  *:before,
-  *:after {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-
-  /* remove default margin */
-  :global(body) {
-    max-height: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    background-color: #282f30;
-    font-family: 'Fira Code', monospace;
-    font-weight: 400;
-    overflow: hidden;
-  }
-
-  a {
-    color: #f9fbf9;
-    font-size: 4vh;
-  }
-
-  main {
-    text-align: center;
-    padding: 0 10vmin 10vmin;
-    color: #f9fbf9;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  h1 {
-    color: #ecb600;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 13vmin;
-    font-weight: 600;
-    line-height: 1;
-  }
-  /*  */
-  .shift-right {
-    /* margin-top: 1.33em; */
-    padding-left: 4ch;
-  }
-
-  .shift-left {
-    padding-right: 4ch;
-  }
-
-  .footer-links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .link {
-    line-height: 1.75;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-
-    .link {
-      line-height: 1.25;
-    }
-  }
-</style>
-
 <svelte:head>
   <link
     href="https://fonts.googleapis.com/css?family=Fira+Code:400,600&display=swap"
     rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+    rel="stylesheet" />
 </svelte:head>
 
-<main>
-  <h1>
-    <span class="shift-left">veekas</span>
-    <span
-      class="shift-right"
-      transition:fly={{ y: -75, delay: 1600, duration: 2000 }}>
-      ashoka
-    </span>
-  </h1>
-  <div class="footer-links">
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 0 }}">
-      <a href="#">blog</a>
-    </div>
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 100 }}">
-      <a href="mailto:veekas@veekasmeansprogress.com">email</a>
-    </div>
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 200 }}">
-      <a href="https://www.facebook.com/veekas">facebook</a>
-    </div>
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 300 }}">
-      <a href="https://www.github.com/veekas">github</a>
-    </div>
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 400 }}">
-      <a href="http://www.goodreads.com/veekas">goodreads</a>
-    </div>
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 500 }}">
-      <a href="http://www.instagram.com/veekas">instagram</a>
-    </div>
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 600 }}">
-      <a href="https://www.linkedin.com/in/veekas">linkedin</a>
-    </div>
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 700 }}">
-      <a href="https://tinyletter.com/veekas">newsletter</a>
-    </div>
-
-    <!-- <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 0 }}">
-      <a href="https://veekas.github.io/react-resume/resume.pdf">Resume</a>
-    </div> -->
-
-    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 800 }}">
-      <a href="https://www.twitter.com/veekas">twitter</a>
-    </div>
-  </div>
-</main>
+<Router>
+  <!-- <Route path="blog/:id" component="{BlogPost}" /> -->
+  <Route path="blog/*" component={Blog} />
+  <!-- <Route path="about" component="{About}" /> -->
+  <Route path="/" component={Home} />
+</Router>

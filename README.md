@@ -3,6 +3,8 @@
 ## TODO
 
 - name word play idea
+- add about page
+- flesh out blog functionality
 
 ---
 
