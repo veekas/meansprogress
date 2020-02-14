@@ -1,5 +1,14 @@
 <script>
   import { fly } from 'svelte/transition';
+
+  const consoleQuote = `
+“And now that you don't have to be perfect,
+you can be good.”
+
+                          ― John Steinbeck
+                            'East of Eden'
+`;
+  console.log(consoleQuote);
 </script>
 
 <style>
@@ -14,13 +23,15 @@
 
   /* remove default margin */
   :global(body) {
-    height: 100%;
+    max-height: 100%;
     display: flex;
     justify-content: center;
     margin: 0;
     padding: 0;
     background-color: #282f30;
     font-family: 'Fira Code', monospace;
+    font-weight: 400;
+    overflow: hidden;
   }
 
   a {
@@ -65,7 +76,7 @@
   }
 
   .link {
-    line-height: 1.5;
+    line-height: 1.75;
   }
 
   @media (min-width: 640px) {
@@ -73,9 +84,9 @@
       max-width: none;
     }
 
-    /* h1 {
-      margin-top: 0;
-    } */
+    .link {
+      line-height: 1.25;
+    }
   }
 </style>
 
@@ -84,51 +95,55 @@
     href="https://fonts.googleapis.com/css?family=Fira+Code:400,600&display=swap"
     rel="stylesheet" />
 </svelte:head>
+
 <main>
   <h1>
     <span class="shift-left">veekas</span>
     <span
       class="shift-right"
-      transition:fly={{ y: -75, delay: 1000, duration: 2000 }}>
+      transition:fly={{ y: -75, delay: 1600, duration: 2000 }}>
       ashoka
     </span>
   </h1>
   <div class="footer-links">
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 0 }}">
+      <a href="#">blog</a>
+    </div>
+
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 100 }}">
       <a href="mailto:veekas@veekasmeansprogress.com">email</a>
     </div>
 
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 200 }}">
       <a href="https://www.facebook.com/veekas">facebook</a>
     </div>
 
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 300 }}">
       <a href="https://www.github.com/veekas">github</a>
     </div>
 
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 400 }}">
       <a href="http://www.goodreads.com/veekas">goodreads</a>
     </div>
 
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 500 }}">
       <a href="http://www.instagram.com/veekas">instagram</a>
     </div>
 
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 600 }}">
       <a href="https://www.linkedin.com/in/veekas">linkedin</a>
     </div>
 
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 700 }}">
       <a href="https://tinyletter.com/veekas">newsletter</a>
     </div>
 
-    <!-- <div class="link">
+    <!-- <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 0 }}">
       <a href="https://veekas.github.io/react-resume/resume.pdf">Resume</a>
     </div> -->
 
-    <div class="link">
+    <div class="link" transition:fly="{{ x: 200, duration: 800, delay: 800 }}">
       <a href="https://www.twitter.com/veekas">twitter</a>
     </div>
-
   </div>
 </main>
