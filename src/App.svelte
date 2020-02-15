@@ -68,7 +68,6 @@
 
   /* remove default margin */
   :global(body) {
-    height: 100%;
     display: flex;
     justify-content: center;
     margin: 0;
