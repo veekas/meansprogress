@@ -138,6 +138,7 @@
     href="https://fonts.googleapis.com/css?family=Fira+Code:400,600&display=swap"
     rel="stylesheet" />
 </svelte:head>
+
 <main>
   <h1>
     <span class="shift-left">veekas</span>
@@ -183,6 +184,5 @@
     <div class="link">
       <a href="https://www.twitter.com/veekas">twitter</a>
     </div>
-
   </div>
 </main>
