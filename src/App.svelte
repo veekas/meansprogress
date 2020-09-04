@@ -1,5 +1,5 @@
 <script>
-  import { fly } from 'svelte/transition';
+  import { fly } from "svelte/transition";
 </script>
 
 <style>
@@ -20,7 +20,7 @@
     margin: 0;
     padding: 0;
     background-color: #282f30;
-    font-family: 'Fira Code', monospace;
+    font-family: "Fira Code", monospace;
   }
 
   a {
@@ -95,12 +95,16 @@
   </h1>
   <div class="footer-links">
     <div class="link">
-      <a href="mailto:veekas@veekasmeansprogress.com">email</a>
+      <a href="https://calendly.com/veekas/30min">calendar</a>
     </div>
 
     <div class="link">
-      <a href="https://www.facebook.com/veekas">facebook</a>
+      <a href="mailto:veekas@veekasmeansprogress.com">email</a>
     </div>
+
+    <!-- <div class="link">
+      <a href="https://www.facebook.com/veekas">facebook</a>
+    </div> -->
 
     <div class="link">
       <a href="https://www.github.com/veekas">github</a>
@@ -110,9 +114,9 @@
       <a href="http://www.goodreads.com/veekas">goodreads</a>
     </div>
 
-    <div class="link">
+    <!-- <div class="link">
       <a href="http://www.instagram.com/veekas">instagram</a>
-    </div>
+    </div> -->
 
     <div class="link">
       <a href="https://www.linkedin.com/in/veekas">linkedin</a>
