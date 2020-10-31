@@ -95,7 +95,7 @@
   </h1>
   <div class="footer-links">
     <div class="link">
-      <a href="https://calendly.com/veekas/30min">calendar</a>
+      <a href="https://calendly.com/veekas/meet">calendar</a>
     </div>
 
     <div class="link">
