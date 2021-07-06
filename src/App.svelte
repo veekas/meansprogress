@@ -39,9 +39,9 @@
       <a href="http://www.goodreads.com/veekas">goodreads</a>
     </div>
 
-    <!-- <div class="link">
+    <div class="link">
       <a href="http://www.instagram.com/veekas">instagram</a>
-    </div> -->
+    </div>
 
     <div class="link">
       <a href="https://www.linkedin.com/in/veekas">linkedin</a>
