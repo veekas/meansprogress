@@ -2,6 +2,66 @@
   import { fly } from "svelte/transition";
 </script>
 
+<svelte:head>
+  <link
+    href="https://fonts.googleapis.com/css?family=Fira+Code:400,600&display=swap"
+    rel="stylesheet"
+  />
+</svelte:head>
+<main>
+  <h1>
+    <span class="shift-left">veekas</span>
+    <span
+      class="shift-right"
+      transition:fly={{ y: -75, delay: 1000, duration: 2000 }}
+    >
+      ashoka
+    </span>
+  </h1>
+  <div class="footer-links">
+    <div class="link">
+      <a href="https://calendly.com/veekas/meet">calendar</a>
+    </div>
+
+    <div class="link">
+      <a href="mailto:veekas@veekasmeansprogress.com">email</a>
+    </div>
+
+    <!-- <div class="link">
+      <a href="https://www.facebook.com/veekas">facebook</a>
+    </div> -->
+
+    <div class="link">
+      <a href="https://www.github.com/veekas">github</a>
+    </div>
+
+    <div class="link">
+      <a href="http://www.goodreads.com/veekas">goodreads</a>
+    </div>
+
+    <!-- <div class="link">
+      <a href="http://www.instagram.com/veekas">instagram</a>
+    </div> -->
+
+    <div class="link">
+      <a href="https://www.linkedin.com/in/veekas">linkedin</a>
+    </div>
+
+    <div class="link">
+      <a href="https://tinyletter.com/veekas">newsletter</a>
+    </div>
+
+    <!-- <div class="link">
+      <a href="https://veekas.github.io/react-resume/resume.pdf">Resume</a>
+    </div> -->
+
+    <div class="link">
+      <a href="https://www.twitter.com/veekas">twitter</a>
+    </div>
+
+  </div>
+</main>
+
 <style>
   /* set width, height, & min/max properties to include content, padding, & border */
   *,
@@ -78,61 +138,3 @@
     } */
   }
 </style>
-
-<svelte:head>
-  <link
-    href="https://fonts.googleapis.com/css?family=Fira+Code:400,600&display=swap"
-    rel="stylesheet" />
-</svelte:head>
-<main>
-  <h1>
-    <span class="shift-left">veekas</span>
-    <span
-      class="shift-right"
-      transition:fly={{ y: -75, delay: 1000, duration: 2000 }}>
-      ashoka
-    </span>
-  </h1>
-  <div class="footer-links">
-    <div class="link">
-      <a href="https://calendly.com/veekas/meet">calendar</a>
-    </div>
-
-    <div class="link">
-      <a href="mailto:veekas@veekasmeansprogress.com">email</a>
-    </div>
-
-    <!-- <div class="link">
-      <a href="https://www.facebook.com/veekas">facebook</a>
-    </div> -->
-
-    <div class="link">
-      <a href="https://www.github.com/veekas">github</a>
-    </div>
-
-    <div class="link">
-      <a href="http://www.goodreads.com/veekas">goodreads</a>
-    </div>
-
-    <!-- <div class="link">
-      <a href="http://www.instagram.com/veekas">instagram</a>
-    </div> -->
-
-    <div class="link">
-      <a href="https://www.linkedin.com/in/veekas">linkedin</a>
-    </div>
-
-    <div class="link">
-      <a href="https://tinyletter.com/veekas">newsletter</a>
-    </div>
-
-    <!-- <div class="link">
-      <a href="https://veekas.github.io/react-resume/resume.pdf">Resume</a>
-    </div> -->
-
-    <div class="link">
-      <a href="https://www.twitter.com/veekas">twitter</a>
-    </div>
-
-  </div>
-</main>
