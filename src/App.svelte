@@ -19,11 +19,11 @@
     </span>
   </h1>
   <div class="footer-links">
-    <div class="link">
+    <!-- <div class="link">
       <a href="https://www.climatecantwait.org/bike-trek">
         🕚 climate can't wait 2022
       </a>
-    </div>
+    </div> -->
 
     <div class="link">
       <a href="https://calendly.com/veekas/meet">calendar</a>
@@ -64,7 +64,6 @@
     <div class="link">
       <a href="https://www.twitter.com/veekas">twitter</a>
     </div>
-
   </div>
 </main>
 
