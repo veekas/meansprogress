@@ -30,7 +30,7 @@
     </div>
 
     <div class="link">
-      <a href="mailto:veekas@veekasmeansprogress.com">email</a>
+      <a href="mailto:veekas@duck.com">email</a>
     </div>
 
     <!-- <div class="link">
