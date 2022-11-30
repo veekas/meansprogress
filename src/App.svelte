@@ -54,6 +54,10 @@
     </div>
 
     <div class="link">
+      <a rel="me" href="https://toot.cafe/@veekas">mastodon</a>
+    </div>
+
+    <div class="link">
       <a href="https://tinyletter.com/veekas">newsletter</a>
     </div>
 
@@ -61,9 +65,9 @@
       <a href="https://veekas.github.io/react-resume/resume.pdf">Resume</a>
     </div> -->
 
-    <div class="link">
+    <!-- <div class="link">
       <a href="https://www.twitter.com/veekas">twitter</a>
-    </div>
+    </div> -->
   </div>
 </main>
 
