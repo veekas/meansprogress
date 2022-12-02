@@ -26,39 +26,39 @@
     </div> -->
 
     <div class="link">
-      <a href="https://calendly.com/veekas/meet">calendar</a>
+      <a href="https://calendly.com/veekas/meet" rel="me">calendar</a>
     </div>
 
     <div class="link">
-      <a href="mailto:veekas@duck.com">email</a>
+      <a href="mailto:veekas@duck.com" rel="me">email</a>
     </div>
 
     <!-- <div class="link">
-      <a href="https://www.facebook.com/veekas">facebook</a>
+      <a href="https://www.facebook.com/veekas" rel="me">facebook</a>
     </div> -->
 
     <div class="link">
-      <a href="https://www.github.com/veekas">github</a>
+      <a href="https://www.github.com/veekas" rel="me">github</a>
     </div>
 
     <div class="link">
-      <a href="http://www.goodreads.com/veekas">goodreads</a>
+      <a href="http://www.goodreads.com/veekas" rel="me">goodreads</a>
     </div>
 
     <div class="link">
-      <a href="http://www.instagram.com/veekas">instagram</a>
+      <a href="http://www.instagram.com/veekas" rel="me">instagram</a>
     </div>
 
     <div class="link">
-      <a href="https://www.linkedin.com/in/veekas">linkedin</a>
+      <a href="https://www.linkedin.com/in/veekas" rel="me">linkedin</a>
     </div>
 
     <div class="link">
-      <a rel="me" href="https://toot.cafe/@veekas">mastodon</a>
+      <a href="https://toot.cafe/@veekas" rel="me">mastodon</a>
     </div>
 
     <div class="link">
-      <a href="https://tinyletter.com/veekas">newsletter</a>
+      <a href="https://tinyletter.com/veekas" rel="me">newsletter</a>
     </div>
 
     <!-- <div class="link">
@@ -66,7 +66,7 @@
     </div> -->
 
     <!-- <div class="link">
-      <a href="https://www.twitter.com/veekas">twitter</a>
+      <a href="https://www.twitter.com/veekas" rel="me">twitter</a>
     </div> -->
   </div>
 </main>
