@@ -19,11 +19,9 @@
     </span>
   </h1>
   <div class="footer-links">
-    <!-- <div class="link">
-      <a href="https://www.climatecantwait.org/bike-trek">
-        🕚 climate can't wait 2022
-      </a>
-    </div> -->
+    <div class="link">
+      <a href="http://beaconcan.org">BCAN</a>
+    </div>
 
     <div class="link">
       <a href="https://calendly.com/veekas/meet" rel="me">calendar</a>
@@ -57,9 +55,9 @@
       <a href="https://toot.cafe/@veekas" rel="me">mastodon</a>
     </div>
 
-    <div class="link">
+    <!-- <div class="link">
       <a href="https://tinyletter.com/veekas" rel="me">newsletter</a>
-    </div>
+    </div> -->
 
     <!-- <div class="link">
       <a href="https://veekas.github.io/react-resume/resume.pdf">Resume</a>
