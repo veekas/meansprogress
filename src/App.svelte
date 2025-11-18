@@ -20,10 +20,6 @@
   </h1>
   <div class="footer-links">
     <div class="link">
-      <a href="http://beaconcan.org">BCAN</a>
-    </div>
-
-    <div class="link">
       <a href="https://calendly.com/veekas/meet" rel="me">calendar</a>
     </div>
 
@@ -40,7 +36,7 @@
     </div>
 
     <div class="link">
-      <a href="http://www.goodreads.com/veekas" rel="me">goodreads</a>
+      <a href="https://app.thestorygraph.com/profile/veekas" rel="me">storygraph</a>
     </div>
 
     <div class="link">
@@ -49,10 +45,6 @@
 
     <div class="link">
       <a href="https://www.linkedin.com/in/veekas" rel="me">linkedin</a>
-    </div>
-
-    <div class="link">
-      <a href="https://toot.cafe/@veekas" rel="me">mastodon</a>
     </div>
 
     <!-- <div class="link">
