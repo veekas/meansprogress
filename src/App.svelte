@@ -9,30 +9,35 @@
   />
 </svelte:head>
 <main>
-  <h1>
-    <span class="shift-left">veekas</span>
-    <span
-      class="shift-right"
-      transition:fly={{ y: -75, delay: 1000, duration: 2000 }}
-    >
-      ashoka
-    </span>
-  </h1>
+  <div class="header-section">
+    <h1>
+      <span class="shift-left">veekas</span>
+      <span
+        class="shift-right"
+        transition:fly={{ y: -75, delay: 1000, duration: 2000 }}
+      >
+        ashoka
+      </span>
+    </h1>
+    <p class="tagline">
+      senior software engineer • react specialist • climate tech
+    </p>
+  </div>
   <div class="footer-links">
     <div class="link">
-      <a href="https://calendly.com/veekas/meet" rel="me">calendar</a>
+      <a href="https://www.github.com/veekas" rel="me">github</a>
+    </div>
+
+    <div class="link">
+      <a href="https://www.linkedin.com/in/veekas" rel="me">linkedin</a>
     </div>
 
     <div class="link">
       <a href="mailto:veekas@duck.com" rel="me">email</a>
     </div>
 
-    <!-- <div class="link">
-      <a href="https://www.facebook.com/veekas" rel="me">facebook</a>
-    </div> -->
-
     <div class="link">
-      <a href="https://www.github.com/veekas" rel="me">github</a>
+      <a href="https://calendly.com/veekas/meet" rel="me">calendar</a>
     </div>
 
     <div class="link">
@@ -41,10 +46,6 @@
 
     <div class="link">
       <a href="http://www.instagram.com/veekas" rel="me">instagram</a>
-    </div>
-
-    <div class="link">
-      <a href="https://www.linkedin.com/in/veekas" rel="me">linkedin</a>
     </div>
 
     <!-- <div class="link">
@@ -97,6 +98,13 @@
     justify-content: space-between;
   }
 
+  .header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   h1 {
     color: #ecb600;
     display: flex;
@@ -106,7 +114,18 @@
     font-size: 13vmin;
     font-weight: 600;
     line-height: 1;
+    margin-bottom: 0.5em;
   }
+
+  .tagline {
+    color: #f9fbf9;
+    font-size: 2.5vh;
+    font-weight: 400;
+    margin: 0;
+    opacity: 0.9;
+    letter-spacing: 0.05em;
+  }
+
   /*  */
   .shift-right {
     /* margin-top: 1.33em; */
