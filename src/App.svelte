@@ -20,7 +20,7 @@
       </span>
     </h1>
     <p class="tagline">
-      senior software engineer • react specialist • climate tech
+      software engineer III • react/typescript/rust • climate tech
     </p>
   </div>
   <div class="footer-links">
