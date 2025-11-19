@@ -1,5 +1,57 @@
 <script>
   import { fly } from "svelte/transition";
+  import ProjectCard from "./ProjectCard.svelte";
+
+  const projects = [
+    {
+      title: "IRA Savings Calculator",
+      company: "Rewiring America",
+      description: "Interactive tool helping homeowners calculate potential savings from Inflation Reduction Act incentives for home electrification projects. Provides personalized recommendations based on location, income, and home characteristics.",
+      technologies: ["React", "TypeScript", "API Integration"],
+      link: "https://www.rewiringamerica.org/app/ira-calculator",
+      imagePlaceholder: "Screenshot: IRA Calculator Interface"
+    },
+    {
+      title: "Rewiring America Website",
+      company: "Rewiring America",
+      description: "Main public-facing website for the organization's mission to electrify homes and buildings. Focused on performance optimization, accessibility improvements, and responsive design.",
+      technologies: ["React", "Next.js", "Accessibility", "Performance"],
+      link: "https://www.rewiringamerica.org",
+      imagePlaceholder: "Screenshot: Rewiring America Homepage"
+    },
+    {
+      title: "Community Solar Platform",
+      company: "Arcadia",
+      description: "Features enabling community solar enrollment, helping users access clean energy without rooftop panels. Streamlined onboarding flow and real-time availability updates.",
+      technologies: ["React", "Node.js", "PostgreSQL"],
+      link: "",
+      imagePlaceholder: "Screenshot: Community Solar Enrollment"
+    },
+    {
+      title: "Energy Dashboard",
+      company: "Arcadia",
+      description: "Data visualization tools for users to track energy usage, costs, and savings. Interactive charts and insights to help optimize energy consumption.",
+      technologies: ["React", "D3.js", "Data Visualization"],
+      link: "",
+      imagePlaceholder: "Screenshot: Energy Usage Dashboard"
+    },
+    {
+      title: "Wedding Planning Tools",
+      company: "The Knot",
+      description: "Suite of tools for couples to plan their wedding, including guest list management, budget tracking, and vendor coordination. Focus on intuitive UX and mobile optimization.",
+      technologies: ["React", "Redux", "Mobile-First Design"],
+      link: "",
+      imagePlaceholder: "Screenshot: Wedding Planner Interface"
+    },
+    {
+      title: "Vendor Marketplace",
+      company: "The Knot",
+      description: "Enhanced search and filtering for wedding vendors. Improved discovery experience with faceted search, reviews, and booking integration.",
+      technologies: ["React", "Elasticsearch", "Performance"],
+      link: "",
+      imagePlaceholder: "Screenshot: Vendor Search Results"
+    }
+  ];
 </script>
 
 <svelte:head>
@@ -18,6 +70,16 @@
       ashoka
     </span>
   </h1>
+
+  <section class="portfolio">
+    <h2>Portfolio</h2>
+    <div class="projects-grid">
+      {#each projects as project}
+        <ProjectCard {...project} />
+      {/each}
+    </div>
+  </section>
+
   <div class="footer-links">
     <div class="link">
       <a href="http://beaconcan.org">BCAN</a>
@@ -99,10 +161,11 @@
     text-align: center;
     padding: 0 10vmin 10vmin;
     color: #f9fbf9;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 3rem;
   }
 
   h1 {
@@ -133,6 +196,27 @@
 
   .link {
     line-height: 1.5;
+  }
+
+  .portfolio {
+    max-width: 1200px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+
+  .portfolio h2 {
+    color: #ecb600;
+    font-size: 4vh;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
   }
 
   @media (min-width: 640px) {
