@@ -18,6 +18,25 @@
       ashoka
     </span>
   </h1>
+
+  <section class="about">
+    <h2>Senior Software Engineer</h2>
+    <p class="bio">
+      Building tools for climate action at <strong>Rewiring America</strong>,
+      where I develop web applications that help homeowners electrify their homes
+      and access clean energy incentives. Previously contributed to clean energy
+      solutions at <strong>Arcadia</strong> and wedding planning tools at <strong>The Knot</strong>.
+    </p>
+    <div class="skills">
+      <span class="skill-tag">React</span>
+      <span class="skill-tag">TypeScript</span>
+      <span class="skill-tag">Svelte</span>
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">Accessibility</span>
+      <span class="skill-tag">Performance</span>
+    </div>
+  </section>
+
   <div class="footer-links">
     <div class="link">
       <a href="http://beaconcan.org">BCAN</a>
@@ -133,6 +152,47 @@
 
   .link {
     line-height: 1.5;
+  }
+
+  .about {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+
+  .about h2 {
+    color: #ecb600;
+    font-size: 3vh;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .about .bio {
+    font-size: 2.2vh;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .about .bio strong {
+    color: #ecb600;
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .skill-tag {
+    background-color: rgba(236, 182, 0, 0.15);
+    border: 1px solid #ecb600;
+    color: #ecb600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 1.8vh;
+    font-weight: 400;
   }
 
   @media (min-width: 640px) {
