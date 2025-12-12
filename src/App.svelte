@@ -18,6 +18,10 @@
       ashoka
     </span>
   </h1>
+  <div class="link">
+    <a href="https://allogrow.com" rel="me">allo</a>
+  </div>
+
   <div class="footer-links">
     <div class="link">
       <a href="https://calendly.com/veekas/meet" rel="me">calendar</a>
@@ -36,15 +40,21 @@
     </div>
 
     <div class="link">
-      <a href="https://app.thestorygraph.com/profile/veekas" rel="me">storygraph</a>
-    </div>
-
-    <div class="link">
       <a href="http://www.instagram.com/veekas" rel="me">instagram</a>
     </div>
 
     <div class="link">
       <a href="https://www.linkedin.com/in/veekas" rel="me">linkedin</a>
+    </div>
+
+    <div class="link">
+      <a href="https://app.thestorygraph.com/profile/veekas" rel="me"
+        >storygraph</a
+      >
+    </div>
+
+    <div class="link">
+      <a href="https://strava.app.link/gpIRjM032Yb" rel="me">strava</a>
     </div>
 
     <!-- <div class="link">
