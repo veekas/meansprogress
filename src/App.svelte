@@ -18,11 +18,11 @@
       ashoka
     </span>
   </h1>
-  <div class="link">
-    <a href="https://allogrow.com" rel="me">allo</a>
-  </div>
-
   <div class="footer-links">
+    <div class="link">
+      <a href="https://allogrow.com" rel="me">allo</a>
+    </div>
+
     <div class="link">
       <a href="https://calendly.com/veekas/meet" rel="me">calendar</a>
     </div>
@@ -30,10 +30,6 @@
     <div class="link">
       <a href="mailto:veekas@duck.com" rel="me">email</a>
     </div>
-
-    <!-- <div class="link">
-      <a href="https://www.facebook.com/veekas" rel="me">facebook</a>
-    </div> -->
 
     <div class="link">
       <a href="https://www.github.com/veekas" rel="me">github</a>
@@ -48,26 +44,12 @@
     </div>
 
     <div class="link">
-      <a href="https://app.thestorygraph.com/profile/veekas" rel="me"
-        >storygraph</a
-      >
+      <a href="https://app.thestorygraph.com/profile/veekas" rel="me">storygraph</a>
     </div>
 
     <div class="link">
       <a href="https://strava.app.link/gpIRjM032Yb" rel="me">strava</a>
     </div>
-
-    <!-- <div class="link">
-      <a href="https://tinyletter.com/veekas" rel="me">newsletter</a>
-    </div> -->
-
-    <!-- <div class="link">
-      <a href="https://veekas.github.io/react-resume/resume.pdf">Resume</a>
-    </div> -->
-
-    <!-- <div class="link">
-      <a href="https://www.twitter.com/veekas" rel="me">twitter</a>
-    </div> -->
   </div>
 </main>
 
@@ -117,9 +99,8 @@
     font-weight: 600;
     line-height: 1;
   }
-  /*  */
+
   .shift-right {
-    /* margin-top: 1.33em; */
     padding-left: 4ch;
   }
 
@@ -141,9 +122,5 @@
     main {
       max-width: none;
     }
-
-    /* h1 {
-      margin-top: 0;
-    } */
   }
 </style>
