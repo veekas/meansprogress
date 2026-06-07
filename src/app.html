@@ -14,22 +14,18 @@
       content="mission-driven software engineer, volunteer EMT, and parent"
     />
 
-    <!-- social info -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://veekasmeansprogress.com" />
+    <meta property="og:url" content="https://veekas.me" />
     <meta property="og:title" content="veekas ashoka" />
-    <meta
-      property="og:description"
-      content="mission-driven software engineer and volunteer EMT"
-    />
+    <meta property="og:description" content="mission-driven software engineer and volunteer EMT" />
     <meta property="og:image" content="/latest-headshot.jpeg" />
     <meta property="og:image:alt" content="veekas speaking into a megaphone" />
 
     <title>veekas ashoka</title>
-
-    <link rel="icon" type="image/png" href="/vmp-logo-gold.png" />
-    <script type="module" src="/src/main.js"></script>
+    <link rel="icon" type="image/png" href="%sveltekit.assets%/vmp-logo-gold.png" />
+    %sveltekit.head%
   </head>
-
-  <body></body>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
 </html>
