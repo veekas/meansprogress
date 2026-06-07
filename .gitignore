@@ -1,6 +1,9 @@
 /node_modules/
-/public/build/
+/build/
 /dist/
+/.svelte-kit/
+/.netlify/
 
 .DS_Store
 *.log
+.env
