@@ -53,6 +53,12 @@
         </label>
         {#if form?.error}
           <p class="error">{form.error}</p>
+          {#if form?.notWhitelisted}
+            <a
+              href="/request-access?phone={encodeURIComponent(form.rejectedPhone || '')}"
+              class="request-link"
+            >request access →</a>
+          {/if}
         {/if}
         <button type="submit" class="btn" disabled={loading}>
           {loading ? 'sending…' : 'send code →'}
@@ -147,5 +153,17 @@
   .btn[disabled] {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  .request-link {
+    display: block;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+
+  .request-link:hover {
+    color: var(--text);
   }
 </style>

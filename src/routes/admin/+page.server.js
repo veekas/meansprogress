@@ -16,11 +16,17 @@ export const load = async ({ locals: { safeGetSession } }) => {
   if (auth.error === 'unauthenticated') redirect(303, '/login');
   if (auth.error === 'forbidden') redirect(303, '/feed');
 
-  const [{ data: contentRows }, { data: whitelist }, { data: photoRows }] = await Promise.all([
-    adminSupabase.from('content').select('key, value').order('key'),
-    adminSupabase.from('whitelist').select('*').order('name'),
-    adminSupabase.from('photos').select('*').order('sort_order')
-  ]);
+  const [{ data: contentRows }, { data: whitelist }, { data: photoRows }, { data: requests }] =
+    await Promise.all([
+      adminSupabase.from('content').select('key, value').order('key'),
+      adminSupabase.from('whitelist').select('*').order('name'),
+      adminSupabase.from('photos').select('*').order('sort_order'),
+      adminSupabase
+        .from('access_requests')
+        .select('*')
+        .eq('status', 'pending')
+        .order('created_at')
+    ]);
 
   const content = Object.fromEntries((contentRows || []).map((r) => [r.key, r.value]));
 
@@ -33,7 +39,7 @@ export const load = async ({ locals: { safeGetSession } }) => {
     })
   );
 
-  return { content, whitelist: whitelist || [], photos };
+  return { content, whitelist: whitelist || [], photos, requests: requests || [] };
 };
 
 export const actions = {
@@ -133,6 +139,38 @@ export const actions = {
     });
 
     return { photoUploaded: true };
+  },
+
+  approveRequest: async ({ request, locals: { safeGetSession } }) => {
+    const auth = await requireAdmin(safeGetSession);
+    if (auth.error) return fail(403, { error: 'Unauthorized' });
+
+    const formData = await request.formData();
+    const id = formData.get('id')?.toString();
+    const phone = formData.get('phone')?.toString();
+    const name = formData.get('name')?.toString() || null;
+
+    if (!id || !phone) return fail(400, { error: 'Missing fields' });
+
+    await Promise.all([
+      adminSupabase.from('whitelist').upsert({ phone, name }, { onConflict: 'phone' }),
+      adminSupabase.from('access_requests').update({ status: 'approved' }).eq('id', id)
+    ]);
+
+    return { requestApproved: true };
+  },
+
+  denyRequest: async ({ request, locals: { safeGetSession } }) => {
+    const auth = await requireAdmin(safeGetSession);
+    if (auth.error) return fail(403, { error: 'Unauthorized' });
+
+    const formData = await request.formData();
+    const id = formData.get('id')?.toString();
+
+    if (!id) return fail(400, { error: 'Missing ID' });
+
+    await adminSupabase.from('access_requests').update({ status: 'denied' }).eq('id', id);
+    return { requestDenied: true };
   },
 
   deletePhoto: async ({ request, locals: { safeGetSession } }) => {

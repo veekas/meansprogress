@@ -36,6 +36,18 @@ CREATE TABLE IF NOT EXISTS photos (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Requests from people who want whitelist access
+CREATE TABLE IF NOT EXISTS access_requests (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  phone TEXT NOT NULL,
+  name TEXT NOT NULL,
+  note TEXT,
+  status TEXT NOT NULL DEFAULT 'pending',  -- 'pending', 'approved', 'denied'
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE access_requests ENABLE ROW LEVEL SECURITY;
+
 -- Row-level security: all operations go through the service role key server-side,
 -- so enabling RLS here prevents any accidental direct client access.
 ALTER TABLE whitelist ENABLE ROW LEVEL SECURITY;

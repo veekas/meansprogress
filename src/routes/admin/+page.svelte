@@ -114,6 +114,47 @@
     {/if}
   </section>
 
+  <!-- ── Access Requests ────────────────────── -->
+  <section>
+    <h2>
+      access requests
+      {#if data.requests.length > 0}
+        <span class="badge">{data.requests.length}</span>
+      {/if}
+    </h2>
+
+    {#if data.requests.length === 0}
+      <p class="empty-note">no pending requests</p>
+    {:else}
+      <ul class="request-list">
+        {#each data.requests as req}
+          <li>
+            <div class="req-info">
+              <span class="req-name">{req.name}</span>
+              <span class="req-phone">{req.phone}</span>
+              {#if req.note}
+                <span class="req-note">"{req.note}"</span>
+              {/if}
+              <span class="req-date">{new Date(req.created_at).toLocaleDateString()}</span>
+            </div>
+            <div class="req-actions">
+              <form method="POST" action="?/approveRequest" use:enhance>
+                <input type="hidden" name="id" value={req.id} />
+                <input type="hidden" name="phone" value={req.phone} />
+                <input type="hidden" name="name" value={req.name} />
+                <button type="submit" class="btn approve-btn">approve</button>
+              </form>
+              <form method="POST" action="?/denyRequest" use:enhance>
+                <input type="hidden" name="id" value={req.id} />
+                <button type="submit" class="btn btn-ghost deny-btn">deny</button>
+              </form>
+            </div>
+          </li>
+        {/each}
+      </ul>
+    {/if}
+  </section>
+
   <!-- ── Contacts ────────────────────────────── -->
   <section>
     <h2>contacts</h2>
@@ -306,6 +347,97 @@
     color: var(--muted);
     font-size: 0.85rem;
     margin: 0;
+  }
+
+  /* Access requests */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 0.65rem;
+    font-weight: 600;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+  }
+
+  .request-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .request-list li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: var(--surface);
+    border-radius: 2px;
+    border-left: 2px solid var(--gold);
+  }
+
+  .req-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .req-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .req-phone {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .req-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .req-date {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .req-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .approve-btn {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--bg);
+  }
+
+  .approve-btn:hover {
+    background: #d4a000;
+    border-color: #d4a000;
+    color: var(--bg);
+  }
+
+  .deny-btn {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
   }
 
   @media (max-width: 500px) {

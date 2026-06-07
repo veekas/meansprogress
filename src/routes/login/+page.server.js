@@ -21,7 +21,7 @@ export const actions = {
       .single();
 
     if (!entry) {
-      return fail(403, { error: "That number isn't on the guest list." });
+      return fail(403, { error: "That number isn't on the guest list.", notWhitelisted: true, rejectedPhone: phone });
     }
 
     const { error } = await supabase.auth.signInWithOtp({ phone });

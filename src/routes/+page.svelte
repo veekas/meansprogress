@@ -34,6 +34,7 @@
       <a href="/feed" class="btn">see what's up →</a>
     {:else}
       <a href="/login" class="btn">sign in</a>
+      <a href="/request-access" class="request-link">request access</a>
     {/if}
   </div>
 </main>
@@ -93,5 +94,18 @@
 
   .signin {
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+  }
+
+  .request-link {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .request-link:hover {
+    color: var(--text);
   }
 </style>
