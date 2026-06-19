@@ -25,8 +25,8 @@ export const actions = {
     if (!name) return fail(400, { error: 'Name is required.' });
 
     const [{ data: whitelistRows }, { data: pendingRows }] = await Promise.all([
-      adminSupabase.from('whitelist').select('phone'),
-      adminSupabase.from('access_requests').select('id, phone').eq('status', 'pending')
+      adminSupabase.from('whitelist').select('phone').in('phone', [phone, rawPhone]),
+      adminSupabase.from('access_requests').select('id, phone').eq('status', 'pending').in('phone', [phone, rawPhone])
     ]);
 
     const onWhitelist = (whitelistRows || []).some(
