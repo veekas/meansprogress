@@ -1,6 +1,6 @@
 <script>
   import ProjectCard from '$lib/components/ProjectCard.svelte';
-  import { metaDescription, projects, skills } from '$lib/profile.js';
+  import { metaDescription, projects, shortBio, skills } from '$lib/profile.js';
 </script>
 
 <svelte:head>
@@ -14,10 +14,7 @@
   <header>
     <a href="/" class="back">← home</a>
     <h1>work</h1>
-    <p class="intro">
-      Seven years building full-stack web products — lately in climate tech and AI-supported tools.
-      Currently at <strong>SolarAPP+</strong>; previously Rewiring America, Arcadia, and The Knot.
-    </p>
+    <p class="bio">{shortBio}</p>
     <ul class="skills">
       {#each skills as skill}
         <li>{skill}</li>
@@ -79,17 +76,12 @@
     margin: 0 0 1.25rem;
   }
 
-  .intro {
+  .bio {
     color: var(--muted);
     font-size: 0.95rem;
     line-height: 1.7;
     margin: 0 0 1.25rem;
     max-width: 40rem;
-  }
-
-  .intro strong {
-    color: var(--text);
-    font-weight: 600;
   }
 
   .skills {

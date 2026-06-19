@@ -5,8 +5,6 @@
     links,
     metaDescription,
     personJsonLd,
-    shortBio,
-    skills,
     tagline
   } from '$lib/profile.js';
 
@@ -32,14 +30,6 @@
         </h1>
 
         <p class="tagline">{tagline}</p>
-
-        <p class="bio">{shortBio}</p>
-
-        <ul class="skills">
-          {#each skills as skill}
-            <li>{skill}</li>
-          {/each}
-        </ul>
 
         <p class="work-link">
           <a href="/work">more about my work →</a>
@@ -130,39 +120,11 @@
   }
 
   .tagline {
-    color: var(--gold);
     font-size: clamp(0.7rem, 1.8vw, 0.85rem);
     letter-spacing: 0.04em;
-    margin: 0.5vmin 0 0;
+    margin: 1vmin 0 0;
     text-align: left;
     opacity: 0.85;
-  }
-
-  .bio {
-    color: var(--muted);
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    line-height: 1.7;
-    margin: 0.75vmin 0 0;
-    text-align: left;
-    max-width: 36rem;
-  }
-
-  .skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin: 0.75rem 0 0;
-    padding: 0;
-    list-style: none;
-    justify-content: flex-start;
-  }
-
-  .skills li {
-    font-size: 0.65rem;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 0.2rem 0.45rem;
-    border-radius: 2px;
   }
 
   .work-link {
@@ -261,16 +223,10 @@
     }
 
     .tagline,
-    .bio,
-    .skills,
     .work-link {
       display: table-caption;
       caption-side: bottom;
       text-align: right;
-    }
-
-    .skills {
-      justify-content: flex-end;
     }
 
     .bottom-left {
