@@ -1,23 +1,25 @@
 <script>
   import { fly } from 'svelte/transition';
   import AudioMessage from '$lib/components/AudioMessage.svelte';
+  import {
+    links,
+    metaDescription,
+    personJsonLd,
+    shortBio,
+    skills,
+    tagline
+  } from '$lib/profile.js';
+
   let { data } = $props();
 
-  const links = [
-    { href: 'https://i.airbuds.fm/veekas/FJLDpeRRL6', label: 'airbuds' },
-    { href: 'https://allogrow.com', label: 'allo' },
-    { href: 'https://calendly.com/veekas/meet', label: 'calendar' },
-    { href: 'mailto:fit-imply-given@duck.com', label: 'email', external: false },
-    { href: 'https://www.github.com/veekas', label: 'github' },
-    { href: 'http://www.instagram.com/veekas', label: 'instagram' },
-    { href: 'https://www.linkedin.com/in/veekas', label: 'linkedin' },
-    { href: 'https://app.thestorygraph.com/profile/veekas', label: 'storygraph' },
-    { href: 'https://strava.app.link/gpIRjM032Yb', label: 'strava' }
-  ];
+  const jsonLd = JSON.stringify(personJsonLd());
 </script>
 
 <svelte:head>
   <title>veekas ashoka</title>
+  <meta name="description" content={metaDescription} />
+  <meta property="og:description" content={metaDescription} />
+  {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
 <main>
@@ -29,15 +31,29 @@
           <span class="shift-right" in:fly={{ y: -75, delay: 1000, duration: 2000 }}>ashoka</span>
         </h1>
 
-        {#if data.bio}
-          <p class="bio">{data.bio}</p>
-        {/if}
+        <p class="tagline">{tagline}</p>
+
+        <p class="bio">{shortBio}</p>
+
+        <ul class="skills">
+          {#each skills as skill}
+            <li>{skill}</li>
+          {/each}
+        </ul>
+
+        <p class="work-link">
+          <a href="/work">more about my work →</a>
+        </p>
       </div>
 
       <div class="bottom-left">
         <div class="links links--mobile">
           {#each links as link}
-            <a href={link.href} rel="me" target={link.external === false ? undefined : '_blank'}>{link.label}</a>
+            <a
+              href={link.href}
+              rel={link.href.startsWith('http') ? 'me' : undefined}
+              target={link.external === false ? undefined : '_blank'}
+            >{link.label}</a>
           {/each}
         </div>
 
@@ -59,7 +75,11 @@
 
     <div class="links links--desktop">
       {#each links as link}
-        <a href={link.href} rel="me" target={link.external === false ? undefined : '_blank'}>{link.label}</a>
+        <a
+          href={link.href}
+          rel={link.href.startsWith('http') ? 'me' : undefined}
+          target={link.external === false ? undefined : '_blank'}>{link.label}</a
+        >
       {/each}
     </div>
   </div>
@@ -109,12 +129,50 @@
     padding-left: 4ch;
   }
 
+  .tagline {
+    color: var(--gold);
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+    letter-spacing: 0.04em;
+    margin: 0.5vmin 0 0;
+    text-align: left;
+    opacity: 0.85;
+  }
+
   .bio {
     color: var(--muted);
     font-size: clamp(0.8rem, 2vw, 1rem);
     line-height: 1.7;
     margin: 0.75vmin 0 0;
     text-align: left;
+    max-width: 36rem;
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    justify-content: flex-start;
+  }
+
+  .skills li {
+    font-size: 0.65rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.45rem;
+    border-radius: 2px;
+  }
+
+  .work-link {
+    margin: 0.75rem 0 0;
+    text-align: left;
+    font-size: 0.8rem;
+  }
+
+  .work-link a {
+    color: var(--gold);
   }
 
   .links {
@@ -202,10 +260,17 @@
       align-self: stretch;
     }
 
-    .bio {
+    .tagline,
+    .bio,
+    .skills,
+    .work-link {
       display: table-caption;
       caption-side: bottom;
       text-align: right;
+    }
+
+    .skills {
+      justify-content: flex-end;
     }
 
     .bottom-left {
