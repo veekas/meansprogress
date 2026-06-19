@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { adminSupabase } from '$lib/server/supabase';
+import { normalizePhone } from '$lib/phone';
 import { env } from '$env/dynamic/private';
 
 async function requireAdmin(safeGetSession) {
@@ -79,10 +80,10 @@ export const actions = {
     if (auth.error) return fail(403, { error: 'Unauthorized' });
 
     const formData = await request.formData();
-    const phone = formData.get('phone')?.toString().trim();
+    const phone = normalizePhone(formData.get('phone')?.toString().trim());
     const name = formData.get('name')?.toString().trim() || null;
 
-    if (!phone) return fail(400, { contactError: 'Phone number is required.' });
+    if (!phone) return fail(400, { contactError: 'Phone number must include country code, e.g. +14805551234.' });
 
     const { error } = await adminSupabase.from('whitelist').insert({ phone, name });
     if (error) return fail(400, { contactError: error.message });
@@ -147,7 +148,7 @@ export const actions = {
 
     const formData = await request.formData();
     const id = formData.get('id')?.toString();
-    const phone = formData.get('phone')?.toString();
+    const phone = normalizePhone(formData.get('phone')?.toString());
     const name = formData.get('name')?.toString() || null;
 
     if (!id || !phone) return fail(400, { error: 'Missing fields' });
