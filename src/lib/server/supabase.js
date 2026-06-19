@@ -1,12 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
+import { env as pubEnv } from '$env/dynamic/public';
+import { env as privEnv } from '$env/dynamic/private';
 
 let _client = null;
 
 function client() {
   if (!_client) {
     _client = createClient(
-      process.env.PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      pubEnv.PUBLIC_SUPABASE_URL,
+      privEnv.SUPABASE_SERVICE_ROLE_KEY,
       { auth: { persistSession: false } }
     );
   }
