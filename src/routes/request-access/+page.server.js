@@ -1,5 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import { normalizePhone } from '$lib/phone';
+import { notifyAccessRequest } from '$lib/server/notify';
 import { adminSupabase } from '$lib/server/supabase';
 
 export const load = async ({ url }) => {
@@ -8,7 +9,7 @@ export const load = async ({ url }) => {
 };
 
 export const actions = {
-  default: async ({ request }) => {
+  default: async ({ request, url }) => {
     const formData = await request.formData();
     const rawPhone = formData.get('phone')?.toString().trim();
     const phone = normalizePhone(rawPhone);
@@ -50,6 +51,13 @@ export const actions = {
       .insert({ phone, name, note });
 
     if (error) return fail(500, { error: 'Something went wrong. Try again.' });
+
+    await notifyAccessRequest({
+      name,
+      phone,
+      note,
+      adminUrl: `${url.origin}/admin`
+    });
 
     return { sent: true };
   }
