@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Code:400,600&display=swap');
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #282f30;
+  --gold: #ecb600;
+  --text: #f9fbf9;
+  --muted: #6b7e80;
+  --border: #3a4446;
+  --surface: #303839;
+  --font: 'Fira Code', monospace;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--gold);
+}
+
+button {
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+input:focus,
+textarea:focus {
+  outline: 1px solid var(--gold);
+  border-color: var(--gold);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--bg);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+}
+
+.btn-ghost:hover {
+  border-color: var(--muted);
+  color: var(--text);
+}
+
+.error {
+  color: #e05c5c;
+  font-size: 0.85rem;
+  margin: 0.4rem 0 0;
+}
+
+.success {
+  color: #6dbf8f;
+  font-size: 0.85rem;
+  margin: 0.4rem 0 0;
+}
