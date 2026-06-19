@@ -4,7 +4,7 @@
 </script>
 
 <nav>
-  <a href="/" class="site-name">veekas.me</a>
+  <a href="/" class="site-name">veekasmeansprogress.com</a>
   <div class="nav-right">
     {#if showAdmin}
       <a href="/admin" class="nav-link">admin</a>
@@ -20,13 +20,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     padding: 1.25rem 2rem;
     border-bottom: 1px solid var(--border);
   }
 
   .site-name {
     color: var(--gold);
-    font-size: 1rem;
+    font-size: clamp(0.75rem, 3vw, 1rem);
     font-weight: 600;
     letter-spacing: 0.03em;
   }

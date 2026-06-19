@@ -29,11 +29,11 @@
 </script>
 
 <svelte:head>
-  <title>sign in — veekas.me</title>
+  <title>sign in — veekasmeansprogress.com</title>
 </svelte:head>
 
 <main>
-  <a href="/" class="back">← veekas.me</a>
+  <a href="/" class="back">← veekasmeansprogress.com</a>
 
   <div class="card">
     <h1>sign in</h1>

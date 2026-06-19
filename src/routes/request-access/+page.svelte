@@ -5,11 +5,11 @@
 </script>
 
 <svelte:head>
-  <title>request access — veekas.me</title>
+  <title>request access — veekasmeansprogress.com</title>
 </svelte:head>
 
 <main>
-  <a href="/" class="back">← veekas.me</a>
+  <a href="/" class="back">← veekasmeansprogress.com</a>
 
   <div class="card">
     <h1>request access</h1>
@@ -23,7 +23,7 @@
             request sent. veekas will review it and add you if he knows you.
           {/if}
         </p>
-        <a href="/" class="btn">← back to veekas.me</a>
+        <a href="/" class="btn">← back to veekasmeansprogress.com</a>
       </div>
     {:else}
       <p class="hint">

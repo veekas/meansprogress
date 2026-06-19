@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>admin — veekas.me</title>
+  <title>admin — veekasmeansprogress.com</title>
 </svelte:head>
 
 <Nav showAdmin={true} />
