@@ -16,6 +16,10 @@ async function findWhitelistedPhone(phone) {
   if (error) return { normalized, entry: null };
 
   const entry = (rows || []).find((row) => normalizePhone(row.phone) === normalized);
+  if (entry && entry.phone !== normalized) {
+    await adminSupabase.from('whitelist').update({ phone: normalized }).eq('phone', entry.phone);
+    entry.phone = normalized;
+  }
   return { normalized, entry: entry ?? null };
 }
 

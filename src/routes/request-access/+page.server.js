@@ -1,41 +1,48 @@
 import { fail } from '@sveltejs/kit';
+import { normalizePhone } from '$lib/phone';
+import { notifyAccessRequest } from '$lib/server/notify';
 import { adminSupabase } from '$lib/server/supabase';
 
 export const load = async ({ url }) => {
-  // Pre-fill phone if arriving from the login rejection flow
-  return { prefillPhone: url.searchParams.get('phone') || '' };
+  const raw = url.searchParams.get('phone') || '';
+  return { prefillPhone: normalizePhone(raw) || raw };
 };
 
 export const actions = {
-  default: async ({ request }) => {
+  default: async ({ request, url }) => {
     const formData = await request.formData();
-    const phone = formData.get('phone')?.toString().trim();
+    const rawPhone = formData.get('phone')?.toString().trim();
+    const phone = normalizePhone(rawPhone);
     const name = formData.get('name')?.toString().trim();
     const note = formData.get('note')?.toString().trim() || null;
 
-    if (!phone) return fail(400, { error: 'Phone number is required.' });
+    if (!rawPhone) return fail(400, { error: 'Phone number is required.' });
+    if (!phone) {
+      return fail(400, {
+        error: 'Use a full phone number, e.g. +14805551234 or 4805551234.'
+      });
+    }
     if (!name) return fail(400, { error: 'Name is required.' });
 
-    // Already on whitelist → just tell them to sign in
-    const { data: existing } = await adminSupabase
-      .from('whitelist')
-      .select('phone')
-      .eq('phone', phone)
-      .single();
+    const [{ data: whitelistRows }, { data: pendingRows }] = await Promise.all([
+      adminSupabase.from('whitelist').select('phone').in('phone', [phone, rawPhone]),
+      adminSupabase.from('access_requests').select('id, phone').eq('status', 'pending').in('phone', [phone, rawPhone])
+    ]);
 
-    if (existing) {
-      return fail(400, { error: 'That number already has access. Try signing in.', alreadyHasAccess: true });
+    const onWhitelist = (whitelistRows || []).some(
+      (row) => normalizePhone(row.phone) === phone
+    );
+    if (onWhitelist) {
+      return fail(400, {
+        error: 'That number already has access. Try signing in.',
+        alreadyHasAccess: true
+      });
     }
 
-    // Duplicate pending request guard
-    const { data: pending } = await adminSupabase
-      .from('access_requests')
-      .select('id')
-      .eq('phone', phone)
-      .eq('status', 'pending')
-      .single();
-
-    if (pending) {
+    const hasPending = (pendingRows || []).some(
+      (row) => normalizePhone(row.phone) === phone
+    );
+    if (hasPending) {
       return { alreadySent: true };
     }
 
@@ -44,6 +51,13 @@ export const actions = {
       .insert({ phone, name, note });
 
     if (error) return fail(500, { error: 'Something went wrong. Try again.' });
+
+    await notifyAccessRequest({
+      name,
+      phone,
+      note,
+      adminUrl: `${url.origin}/admin`
+    });
 
     return { sent: true };
   }
