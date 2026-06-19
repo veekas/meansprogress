@@ -1,16 +1,36 @@
-import { redirect } from '@sveltejs/kit';
 import { adminSupabase } from '$lib/server/supabase';
-import { env } from '$env/dynamic/private';
 
-export const load = async ({ locals: { safeGetSession } }) => {
-  const { session, user } = await safeGetSession();
-  if (!session) redirect(303, '/login');
+export const load = async ({ parent }) => {
+  const { isAdmin } = await parent();
 
-  const isAdmin = !!(user?.phone && env.ADMIN_PHONE && user.phone === env.ADMIN_PHONE);
-
-  const [{ data: contentRows }, { data: photoRows }] = await Promise.all([
+  const [
+    { data: contentRows },
+    { data: photoRows },
+    { data: statusPosts },
+    { data: readingPosts },
+    { count: statusCount },
+    { count: readingCount },
+    { count: photoCount }
+  ] = await Promise.all([
     adminSupabase.from('content').select('key, value'),
-    adminSupabase.from('photos').select('id, storage_path, caption, sort_order').order('sort_order')
+    adminSupabase
+      .from('photos')
+      .select('id, storage_path, caption, sort_order')
+      .order('sort_order', { ascending: false })
+      .limit(1),
+    adminSupabase
+      .from('status_posts')
+      .select('id, body, created_at')
+      .order('created_at', { ascending: false })
+      .limit(1),
+    adminSupabase
+      .from('reading_posts')
+      .select('id, title, author, note, created_at')
+      .order('created_at', { ascending: false })
+      .limit(1),
+    adminSupabase.from('status_posts').select('id', { count: 'exact', head: true }),
+    adminSupabase.from('reading_posts').select('id', { count: 'exact', head: true }),
+    adminSupabase.from('photos').select('id', { count: 'exact', head: true })
   ]);
 
   const content = Object.fromEntries((contentRows || []).map((r) => [r.key, r.value]));
@@ -24,5 +44,14 @@ export const load = async ({ locals: { safeGetSession } }) => {
     })
   );
 
-  return { content, photos, isAdmin };
+  return {
+    content,
+    photos,
+    isAdmin,
+    latestStatus: statusPosts?.[0] ?? null,
+    latestReading: readingPosts?.[0] ?? null,
+    statusCount: statusCount ?? 0,
+    readingCount: readingCount ?? 0,
+    photoCount: photoCount ?? 0
+  };
 };

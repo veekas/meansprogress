@@ -1,12 +1,13 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { adminSupabase } from '$lib/server/supabase';
 import { normalizePhone } from '$lib/phone';
-import { env } from '$env/dynamic/private';
+import { isAdminUser } from '$lib/server/admin';
+import { preparePhotoUpload } from '$lib/server/photos';
 
 async function requireAdmin(safeGetSession) {
   const { session, user } = await safeGetSession();
   if (!session) return { error: 'unauthenticated' };
-  if (!user?.phone || !env.ADMIN_PHONE || user.phone !== env.ADMIN_PHONE) {
+  if (!isAdminUser(user)) {
     return { error: 'forbidden' };
   }
   return { user };
@@ -17,7 +18,7 @@ export const load = async ({ locals: { safeGetSession } }) => {
   if (auth.error === 'unauthenticated') redirect(303, '/login');
   if (auth.error === 'forbidden') redirect(303, '/feed');
 
-  const [{ data: contentRows }, { data: whitelist }, { data: photoRows }, { data: requests }] =
+  const [{ data: contentRows }, { data: whitelist }, { data: photoRows }, { data: requests }, { data: latestStatus }, { data: latestReading }] =
     await Promise.all([
       adminSupabase.from('content').select('key, value').order('key'),
       adminSupabase.from('whitelist').select('*').order('name'),
@@ -26,10 +27,26 @@ export const load = async ({ locals: { safeGetSession } }) => {
         .from('access_requests')
         .select('*')
         .eq('status', 'pending')
-        .order('created_at')
+        .order('created_at'),
+      adminSupabase
+        .from('status_posts')
+        .select('body')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      adminSupabase
+        .from('reading_posts')
+        .select('title, author, note')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
     ]);
 
   const content = Object.fromEntries((contentRows || []).map((r) => [r.key, r.value]));
+  content.status = latestStatus?.body || '';
+  content.reading_title = latestReading?.title || '';
+  content.reading_author = latestReading?.author || '';
+  content.reading_note = latestReading?.note || '';
 
   const photos = await Promise.all(
     (photoRows || []).map(async (photo) => {
@@ -44,22 +61,80 @@ export const load = async ({ locals: { safeGetSession } }) => {
 };
 
 export const actions = {
-  updateContent: async ({ request, locals: { safeGetSession } }) => {
+  updateBio: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
     if (auth.error) return fail(403, { error: 'Unauthorized' });
 
     const formData = await request.formData();
+    const bio = formData.get('bio')?.toString() || '';
 
-    const keys = [
-      'bio',
-      'status',
-      'reading_title',
-      'reading_author',
-      'reading_note',
-      'address',
-      'contact_email',
-      'contact_phone'
-    ];
+    await adminSupabase
+      .from('content')
+      .upsert({ key: 'bio', value: bio, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+
+    return { bioSaved: true };
+  },
+
+  updateStatus: async ({ request, locals: { safeGetSession } }) => {
+    const auth = await requireAdmin(safeGetSession);
+    if (auth.error) return fail(403, { error: 'Unauthorized' });
+
+    const formData = await request.formData();
+    const status = formData.get('status')?.toString().trim() || '';
+
+    const { data: latestStatus } = await adminSupabase
+      .from('status_posts')
+      .select('body')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (status && status !== (latestStatus?.body || '')) {
+      await adminSupabase.from('status_posts').insert({ body: status });
+    }
+
+    return { statusSaved: true };
+  },
+
+  updateReading: async ({ request, locals: { safeGetSession } }) => {
+    const auth = await requireAdmin(safeGetSession);
+    if (auth.error) return fail(403, { error: 'Unauthorized' });
+
+    const formData = await request.formData();
+    const readingTitle = formData.get('reading_title')?.toString().trim() || '';
+    const readingAuthor = formData.get('reading_author')?.toString().trim() || '';
+    const readingNote = formData.get('reading_note')?.toString().trim() || '';
+
+    const { data: latestReading } = await adminSupabase
+      .from('reading_posts')
+      .select('title, author, note')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const readingChanged =
+      readingTitle &&
+      (readingTitle !== (latestReading?.title || '') ||
+        readingAuthor !== (latestReading?.author || '') ||
+        readingNote !== (latestReading?.note || ''));
+
+    if (readingChanged) {
+      await adminSupabase.from('reading_posts').insert({
+        title: readingTitle,
+        author: readingAuthor,
+        note: readingNote
+      });
+    }
+
+    return { readingSaved: true };
+  },
+
+  updateContact: async ({ request, locals: { safeGetSession } }) => {
+    const auth = await requireAdmin(safeGetSession);
+    if (auth.error) return fail(403, { error: 'Unauthorized' });
+
+    const formData = await request.formData();
+    const keys = ['address', 'contact_email', 'contact_phone'];
 
     await Promise.all(
       keys.map((key) =>
@@ -72,7 +147,7 @@ export const actions = {
       )
     );
 
-    return { contentSaved: true };
+    return { contactSaved: true };
   },
 
   addContact: async ({ request, locals: { safeGetSession } }) => {
@@ -116,13 +191,12 @@ export const actions = {
       return fail(400, { photoError: 'Please select a photo.' });
     }
 
-    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const { bytes, contentType, ext } = await preparePhotoUpload(file);
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    const bytes = await file.arrayBuffer();
     const { error: uploadError } = await adminSupabase.storage
       .from('photos')
-      .upload(filename, bytes, { contentType: file.type });
+      .upload(filename, bytes, { contentType });
 
     if (uploadError) return fail(500, { photoError: 'Upload failed. Try again.' });
 

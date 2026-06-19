@@ -1,8 +1,21 @@
 <script>
   import Nav from '$lib/components/Nav.svelte';
+  import SeeMore from '$lib/components/SeeMore.svelte';
+
   let { data } = $props();
 
-  const { content, photos, isAdmin } = data;
+  const {
+    content,
+    photos,
+    isAdmin,
+    latestStatus,
+    latestReading,
+    statusCount,
+    readingCount,
+    photoCount
+  } = data;
+
+  const latestPhoto = photos[0] ?? null;
 </script>
 
 <svelte:head>
@@ -12,66 +25,76 @@
 <Nav showAdmin={isAdmin} />
 
 <main>
-  {#if content.status}
+  {#if latestStatus}
     <section>
-      <h2>what's up</h2>
-      <p class="status-text">{content.status}</p>
+      <h2>what i'm up to</h2>
+      <p class="status-text">{latestStatus.body}</p>
+      {#if statusCount > 1}
+        <SeeMore href="/feed/status" />
+      {/if}
     </section>
   {/if}
 
-  {#if content.reading_title}
+  {#if latestReading}
     <section>
-      <h2>reading</h2>
+      <h2>what i'm reading</h2>
       <div class="reading">
-        <span class="reading-title">{content.reading_title}</span>
-        {#if content.reading_author}
-          <span class="reading-author">by {content.reading_author}</span>
+        <span class="reading-title">{latestReading.title}</span>
+        {#if latestReading.author}
+          <span class="reading-author">by {latestReading.author}</span>
         {/if}
-        {#if content.reading_note}
-          <p class="reading-note">{content.reading_note}</p>
+        {#if latestReading.note}
+          <p class="reading-note">{latestReading.note}</p>
         {/if}
       </div>
+      {#if readingCount > 1}
+        <SeeMore href="/feed/reading" />
+      {/if}
     </section>
   {/if}
 
-  {#if content.address}
+  {#if latestPhoto}
     <section>
-      <h2>where i am</h2>
-      <p class="address">{content.address}</p>
+      <h2>proof of life</h2>
+      <figure>
+        <img src={latestPhoto.url} alt={latestPhoto.caption || ''} loading="lazy" />
+        {#if latestPhoto.caption}
+          <figcaption>{latestPhoto.caption}</figcaption>
+        {/if}
+      </figure>
+      {#if photoCount > 1}
+        <SeeMore href="/feed/photos" />
+      {/if}
     </section>
   {/if}
 
   {#if content.contact_email || content.contact_phone}
     <section>
-      <h2>reach me</h2>
+      <h2>my contact info</h2>
       <div class="contact">
         {#if content.contact_email}
-          <a href="mailto:{content.contact_email}">{content.contact_email}</a>
+          <div class="contact-item">
+            <h3>email</h3>
+            <a href="mailto:{content.contact_email}">{content.contact_email}</a>
+          </div>
         {/if}
         {#if content.contact_phone}
-          <a href="tel:{content.contact_phone}">{content.contact_phone}</a>
+          <div class="contact-item">
+            <h3>phone</h3>
+            <a href="tel:{content.contact_phone}">{content.contact_phone}</a>
+          </div>
+        {/if}
+        {#if content.address}
+          <div class="contact-item">
+            <h3>address</h3>
+            <p class="address">{content.address}</p>
+          </div>
         {/if}
       </div>
     </section>
   {/if}
 
-  {#if photos.length > 0}
-    <section>
-      <h2>photos</h2>
-      <div class="photo-grid">
-        {#each photos as photo}
-          <figure>
-            <img src={photo.url} alt={photo.caption || ''} loading="lazy" />
-            {#if photo.caption}
-              <figcaption>{photo.caption}</figcaption>
-            {/if}
-          </figure>
-        {/each}
-      </div>
-    </section>
-  {/if}
-
-  {#if !content.status && !content.reading_title && !content.address && photos.length === 0}
+  {#if !latestStatus && !latestReading && !content.address && !latestPhoto}
     <div class="empty">
       <p>nothing here yet.</p>
     </div>
@@ -100,6 +123,15 @@
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.12em;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--muted);
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
     margin: 0;
   }
 
@@ -144,17 +176,17 @@
   .contact {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 1.25rem;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
   .contact a {
     font-size: 0.95rem;
-  }
-
-  .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.75rem;
   }
 
   figure {
@@ -162,6 +194,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
+    max-width: 320px;
   }
 
   img {

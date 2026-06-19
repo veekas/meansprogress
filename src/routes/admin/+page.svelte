@@ -14,18 +14,44 @@
 <main>
   <h1>admin</h1>
 
-  <!-- ── Content ─────────────────────────────── -->
+  <!-- ── Bio ─────────────────────────────────── -->
   <section>
-    <h2>content</h2>
-    <form method="POST" action="?/updateContent" use:enhance class="content-form">
+    <h2>bio</h2>
+    <form method="POST" action="?/updateBio" use:enhance class="section-form">
       <label>
         bio (shown on public landing page)
         <textarea name="bio" rows="3">{data.content.bio || ''}</textarea>
       </label>
+      {#if form?.bioSaved}
+        <p class="success">saved ✓</p>
+      {/if}
+      <button type="submit" class="btn">save bio</button>
+    </form>
+  </section>
+
+  <!-- ── Status ──────────────────────────────── -->
+  <section>
+    <h2>what's up</h2>
+    <form method="POST" action="?/updateStatus" use:enhance class="section-form">
       <label>
-        what's up
-        <textarea name="status" rows="4">{data.content.status || ''}</textarea>
+        status update
+        <textarea
+          name="status"
+          rows="4"
+          placeholder="saving adds a new entry when this changes"
+        >{data.content.status || ''}</textarea>
       </label>
+      {#if form?.statusSaved}
+        <p class="success">saved ✓</p>
+      {/if}
+      <button type="submit" class="btn">save status</button>
+    </form>
+  </section>
+
+  <!-- ── Reading ─────────────────────────────── -->
+  <section>
+    <h2>reading</h2>
+    <form method="POST" action="?/updateReading" use:enhance class="section-form">
       <div class="field-row">
         <label>
           book title
@@ -38,8 +64,23 @@
       </div>
       <label>
         reading note
-        <textarea name="reading_note" rows="3">{data.content.reading_note || ''}</textarea>
+        <textarea
+          name="reading_note"
+          rows="3"
+          placeholder="saving adds a new entry when the book changes"
+        >{data.content.reading_note || ''}</textarea>
       </label>
+      {#if form?.readingSaved}
+        <p class="success">saved ✓</p>
+      {/if}
+      <button type="submit" class="btn">save reading</button>
+    </form>
+  </section>
+
+  <!-- ── Contact ─────────────────────────────── -->
+  <section>
+    <h2>contact info</h2>
+    <form method="POST" action="?/updateContact" use:enhance class="section-form">
       <label>
         address (one line per line)
         <textarea name="address" rows="3">{data.content.address || ''}</textarea>
@@ -54,10 +95,10 @@
           <input type="tel" name="contact_phone" value={data.content.contact_phone || ''} />
         </label>
       </div>
-      {#if form?.contentSaved}
+      {#if form?.contactSaved}
         <p class="success">saved ✓</p>
       {/if}
-      <button type="submit" class="btn">save content</button>
+      <button type="submit" class="btn">save contact info</button>
     </form>
   </section>
 
@@ -248,7 +289,7 @@
     font-size: 0.85em;
   }
 
-  .content-form,
+  .section-form,
   .add-contact-form,
   .upload-form {
     display: flex;

@@ -27,6 +27,21 @@ INSERT INTO content (key, value) VALUES
   ('contact_phone', '')
 ON CONFLICT (key) DO NOTHING;
 
+-- Historical status and reading posts for the feed
+CREATE TABLE IF NOT EXISTS status_posts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  body TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS reading_posts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  author TEXT NOT NULL DEFAULT '',
+  note TEXT NOT NULL DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Photo metadata (files live in Supabase Storage bucket named "photos")
 CREATE TABLE IF NOT EXISTS photos (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -52,6 +67,8 @@ ALTER TABLE access_requests ENABLE ROW LEVEL SECURITY;
 -- so enabling RLS here prevents any accidental direct client access.
 ALTER TABLE whitelist ENABLE ROW LEVEL SECURITY;
 ALTER TABLE content ENABLE ROW LEVEL SECURITY;
+ALTER TABLE status_posts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reading_posts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE photos ENABLE ROW LEVEL SECURITY;
 
 -- No client-side policies needed — the service role key bypasses RLS entirely.

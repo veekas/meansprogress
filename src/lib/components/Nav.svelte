@@ -1,5 +1,4 @@
 <script>
-  import { enhance } from '$app/forms';
   let { showAdmin = false } = $props();
 </script>
 
@@ -9,7 +8,7 @@
     {#if showAdmin}
       <a href="/admin" class="nav-link">admin</a>
     {/if}
-    <form method="POST" action="/logout" use:enhance>
+    <form method="POST" action="/logout">
       <button type="submit" class="btn btn-ghost">sign out</button>
     </form>
   </div>
