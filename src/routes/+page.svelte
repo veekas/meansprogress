@@ -29,11 +29,13 @@
           <span class="shift-right" in:fly={{ y: -75, delay: 1000, duration: 2000 }}>ashoka</span>
         </h1>
 
-        <p class="tagline">{tagline}</p>
+        <div class="profile-details">
+          <p class="tagline">{tagline}</p>
 
-        <p class="work-link">
-          <a href="/work">more about my work →</a>
-        </p>
+          <p class="work-link">
+            <a href="/work">more about my work →</a>
+          </p>
+        </div>
       </div>
 
       <div class="bottom-left">
@@ -41,7 +43,7 @@
           {#each links as link}
             <a
               href={link.href}
-              rel={link.href.startsWith('http') ? 'me' : undefined}
+              rel={link.href.startsWith('http') ? 'me noopener' : undefined}
               target={link.external === false ? undefined : '_blank'}
             >{link.label}</a>
           {/each}
@@ -67,7 +69,7 @@
       {#each links as link}
         <a
           href={link.href}
-          rel={link.href.startsWith('http') ? 'me' : undefined}
+          rel={link.href.startsWith('http') ? 'me noopener' : undefined}
           target={link.external === false ? undefined : '_blank'}>{link.label}</a
         >
       {/each}
@@ -222,10 +224,14 @@
       align-self: stretch;
     }
 
-    .tagline,
-    .work-link {
+    .profile-details {
       display: table-caption;
       caption-side: bottom;
+      text-align: right;
+    }
+
+    .tagline,
+    .work-link {
       text-align: right;
     }
 
