@@ -27,8 +27,19 @@
       </div>
     {:else}
       <p class="hint">
-        if you know veekas, enter your info below to request access to his private feed.
+        if you know veekas, enter your info below to request access to his private feed — a
+        low-key update page for friends, not a social network.
       </p>
+
+      <div class="feed-preview">
+        <p class="feed-preview-label">what's inside</p>
+        <ul>
+          <li><strong>what i'm up to</strong> — occasional life and work updates</li>
+          <li><strong>what i'm reading</strong> — books in progress, with notes when there's something worth sharing</li>
+          <li><strong>proof of life</strong> — photos so you know he's still out there</li>
+          <li><strong>contact info</strong> — email, phone, and mailing address for people who should have it</li>
+        </ul>
+      </div>
 
       <form
         method="POST"
@@ -101,7 +112,7 @@
 
   .card {
     width: 100%;
-    max-width: 360px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -119,6 +130,40 @@
     font-size: 0.85rem;
     margin: 0;
     line-height: 1.6;
+  }
+
+  .feed-preview {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 1rem 1.1rem;
+    border-radius: 2px;
+  }
+
+  .feed-preview-label {
+    margin: 0 0 0.65rem;
+    font-size: 0.7rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .feed-preview ul {
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .feed-preview li {
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .feed-preview strong {
+    color: var(--text);
+    font-weight: 600;
   }
 
   form {

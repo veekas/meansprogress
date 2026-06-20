@@ -19,7 +19,7 @@
     <h2>bio</h2>
     <form method="POST" action="?/updateBio" use:enhance class="section-form">
       <label>
-        bio (shown on public landing page)
+        bio (legacy — landing page copy lives in src/lib/profile.js)
         <textarea name="bio" rows="3">{data.content.bio || ''}</textarea>
       </label>
       {#if form?.bioSaved}
