@@ -45,15 +45,17 @@
           >
         </h1>
 
-        <p class="tagline" style:width={taglineWidth ? `${taglineWidth}px` : undefined}>
-          {#each tagline as sentence, i}
-            {sentence}{#if i < tagline.length - 1}<br />{/if}
-          {/each}
-        </p>
+        <div class="profile-details">
+          <p class="tagline" style:width={taglineWidth ? `${taglineWidth}px` : undefined}>
+            {#each tagline as sentence, i}
+              {sentence}{#if i < tagline.length - 1}<br />{/if}
+            {/each}
+          </p>
 
-        <p class="work-link">
-          <a href="/work">more about my work →</a>
-        </p>
+          <p class="work-link">
+            <a href="/work">more about my work →</a>
+          </p>
+        </div>
       </div>
 
       <div class="bottom-left">
@@ -61,7 +63,7 @@
           {#each links as link}
             <a
               href={link.href}
-              rel={link.href.startsWith('http') ? 'me' : undefined}
+              rel={link.href.startsWith('http') ? 'me noopener' : undefined}
               target={link.external === false ? undefined : '_blank'}
             >{link.label}</a>
           {/each}
@@ -87,7 +89,7 @@
       {#each links as link}
         <a
           href={link.href}
-          rel={link.href.startsWith('http') ? 'me' : undefined}
+          rel={link.href.startsWith('http') ? 'me noopener' : undefined}
           target={link.external === false ? undefined : '_blank'}>{link.label}</a
         >
       {/each}
@@ -240,10 +242,14 @@
       align-self: stretch;
     }
 
-    .tagline,
-    .work-link {
+    .profile-details {
       display: table-caption;
       caption-side: bottom;
+      text-align: right;
+    }
+
+    .tagline,
+    .work-link {
       text-align: right;
     }
 

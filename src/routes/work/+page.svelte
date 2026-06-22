@@ -43,9 +43,9 @@
   <footer>
     <p>
       full résumé on
-      <a href="https://www.linkedin.com/in/veekas" rel="me" target="_blank">linkedin</a>
+      <a href="https://www.linkedin.com/in/veekas" rel="me noopener" target="_blank">linkedin</a>
       ·
-      <a href="https://calendly.com/veekas/meet" target="_blank">grab time on my calendar</a>
+      <a href="https://calendly.com/veekas/meet" target="_blank" rel="noopener">grab time on my calendar</a>
     </p>
   </footer>
 </main>
