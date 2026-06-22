@@ -1,5 +1,6 @@
 <script>
   import { fly } from 'svelte/transition';
+  import { onMount } from 'svelte';
   import AudioMessage from '$lib/components/AudioMessage.svelte';
   import {
     links,
@@ -11,6 +12,17 @@
   let { data } = $props();
 
   const jsonLd = JSON.stringify(personJsonLd());
+
+  let ashokaEl;
+  let taglineWidth = $state(null);
+
+  onMount(() => {
+    const observer = new ResizeObserver(([entry]) => {
+      taglineWidth = entry.target.getBoundingClientRect().width;
+    });
+    observer.observe(ashokaEl, { box: 'border-box' });
+    return () => observer.disconnect();
+  });
 </script>
 
 <svelte:head>
@@ -26,11 +38,19 @@
       <div class="name-block">
         <h1>
           <span class="shift-left" in:fly={{ y: -30, duration: 1200, delay: 100 }}>veekas</span>
-          <span class="shift-right" in:fly={{ y: -75, delay: 1000, duration: 2000 }}>ashoka</span>
+          <span
+            class="shift-right"
+            bind:this={ashokaEl}
+            in:fly={{ y: -75, delay: 1000, duration: 2000 }}>ashoka</span
+          >
         </h1>
 
         <div class="profile-details">
-          <p class="tagline">{tagline}</p>
+          <p class="tagline" style:width={taglineWidth ? `${taglineWidth}px` : undefined}>
+            {#each tagline as sentence, i}
+              {sentence}{#if i < tagline.length - 1}<br />{/if}
+            {/each}
+          </p>
 
           <p class="work-link">
             <a href="/work">more about my work →</a>
@@ -125,13 +145,11 @@
     font-size: clamp(0.7rem, 1.8vw, 0.85rem);
     letter-spacing: 0.04em;
     margin: 1vmin 0 0;
-    text-align: left;
     opacity: 0.85;
   }
 
   .work-link {
     margin: 0.75rem 0 0;
-    text-align: left;
     font-size: 0.8rem;
   }
 

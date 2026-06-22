@@ -211,7 +211,7 @@
         </label>
         <label>
           name
-          <input type="text" name="name" placeholder="Alex" />
+          <input type="text" name="name" placeholder="Ozzy" />
         </label>
       </div>
       {#if form?.contactError}

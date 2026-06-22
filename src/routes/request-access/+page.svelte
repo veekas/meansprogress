@@ -64,7 +64,7 @@
         </label>
         <label>
           your name
-          <input type="text" name="name" placeholder="Alex" autocomplete="name" required />
+          <input type="text" name="name" placeholder="Ozzy" autocomplete="name" required />
         </label>
         <label>
           note (optional)
