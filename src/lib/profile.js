@@ -1,24 +1,13 @@
-/** @type {readonly string[]} */
-export const skills = [
-  'TypeScript',
-  'React',
-  'Next.js',
-  'Svelte',
-  'Node.js',
-  'GraphQL',
-  'PostgreSQL',
-  'accessibility',
-  'climate tech',
-  'AI products'
+export const tagline = [
+  'Veekas is a software engineer, founder of Allo, and a volunteer EMT.',
+  'He lives in Beacon, NY, with his young son and old dog.'
 ];
 
-export const tagline = 'senior product engineer · climate + edtech · founder';
-
 export const shortBio =
-  'Senior product engineer at SolarAPP+ and founder of Allo, a coaching app for caregivers of young children. Spent two years at Rewiring America building electrification tools — including the Incentive API and Personal Electrification Planner. Seven years in full-stack TypeScript and React, with roots at Arcadia and The Knot.';
+  'Senior product engineer at SolarAPP+ and founder of Allo, a coaching app for caregivers of young children. Spent two years at Rewiring America building electrification tools — including the Incentive API and Personal Electrification Planner. Seven years in full-stack TypeScript and React, with roots at Arcadia and The Knot. Board member for the Mid-Hudson Energy Transition HELP Fund since 2024. Volunteer EMT with the Beacon Volunteer Ambulance Corps since 2025.';
 
 export const metaDescription =
-  'Senior product engineer at SolarAPP+. Founder of Allo. Climate tech, electrification tools, and full-stack TypeScript — based in Beacon, NY.';
+  'Senior product engineer at SolarAPP+. Founder of Allo. Climate tech and full-stack TypeScript — volunteer EMT in Beacon, NY.';
 
 /** @type {readonly { title: string; company: string; period?: string; description: string; technologies: readonly string[]; href?: string }[]} */
 export const projects = [
@@ -28,7 +17,7 @@ export const projects = [
     period: '2025–present',
     description:
       'Designed and built a childhood speech therapy tool that offers personalized recommendations and support for parents and caregivers.',
-    technologies: ['Next.js', 'LangGraph', 'OpenAI API', 'FastAPI', 'Render'],
+    technologies: ['Next.js', 'TypeScript', 'Claude API', 'FastAPI', 'Render', 'AWS', 'Python', 'Cloudflare', 'Supabase'],
     href: 'https://allogrow.com'
   },
   {title: 'Senior Product Engineer',
@@ -36,7 +25,7 @@ export const projects = [
     period: '2026–present',
     description:
       'Streamlining the permitting process for governments and clean energy installers to save everyone money and time.',
-    technologies: ['PHP, Laravel, Vue, AWS'],
+    technologies: ['PHP', 'Laravel', 'Vue', 'PostgreSQL', 'AWS'],
     href: 'https://www.gosolarapp.org/'
   },
   {
@@ -78,7 +67,32 @@ export const projects = [
     period: '2018–2022',
     description:
       'Worked on the marketplace team. Co-led development of the company-wide React component library. Built an internal A/B testing service and REST API for experiments and user bucketing.',
-    technologies: ['React', 'Next.js', 'Node.js', 'Ruby on Rails', 'Jenkins']
+    technologies: ['React', 'Next.js', 'Node.js', 'Ruby on Rails', 'Jenkins', 'GraphQL']
+  }
+];
+
+/** @type {readonly string[]} */
+export const skills = [...new Set(projects.flatMap((project) => project.technologies))];
+
+/** @type {readonly { title: string; company: string; period?: string; description: string; technologies: readonly string[]; href?: string }[]} */
+export const volunteer = [
+  {
+    title: 'Emergency Medical Technician - Basic',
+    company: 'Beacon Volunteer Ambulance Corps',
+    period: '2025–present',
+    description:
+      'Volunteer EMT since 2025',
+    technologies: [],
+    href: 'https://www.beaconvac.org/'
+  },
+    {
+    title: 'Board Member',
+    company: 'Mid-Hudson Energy Transition: HELP Fund',
+    period: '2024–present',
+    description:
+      'Board member for a fund that helps low-income Mid-Hudson residents remediate their homes and transition to clean energy. Chair of the Fundraising Committee.',
+    technologies: [],
+    href: 'https://www.investinhelp.org/'
   }
 ];
 
@@ -132,7 +146,27 @@ export function personJsonLd() {
       'AI Products',
       'Caregiver Support',
       'Speech Therapy',
-      'Direct-Pay Healthcare'
+      'Direct-Pay Healthcare',
+      'Emergency Medical Services',
+      'EMT'
+    ],
+    memberOf: {
+      '@type': 'Organization',
+      name: 'Beacon Volunteer Ambulance Corps',
+      url: 'https://www.beaconvac.org/'
+    },
+    hasCredential: [
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'Bachelor of Arts in Political Science',
+        educationalLevel: "Bachelor's Degree",
+        credentialCategory: 'degree'
+      },
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'Emergency Medical Technician — Basic (EMT-B)',
+        credentialCategory: 'certification'
+      }
     ],
     sameAs: [
       'https://www.linkedin.com/in/veekas',
@@ -149,14 +183,6 @@ export function personJsonLd() {
       { '@type': 'Organization', name: 'Arizona State University' },
       { '@type': 'Organization', name: 'People for the American Way' },
       { '@type': 'Organization', name: 'Sunrise Movement' }
-    ],
-    hasCredential: [
-      {
-        '@type': 'EducationalOccupationalCredential',
-        name: 'Bachelor of Arts in Political Science',
-        educationalLevel: "Bachelor's Degree",
-        credentialCategory: 'degree'
-      }
     ]
   };
 }

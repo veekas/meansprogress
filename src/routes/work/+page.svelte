@@ -1,6 +1,6 @@
 <script>
   import ProjectCard from '$lib/components/ProjectCard.svelte';
-  import { metaDescription, projects, shortBio, skills } from '$lib/profile.js';
+  import { metaDescription, projects, shortBio, skills, volunteer } from '$lib/profile.js';
 </script>
 
 <svelte:head>
@@ -23,10 +23,19 @@
   </header>
 
   <section class="projects">
-    <h2>selected projects</h2>
+    <h2>selected work</h2>
     <div class="grid">
       {#each projects as project}
         <ProjectCard {...project} />
+      {/each}
+    </div>
+  </section>
+
+  <section class="projects volunteer">
+    <h2>volunteer</h2>
+    <div class="grid">
+      {#each volunteer as entry}
+        <ProjectCard {...entry} />
       {/each}
     </div>
   </section>
@@ -81,7 +90,6 @@
     font-size: 0.95rem;
     line-height: 1.7;
     margin: 0 0 1.25rem;
-    max-width: 40rem;
   }
 
   .skills {
@@ -105,6 +113,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
     gap: 1rem;
+  }
+
+  .volunteer {
+    margin-top: 3rem;
   }
 
   footer {
