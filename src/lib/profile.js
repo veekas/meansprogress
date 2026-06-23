@@ -1,7 +1,4 @@
-export const tagline = [
-  'Veekas is a software engineer, founder of Allo, and a volunteer EMT.',
-  'He lives in Beacon, NY, with his young son and old dog.'
-];
+export const tagline = 'Veekas is a software engineer, founder of Allo, and a volunteer EMT. He lives in Beacon, NY, with his young son and old dog.'
 
 export const shortBio =
   'Senior product engineer at SolarAPP+ and founder of Allo, a coaching app for caregivers of young children. Spent two years at Rewiring America building electrification tools — including the Incentive API and Personal Electrification Planner. Seven years in full-stack TypeScript and React, with roots at Arcadia and The Knot. Board member for the Mid-Hudson Energy Transition HELP Fund since 2024. Volunteer EMT with the Beacon Volunteer Ambulance Corps since 2025.';

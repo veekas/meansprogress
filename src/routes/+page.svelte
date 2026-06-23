@@ -47,9 +47,7 @@
 
         <div class="profile-details">
           <p class="tagline" style:width={taglineWidth ? `${taglineWidth}px` : undefined}>
-            {#each tagline as sentence, i}
-              {sentence}{#if i < tagline.length - 1}<br />{/if}
-            {/each}
+            {tagline}
           </p>
 
           <p class="work-link">
