@@ -8,9 +8,11 @@
 <nav>
   <a href="/" class="site-name">veekasmeansprogress.com</a>
   <div class="nav-right">
-    <button type="button" class="btn btn-ghost" onclick={() => (feedbackOpen = true)}>
-      feedback
-    </button>
+    {#if !showAdmin}
+      <button type="button" class="btn btn-ghost" onclick={() => (feedbackOpen = true)}>
+        feedback
+      </button>
+    {/if}
     {#if showAdmin}
       <a href="/admin" class="nav-link">admin</a>
     {:else if showSettings}
@@ -22,7 +24,9 @@
   </div>
 </nav>
 
-<FeedbackDialog bind:open={feedbackOpen} />
+{#if !showAdmin}
+  <FeedbackDialog bind:open={feedbackOpen} />
+{/if}
 
 <style>
   nav {
