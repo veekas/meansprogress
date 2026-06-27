@@ -37,6 +37,27 @@
   let contactError = $state(null);
   let contactAdded = $state(false);
   let requestActionError = $state(null);
+  let photoActionError = $state(null);
+  let contactListError = $state(null);
+
+  function createInlineEnhance(setError) {
+    return preserveDraftOnFailure({
+      onSuccess: () => setError(null),
+      onFailure: (payload) => {
+        setError(
+          payload?.message ||
+            payload?.requestActionError ||
+            payload?.removeContactError ||
+            payload?.photoDeleteError ||
+            'That action failed. Please try again.'
+        );
+      }
+    });
+  }
+
+  const enhanceRequestAction = createInlineEnhance((value) => (requestActionError = value));
+  const enhanceDeletePhoto = createInlineEnhance((value) => (photoActionError = value));
+  const enhanceRemoveContact = createInlineEnhance((value) => (contactListError = value));
 
   function syncDraftsFromServer() {
     bio = data.content.bio || '';
@@ -128,16 +149,6 @@
       contactError = payload?.message || payload?.contactError || 'Could not add contact. Please try again.';
       if (payload?.phone != null) newContactPhone = payload.phone;
       if (payload?.name != null) newContactName = payload.name;
-    }
-  });
-
-  const enhanceRequestAction = preserveDraftOnFailure({
-    onSuccess: () => {
-      requestActionError = null;
-    },
-    onFailure: (payload) => {
-      requestActionError =
-        payload?.message || payload?.requestActionError || 'That action failed. Please try again.';
     }
   });
 
@@ -317,6 +328,12 @@
   <section>
     <h2>photos</h2>
 
+    {#if photoActionError}
+      <div class="form-feedback error">
+        <p>{photoActionError}</p>
+      </div>
+    {/if}
+
     <form
       bind:this={photoForm}
       method="POST"
@@ -362,7 +379,7 @@
             {#if photo.caption}
               <p class="caption">{photo.caption}</p>
             {/if}
-            <form method="POST" action="?/deletePhoto" use:enhance={enhanceRequestAction}>
+            <form method="POST" action="?/deletePhoto" use:enhance={enhanceDeletePhoto}>
               <input type="hidden" name="id" value={photo.id} />
               <input type="hidden" name="storage_path" value={photo.storage_path} />
               <button type="submit" class="btn btn-ghost delete-btn">delete</button>
@@ -429,6 +446,12 @@
       phone numbers in E.164 format, e.g. <code>+15551234567</code>
     </p>
 
+    {#if contactListError}
+      <div class="form-feedback error">
+        <p>{contactListError}</p>
+      </div>
+    {/if}
+
     <form
       bind:this={addContactForm}
       method="POST"
@@ -472,7 +495,7 @@
           <li>
             <span class="contact-name">{contact.name || '—'}</span>
             <span class="contact-phone">{contact.phone}</span>
-            <form method="POST" action="?/removeContact" use:enhance={enhanceRequestAction} style="display:inline">
+            <form method="POST" action="?/removeContact" use:enhance={enhanceRemoveContact} style="display:inline">
               <input type="hidden" name="id" value={contact.id} />
               <button type="submit" class="btn btn-ghost remove-btn">remove</button>
             </form>

@@ -208,8 +208,12 @@ export const actions = {
       });
     }
 
-    const { error } = await adminSupabase.from('whitelist').insert({ phone, name: name || null });
-    if (error) return fail(400, { contactError: friendlyDbError(error), ...draft });
+    try {
+      const { error } = await adminSupabase.from('whitelist').insert({ phone, name: name || null });
+      if (error) return fail(400, { contactError: friendlyDbError(error), ...draft });
+    } catch (err) {
+      return fail(500, { contactError: friendlyDbError(err), ...draft });
+    }
 
     return { contactAdded: true };
   },
@@ -223,8 +227,12 @@ export const actions = {
 
     if (!id) return fail(400, { removeContactError: 'Missing contact ID.' });
 
-    const { error } = await adminSupabase.from('whitelist').delete().eq('id', id);
-    if (error) return fail(500, { removeContactError: friendlyDbError(error) });
+    try {
+      const { error } = await adminSupabase.from('whitelist').delete().eq('id', id);
+      if (error) return fail(500, { removeContactError: friendlyDbError(error) });
+    } catch (err) {
+      return fail(500, { removeContactError: friendlyDbError(err) });
+    }
 
     return { contactRemoved: true };
   },
@@ -293,13 +301,26 @@ export const actions = {
 
     if (!id || !phone) return fail(400, { requestActionError: 'Missing request details.' });
 
-    const [whitelistResult, requestResult] = await Promise.all([
-      adminSupabase.from('whitelist').upsert({ phone, name }, { onConflict: 'phone' }),
-      adminSupabase.from('access_requests').update({ status: 'approved' }).eq('id', id)
-    ]);
+    try {
+      const { error: whitelistError } = await adminSupabase
+        .from('whitelist')
+        .upsert({ phone, name }, { onConflict: 'phone' });
 
-    const error = whitelistResult.error || requestResult.error;
-    if (error) return fail(500, { requestActionError: friendlyDbError(error) });
+      if (whitelistError) {
+        return fail(500, { requestActionError: friendlyDbError(whitelistError) });
+      }
+
+      const { error: requestError } = await adminSupabase
+        .from('access_requests')
+        .update({ status: 'approved' })
+        .eq('id', id);
+
+      if (requestError) {
+        return fail(500, { requestActionError: friendlyDbError(requestError) });
+      }
+    } catch (err) {
+      return fail(500, { requestActionError: friendlyDbError(err) });
+    }
 
     return { requestApproved: true };
   },
@@ -313,8 +334,16 @@ export const actions = {
 
     if (!id) return fail(400, { requestActionError: 'Missing request ID.' });
 
-    const { error } = await adminSupabase.from('access_requests').update({ status: 'denied' }).eq('id', id);
-    if (error) return fail(500, { requestActionError: friendlyDbError(error) });
+    try {
+      const { error } = await adminSupabase
+        .from('access_requests')
+        .update({ status: 'denied' })
+        .eq('id', id);
+
+      if (error) return fail(500, { requestActionError: friendlyDbError(error) });
+    } catch (err) {
+      return fail(500, { requestActionError: friendlyDbError(err) });
+    }
 
     return { requestDenied: true };
   },
@@ -329,13 +358,17 @@ export const actions = {
 
     if (!id) return fail(400, { photoDeleteError: 'Missing photo ID.' });
 
-    const [storageResult, deleteResult] = await Promise.all([
-      storagePath ? adminSupabase.storage.from('photos').remove([storagePath]) : Promise.resolve({ error: null }),
-      adminSupabase.from('photos').delete().eq('id', id)
-    ]);
+    try {
+      const [storageResult, deleteResult] = await Promise.all([
+        storagePath ? adminSupabase.storage.from('photos').remove([storagePath]) : Promise.resolve({ error: null }),
+        adminSupabase.from('photos').delete().eq('id', id)
+      ]);
 
-    const error = storageResult.error || deleteResult.error;
-    if (error) return fail(500, { photoDeleteError: friendlyDbError(error) });
+      const error = storageResult.error || deleteResult.error;
+      if (error) return fail(500, { photoDeleteError: friendlyDbError(error) });
+    } catch (err) {
+      return fail(500, { photoDeleteError: friendlyDbError(err) });
+    }
 
     return { photoDeleted: true };
   }
