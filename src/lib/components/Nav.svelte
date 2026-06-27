@@ -1,10 +1,16 @@
 <script>
+  import FeedbackDialog from './FeedbackDialog.svelte';
+
   let { showAdmin = false, showSettings = false } = $props();
+  let feedbackOpen = $state(false);
 </script>
 
 <nav>
   <a href="/" class="site-name">veekasmeansprogress.com</a>
   <div class="nav-right">
+    <button type="button" class="btn btn-ghost" onclick={() => (feedbackOpen = true)}>
+      feedback
+    </button>
     {#if showAdmin}
       <a href="/admin" class="nav-link">admin</a>
     {:else if showSettings}
@@ -15,6 +21,8 @@
     </form>
   </div>
 </nav>
+
+<FeedbackDialog bind:open={feedbackOpen} />
 
 <style>
   nav {
