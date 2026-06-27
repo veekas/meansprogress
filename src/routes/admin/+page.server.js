@@ -3,6 +3,7 @@ import { adminSupabase } from '$lib/server/supabase';
 import { normalizePhone } from '$lib/phone';
 import { isAdminUser } from '$lib/server/admin';
 import { preparePhotoUpload } from '$lib/server/photos';
+import { friendlyDbError } from '$lib/adminForm';
 
 async function requireAdmin(safeGetSession) {
   const { session, user } = await safeGetSession();
@@ -11,6 +12,10 @@ async function requireAdmin(safeGetSession) {
     return { error: 'forbidden' };
   }
   return { user };
+}
+
+function unauthorizedFail() {
+  return fail(403, { message: 'You are not authorized to make this change.' });
 }
 
 export const load = async ({ locals: { safeGetSession } }) => {
@@ -63,34 +68,47 @@ export const load = async ({ locals: { safeGetSession } }) => {
 export const actions = {
   updateBio: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const bio = formData.get('bio')?.toString() || '';
 
-    await adminSupabase
-      .from('content')
-      .upsert({ key: 'bio', value: bio, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+    try {
+      const { error } = await adminSupabase
+        .from('content')
+        .upsert({ key: 'bio', value: bio, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+
+      if (error) return fail(500, { bioError: friendlyDbError(error), bio });
+    } catch (err) {
+      return fail(500, { bioError: friendlyDbError(err), bio });
+    }
 
     return { bioSaved: true };
   },
 
   updateStatus: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const status = formData.get('status')?.toString().trim() || '';
 
-    const { data: latestStatus } = await adminSupabase
-      .from('status_posts')
-      .select('body')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+    try {
+      const { data: latestStatus, error: fetchError } = await adminSupabase
+        .from('status_posts')
+        .select('body')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-    if (status && status !== (latestStatus?.body || '')) {
-      await adminSupabase.from('status_posts').insert({ body: status });
+      if (fetchError) return fail(500, { statusError: friendlyDbError(fetchError), status });
+
+      if (status && status !== (latestStatus?.body || '')) {
+        const { error: insertError } = await adminSupabase.from('status_posts').insert({ body: status });
+        if (insertError) return fail(500, { statusError: friendlyDbError(insertError), status });
+      }
+    } catch (err) {
+      return fail(500, { statusError: friendlyDbError(err), status });
     }
 
     return { statusSaved: true };
@@ -98,32 +116,44 @@ export const actions = {
 
   updateReading: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const readingTitle = formData.get('reading_title')?.toString().trim() || '';
     const readingAuthor = formData.get('reading_author')?.toString().trim() || '';
     const readingNote = formData.get('reading_note')?.toString().trim() || '';
+    const draft = {
+      reading_title: readingTitle,
+      reading_author: readingAuthor,
+      reading_note: readingNote
+    };
 
-    const { data: latestReading } = await adminSupabase
-      .from('reading_posts')
-      .select('title, author, note')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+    try {
+      const { data: latestReading, error: fetchError } = await adminSupabase
+        .from('reading_posts')
+        .select('title, author, note')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-    const readingChanged =
-      readingTitle &&
-      (readingTitle !== (latestReading?.title || '') ||
-        readingAuthor !== (latestReading?.author || '') ||
-        readingNote !== (latestReading?.note || ''));
+      if (fetchError) return fail(500, { readingError: friendlyDbError(fetchError), ...draft });
 
-    if (readingChanged) {
-      await adminSupabase.from('reading_posts').insert({
-        title: readingTitle,
-        author: readingAuthor,
-        note: readingNote
-      });
+      const readingChanged =
+        readingTitle &&
+        (readingTitle !== (latestReading?.title || '') ||
+          readingAuthor !== (latestReading?.author || '') ||
+          readingNote !== (latestReading?.note || ''));
+
+      if (readingChanged) {
+        const { error: insertError } = await adminSupabase.from('reading_posts').insert({
+          title: readingTitle,
+          author: readingAuthor,
+          note: readingNote
+        });
+        if (insertError) return fail(500, { readingError: friendlyDbError(insertError), ...draft });
+      }
+    } catch (err) {
+      return fail(500, { readingError: friendlyDbError(err), ...draft });
     }
 
     return { readingSaved: true };
@@ -131,137 +161,181 @@ export const actions = {
 
   updateContact: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
-    const keys = ['address', 'contact_email', 'contact_phone'];
+    const address = formData.get('address')?.toString() || '';
+    const contactEmail = formData.get('contact_email')?.toString() || '';
+    const contactPhone = formData.get('contact_phone')?.toString() || '';
+    const draft = { address, contact_email: contactEmail, contact_phone: contactPhone };
 
-    await Promise.all(
-      keys.map((key) =>
-        adminSupabase
-          .from('content')
-          .upsert(
-            { key, value: formData.get(key)?.toString() || '', updated_at: new Date().toISOString() },
-            { onConflict: 'key' }
-          )
-      )
-    );
+    try {
+      const keys = ['address', 'contact_email', 'contact_phone'];
+      const results = await Promise.all(
+        keys.map((key) =>
+          adminSupabase
+            .from('content')
+            .upsert(
+              { key, value: formData.get(key)?.toString() || '', updated_at: new Date().toISOString() },
+              { onConflict: 'key' }
+            )
+        )
+      );
+
+      const failed = results.find((result) => result.error);
+      if (failed?.error) return fail(500, { contactInfoError: friendlyDbError(failed.error), ...draft });
+    } catch (err) {
+      return fail(500, { contactInfoError: friendlyDbError(err), ...draft });
+    }
 
     return { contactSaved: true };
   },
 
   addContact: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
-    const phone = normalizePhone(formData.get('phone')?.toString().trim());
-    const name = formData.get('name')?.toString().trim() || null;
+    const rawPhone = formData.get('phone')?.toString().trim() || '';
+    const name = formData.get('name')?.toString().trim() || '';
+    const phone = normalizePhone(rawPhone);
+    const draft = { phone: rawPhone, name };
 
-    if (!phone) return fail(400, { contactError: 'Phone number must include country code, e.g. +14805551234.' });
+    if (!phone) {
+      return fail(400, {
+        contactError: 'Phone number must include country code, e.g. +14805551234.',
+        ...draft
+      });
+    }
 
-    const { error } = await adminSupabase.from('whitelist').insert({ phone, name });
-    if (error) return fail(400, { contactError: error.message });
+    const { error } = await adminSupabase.from('whitelist').insert({ phone, name: name || null });
+    if (error) return fail(400, { contactError: friendlyDbError(error), ...draft });
 
     return { contactAdded: true };
   },
 
   removeContact: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const id = formData.get('id')?.toString();
 
-    if (!id) return fail(400, { error: 'Missing ID' });
+    if (!id) return fail(400, { removeContactError: 'Missing contact ID.' });
 
-    await adminSupabase.from('whitelist').delete().eq('id', id);
+    const { error } = await adminSupabase.from('whitelist').delete().eq('id', id);
+    if (error) return fail(500, { removeContactError: friendlyDbError(error) });
+
     return { contactRemoved: true };
   },
 
   uploadPhoto: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const file = formData.get('photo');
     const caption = formData.get('caption')?.toString().trim() || '';
 
     if (!file || !(file instanceof File) || file.size === 0) {
-      return fail(400, { photoError: 'Please select a photo.' });
+      return fail(400, { photoError: 'Please select a photo.', caption });
     }
 
-    const { bytes, contentType, ext } = await preparePhotoUpload(file);
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    try {
+      const { bytes, contentType, ext } = await preparePhotoUpload(file);
+      const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    const { error: uploadError } = await adminSupabase.storage
-      .from('photos')
-      .upload(filename, bytes, { contentType });
+      const { error: uploadError } = await adminSupabase.storage
+        .from('photos')
+        .upload(filename, bytes, { contentType });
 
-    if (uploadError) return fail(500, { photoError: 'Upload failed. Try again.' });
+      if (uploadError) {
+        return fail(500, { photoError: friendlyDbError(uploadError), caption });
+      }
 
-    const { data: maxRow } = await adminSupabase
-      .from('photos')
-      .select('sort_order')
-      .order('sort_order', { ascending: false })
-      .limit(1)
-      .single();
+      const { data: maxRow, error: maxRowError } = await adminSupabase
+        .from('photos')
+        .select('sort_order')
+        .order('sort_order', { ascending: false })
+        .limit(1)
+        .single();
 
-    await adminSupabase.from('photos').insert({
-      storage_path: filename,
-      caption,
-      sort_order: (maxRow?.sort_order ?? -1) + 1
-    });
+      if (maxRowError && maxRowError.code !== 'PGRST116') {
+        await adminSupabase.storage.from('photos').remove([filename]);
+        return fail(500, { photoError: friendlyDbError(maxRowError), caption });
+      }
+
+      const { error: insertError } = await adminSupabase.from('photos').insert({
+        storage_path: filename,
+        caption,
+        sort_order: (maxRow?.sort_order ?? -1) + 1
+      });
+
+      if (insertError) {
+        await adminSupabase.storage.from('photos').remove([filename]);
+        return fail(500, { photoError: friendlyDbError(insertError), caption });
+      }
+    } catch (err) {
+      return fail(500, { photoError: friendlyDbError(err), caption });
+    }
 
     return { photoUploaded: true };
   },
 
   approveRequest: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const id = formData.get('id')?.toString();
     const phone = normalizePhone(formData.get('phone')?.toString());
     const name = formData.get('name')?.toString() || null;
 
-    if (!id || !phone) return fail(400, { error: 'Missing fields' });
+    if (!id || !phone) return fail(400, { requestActionError: 'Missing request details.' });
 
-    await Promise.all([
+    const [whitelistResult, requestResult] = await Promise.all([
       adminSupabase.from('whitelist').upsert({ phone, name }, { onConflict: 'phone' }),
       adminSupabase.from('access_requests').update({ status: 'approved' }).eq('id', id)
     ]);
+
+    const error = whitelistResult.error || requestResult.error;
+    if (error) return fail(500, { requestActionError: friendlyDbError(error) });
 
     return { requestApproved: true };
   },
 
   denyRequest: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const id = formData.get('id')?.toString();
 
-    if (!id) return fail(400, { error: 'Missing ID' });
+    if (!id) return fail(400, { requestActionError: 'Missing request ID.' });
 
-    await adminSupabase.from('access_requests').update({ status: 'denied' }).eq('id', id);
+    const { error } = await adminSupabase.from('access_requests').update({ status: 'denied' }).eq('id', id);
+    if (error) return fail(500, { requestActionError: friendlyDbError(error) });
+
     return { requestDenied: true };
   },
 
   deletePhoto: async ({ request, locals: { safeGetSession } }) => {
     const auth = await requireAdmin(safeGetSession);
-    if (auth.error) return fail(403, { error: 'Unauthorized' });
+    if (auth.error) return unauthorizedFail();
 
     const formData = await request.formData();
     const id = formData.get('id')?.toString();
     const storagePath = formData.get('storage_path')?.toString();
 
-    if (!id) return fail(400, { error: 'Missing ID' });
+    if (!id) return fail(400, { photoDeleteError: 'Missing photo ID.' });
 
-    await Promise.all([
-      storagePath ? adminSupabase.storage.from('photos').remove([storagePath]) : Promise.resolve(),
+    const [storageResult, deleteResult] = await Promise.all([
+      storagePath ? adminSupabase.storage.from('photos').remove([storagePath]) : Promise.resolve({ error: null }),
       adminSupabase.from('photos').delete().eq('id', id)
     ]);
+
+    const error = storageResult.error || deleteResult.error;
+    if (error) return fail(500, { photoDeleteError: friendlyDbError(error) });
 
     return { photoDeleted: true };
   }

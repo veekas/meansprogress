@@ -1,8 +1,149 @@
 <script>
   import { enhance } from '$app/forms';
   import Nav from '$lib/components/Nav.svelte';
+  import { preserveDraftOnFailure } from '$lib/adminForm';
 
-  let { data, form } = $props();
+  let { data } = $props();
+
+  let bio = $state('');
+  let status = $state('');
+  let readingTitle = $state('');
+  let readingAuthor = $state('');
+  let readingNote = $state('');
+  let address = $state('');
+  let contactEmail = $state('');
+  let contactPhone = $state('');
+  let newContactPhone = $state('');
+  let newContactName = $state('');
+  let photoCaption = $state('');
+
+  let bioForm;
+  let statusForm;
+  let readingForm;
+  let contactInfoForm;
+  let photoForm;
+  let addContactForm;
+
+  let bioError = $state(null);
+  let bioSaved = $state(false);
+  let statusError = $state(null);
+  let statusSaved = $state(false);
+  let readingError = $state(null);
+  let readingSaved = $state(false);
+  let contactInfoError = $state(null);
+  let contactInfoSaved = $state(false);
+  let photoError = $state(null);
+  let photoUploaded = $state(false);
+  let contactError = $state(null);
+  let contactAdded = $state(false);
+  let requestActionError = $state(null);
+
+  function syncDraftsFromServer() {
+    bio = data.content.bio || '';
+    status = data.content.status || '';
+    readingTitle = data.content.reading_title || '';
+    readingAuthor = data.content.reading_author || '';
+    readingNote = data.content.reading_note || '';
+    address = data.content.address || '';
+    contactEmail = data.content.contact_email || '';
+    contactPhone = data.content.contact_phone || '';
+  }
+
+  syncDraftsFromServer();
+
+  function clearFeedback(setError, setSaved) {
+    setError(null);
+    setSaved(false);
+  }
+
+  function handleSuccess(setSaved, savedKey) {
+    return (payload) => {
+      if (payload?.[savedKey]) {
+        setSaved(true);
+        syncDraftsFromServer();
+      }
+    };
+  }
+
+  const enhanceBio = preserveDraftOnFailure({
+    onSuccess: handleSuccess((v) => (bioSaved = v), 'bioSaved'),
+    onFailure: (payload) => {
+      bioError = payload?.message || payload?.bioError || 'Save failed. Please try again.';
+      if (payload?.bio != null) bio = payload.bio;
+    }
+  });
+
+  const enhanceStatus = preserveDraftOnFailure({
+    onSuccess: handleSuccess((v) => (statusSaved = v), 'statusSaved'),
+    onFailure: (payload) => {
+      statusError = payload?.message || payload?.statusError || 'Save failed. Please try again.';
+      if (payload?.status != null) status = payload.status;
+    }
+  });
+
+  const enhanceReading = preserveDraftOnFailure({
+    onSuccess: handleSuccess((v) => (readingSaved = v), 'readingSaved'),
+    onFailure: (payload) => {
+      readingError = payload?.message || payload?.readingError || 'Save failed. Please try again.';
+      if (payload?.reading_title != null) readingTitle = payload.reading_title;
+      if (payload?.reading_author != null) readingAuthor = payload.reading_author;
+      if (payload?.reading_note != null) readingNote = payload.reading_note;
+    }
+  });
+
+  const enhanceContactInfo = preserveDraftOnFailure({
+    onSuccess: handleSuccess((v) => (contactInfoSaved = v), 'contactSaved'),
+    onFailure: (payload) => {
+      contactInfoError = payload?.message || payload?.contactInfoError || 'Save failed. Please try again.';
+      if (payload?.address != null) address = payload.address;
+      if (payload?.contact_email != null) contactEmail = payload.contact_email;
+      if (payload?.contact_phone != null) contactPhone = payload.contact_phone;
+    }
+  });
+
+  const enhancePhoto = preserveDraftOnFailure({
+    onSuccess: (payload) => {
+      if (payload?.photoUploaded) {
+        photoUploaded = true;
+        photoError = null;
+        photoCaption = '';
+      }
+    },
+    onFailure: (payload) => {
+      photoError = payload?.message || payload?.photoError || 'Upload failed. Please try again.';
+      if (payload?.caption != null) photoCaption = payload.caption;
+    }
+  });
+
+  const enhanceAddContact = preserveDraftOnFailure({
+    onSuccess: (payload) => {
+      if (payload?.contactAdded) {
+        contactAdded = true;
+        contactError = null;
+        newContactPhone = '';
+        newContactName = '';
+      }
+    },
+    onFailure: (payload) => {
+      contactError = payload?.message || payload?.contactError || 'Could not add contact. Please try again.';
+      if (payload?.phone != null) newContactPhone = payload.phone;
+      if (payload?.name != null) newContactName = payload.name;
+    }
+  });
+
+  const enhanceRequestAction = preserveDraftOnFailure({
+    onSuccess: () => {
+      requestActionError = null;
+    },
+    onFailure: (payload) => {
+      requestActionError =
+        payload?.message || payload?.requestActionError || 'That action failed. Please try again.';
+    }
+  });
+
+  function submitForm(form) {
+    form?.requestSubmit();
+  }
 </script>
 
 <svelte:head>
@@ -17,12 +158,28 @@
   <!-- ── Bio ─────────────────────────────────── -->
   <section>
     <h2>bio</h2>
-    <form method="POST" action="?/updateBio" use:enhance class="section-form">
+    <form
+      bind:this={bioForm}
+      method="POST"
+      action="?/updateBio"
+      use:enhance={() => {
+        clearFeedback((v) => (bioError = v), (v) => (bioSaved = v));
+        return enhanceBio();
+      }}
+      class="section-form"
+    >
       <label>
         bio (legacy — landing page copy lives in src/lib/profile.js)
-        <textarea name="bio" rows="3">{data.content.bio || ''}</textarea>
+        <textarea name="bio" rows="3" bind:value={bio}></textarea>
       </label>
-      {#if form?.bioSaved}
+      {#if bioError}
+        <div class="form-feedback error">
+          <p>{bioError}</p>
+          <button type="button" class="btn btn-ghost retry-btn" onclick={() => submitForm(bioForm)}>
+            retry
+          </button>
+        </div>
+      {:else if bioSaved}
         <p class="success">saved ✓</p>
       {/if}
       <button type="submit" class="btn">save bio</button>
@@ -32,16 +189,33 @@
   <!-- ── Status ──────────────────────────────── -->
   <section>
     <h2>what's up</h2>
-    <form method="POST" action="?/updateStatus" use:enhance class="section-form">
+    <form
+      bind:this={statusForm}
+      method="POST"
+      action="?/updateStatus"
+      use:enhance={() => {
+        clearFeedback((v) => (statusError = v), (v) => (statusSaved = v));
+        return enhanceStatus();
+      }}
+      class="section-form"
+    >
       <label>
         status update
         <textarea
           name="status"
           rows="4"
           placeholder="saving adds a new entry when this changes"
-        >{data.content.status || ''}</textarea>
+          bind:value={status}
+        ></textarea>
       </label>
-      {#if form?.statusSaved}
+      {#if statusError}
+        <div class="form-feedback error">
+          <p>{statusError}</p>
+          <button type="button" class="btn btn-ghost retry-btn" onclick={() => submitForm(statusForm)}>
+            retry
+          </button>
+        </div>
+      {:else if statusSaved}
         <p class="success">saved ✓</p>
       {/if}
       <button type="submit" class="btn">save status</button>
@@ -51,15 +225,24 @@
   <!-- ── Reading ─────────────────────────────── -->
   <section>
     <h2>reading</h2>
-    <form method="POST" action="?/updateReading" use:enhance class="section-form">
+    <form
+      bind:this={readingForm}
+      method="POST"
+      action="?/updateReading"
+      use:enhance={() => {
+        clearFeedback((v) => (readingError = v), (v) => (readingSaved = v));
+        return enhanceReading();
+      }}
+      class="section-form"
+    >
       <div class="field-row">
         <label>
           book title
-          <input type="text" name="reading_title" value={data.content.reading_title || ''} />
+          <input type="text" name="reading_title" bind:value={readingTitle} />
         </label>
         <label>
           author
-          <input type="text" name="reading_author" value={data.content.reading_author || ''} />
+          <input type="text" name="reading_author" bind:value={readingAuthor} />
         </label>
       </div>
       <label>
@@ -68,9 +251,17 @@
           name="reading_note"
           rows="3"
           placeholder="saving adds a new entry when the book changes"
-        >{data.content.reading_note || ''}</textarea>
+          bind:value={readingNote}
+        ></textarea>
       </label>
-      {#if form?.readingSaved}
+      {#if readingError}
+        <div class="form-feedback error">
+          <p>{readingError}</p>
+          <button type="button" class="btn btn-ghost retry-btn" onclick={() => submitForm(readingForm)}>
+            retry
+          </button>
+        </div>
+      {:else if readingSaved}
         <p class="success">saved ✓</p>
       {/if}
       <button type="submit" class="btn">save reading</button>
@@ -80,22 +271,42 @@
   <!-- ── Contact ─────────────────────────────── -->
   <section>
     <h2>contact info</h2>
-    <form method="POST" action="?/updateContact" use:enhance class="section-form">
+    <form
+      bind:this={contactInfoForm}
+      method="POST"
+      action="?/updateContact"
+      use:enhance={() => {
+        clearFeedback((v) => (contactInfoError = v), (v) => (contactInfoSaved = v));
+        return enhanceContactInfo();
+      }}
+      class="section-form"
+    >
       <label>
         address (one line per line)
-        <textarea name="address" rows="3">{data.content.address || ''}</textarea>
+        <textarea name="address" rows="3" bind:value={address}></textarea>
       </label>
       <div class="field-row">
         <label>
           contact email
-          <input type="email" name="contact_email" value={data.content.contact_email || ''} />
+          <input type="email" name="contact_email" bind:value={contactEmail} />
         </label>
         <label>
           contact phone
-          <input type="tel" name="contact_phone" value={data.content.contact_phone || ''} />
+          <input type="tel" name="contact_phone" bind:value={contactPhone} />
         </label>
       </div>
-      {#if form?.contactSaved}
+      {#if contactInfoError}
+        <div class="form-feedback error">
+          <p>{contactInfoError}</p>
+          <button
+            type="button"
+            class="btn btn-ghost retry-btn"
+            onclick={() => submitForm(contactInfoForm)}
+          >
+            retry
+          </button>
+        </div>
+      {:else if contactInfoSaved}
         <p class="success">saved ✓</p>
       {/if}
       <button type="submit" class="btn">save contact info</button>
@@ -107,9 +318,13 @@
     <h2>photos</h2>
 
     <form
+      bind:this={photoForm}
       method="POST"
       action="?/uploadPhoto"
-      use:enhance
+      use:enhance={() => {
+        clearFeedback((v) => (photoError = v), (v) => (photoUploaded = v));
+        return enhancePhoto();
+      }}
       enctype="multipart/form-data"
       class="upload-form"
     >
@@ -119,12 +334,17 @@
       </label>
       <label>
         caption (optional)
-        <input type="text" name="caption" placeholder="a little note…" />
+        <input type="text" name="caption" placeholder="a little note…" bind:value={photoCaption} />
       </label>
-      {#if form?.photoError}
-        <p class="error">{form.photoError}</p>
-      {/if}
-      {#if form?.photoUploaded}
+      {#if photoError}
+        <div class="form-feedback error">
+          <p>{photoError}</p>
+          <p class="error-hint">Your caption is kept below — re-select the photo file, then retry.</p>
+          <button type="button" class="btn btn-ghost retry-btn" onclick={() => submitForm(photoForm)}>
+            retry
+          </button>
+        </div>
+      {:else if photoUploaded}
         <p class="success">uploaded ✓</p>
       {/if}
       <button type="submit" class="btn">upload photo</button>
@@ -142,7 +362,7 @@
             {#if photo.caption}
               <p class="caption">{photo.caption}</p>
             {/if}
-            <form method="POST" action="?/deletePhoto" use:enhance>
+            <form method="POST" action="?/deletePhoto" use:enhance={enhanceRequestAction}>
               <input type="hidden" name="id" value={photo.id} />
               <input type="hidden" name="storage_path" value={photo.storage_path} />
               <button type="submit" class="btn btn-ghost delete-btn">delete</button>
@@ -164,6 +384,12 @@
       {/if}
     </h2>
 
+    {#if requestActionError}
+      <div class="form-feedback error">
+        <p>{requestActionError}</p>
+      </div>
+    {/if}
+
     {#if data.requests.length === 0}
       <p class="empty-note">no pending requests</p>
     {:else}
@@ -179,13 +405,13 @@
               <span class="req-date">{new Date(req.created_at).toLocaleDateString()}</span>
             </div>
             <div class="req-actions">
-              <form method="POST" action="?/approveRequest" use:enhance>
+              <form method="POST" action="?/approveRequest" use:enhance={enhanceRequestAction}>
                 <input type="hidden" name="id" value={req.id} />
                 <input type="hidden" name="phone" value={req.phone} />
                 <input type="hidden" name="name" value={req.name} />
                 <button type="submit" class="btn approve-btn">approve</button>
               </form>
-              <form method="POST" action="?/denyRequest" use:enhance>
+              <form method="POST" action="?/denyRequest" use:enhance={enhanceRequestAction}>
                 <input type="hidden" name="id" value={req.id} />
                 <button type="submit" class="btn btn-ghost deny-btn">deny</button>
               </form>
@@ -203,21 +429,38 @@
       phone numbers in E.164 format, e.g. <code>+15551234567</code>
     </p>
 
-    <form method="POST" action="?/addContact" use:enhance class="add-contact-form">
+    <form
+      bind:this={addContactForm}
+      method="POST"
+      action="?/addContact"
+      use:enhance={() => {
+        clearFeedback((v) => (contactError = v), (v) => (contactAdded = v));
+        return enhanceAddContact();
+      }}
+      class="add-contact-form"
+    >
       <div class="field-row">
         <label>
           phone number
-          <input type="tel" name="phone" placeholder="+15551234567" required />
+          <input type="tel" name="phone" placeholder="+15551234567" required bind:value={newContactPhone} />
         </label>
         <label>
           name
-          <input type="text" name="name" placeholder="Ozzy" />
+          <input type="text" name="name" placeholder="Ozzy" bind:value={newContactName} />
         </label>
       </div>
-      {#if form?.contactError}
-        <p class="error">{form.contactError}</p>
-      {/if}
-      {#if form?.contactAdded}
+      {#if contactError}
+        <div class="form-feedback error">
+          <p>{contactError}</p>
+          <button
+            type="button"
+            class="btn btn-ghost retry-btn"
+            onclick={() => submitForm(addContactForm)}
+          >
+            retry
+          </button>
+        </div>
+      {:else if contactAdded}
         <p class="success">added ✓</p>
       {/if}
       <button type="submit" class="btn">add contact</button>
@@ -229,7 +472,7 @@
           <li>
             <span class="contact-name">{contact.name || '—'}</span>
             <span class="contact-phone">{contact.phone}</span>
-            <form method="POST" action="?/removeContact" use:enhance style="display:inline">
+            <form method="POST" action="?/removeContact" use:enhance={enhanceRequestAction} style="display:inline">
               <input type="hidden" name="id" value={contact.id} />
               <button type="submit" class="btn btn-ghost remove-btn">remove</button>
             </form>
@@ -301,6 +544,26 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+  }
+
+  .form-feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .form-feedback p {
+    margin: 0;
+  }
+
+  .error-hint {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .retry-btn {
+    font-size: 0.8rem;
   }
 
   .btn {
