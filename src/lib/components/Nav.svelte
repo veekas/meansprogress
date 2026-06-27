@@ -1,5 +1,5 @@
 <script>
-  let { showAdmin = false } = $props();
+  let { showAdmin = false, showSettings = false } = $props();
 </script>
 
 <nav>
@@ -7,6 +7,8 @@
   <div class="nav-right">
     {#if showAdmin}
       <a href="/admin" class="nav-link">admin</a>
+    {:else if showSettings}
+      <a href="/settings" class="nav-link">settings</a>
     {/if}
     <form method="POST" action="/logout">
       <button type="submit" class="btn btn-ghost">sign out</button>

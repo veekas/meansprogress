@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS whitelist (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   phone TEXT UNIQUE NOT NULL,   -- E.164 format: +15551234567
   name TEXT,
+  email TEXT NOT NULL DEFAULT '',
+  address TEXT NOT NULL DEFAULT '',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

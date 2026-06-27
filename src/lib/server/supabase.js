@@ -1,10 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { env as pubEnv } from '$env/dynamic/public';
 import { env as privEnv } from '$env/dynamic/private';
+import { isMockMode } from '$lib/server/mock-mode';
+import { createMockSupabase } from '$lib/server/mock-supabase';
 
 let _client = null;
+let _mockClient = null;
 
-function client() {
+function db() {
+  if (isMockMode()) {
+    if (!_mockClient) _mockClient = createMockSupabase();
+    return _mockClient;
+  }
+
   if (!_client) {
     _client = createClient(
       pubEnv.PUBLIC_SUPABASE_URL,
@@ -21,8 +29,8 @@ export const adminSupabase = new Proxy(
   {},
   {
     get(_, prop) {
-      const val = client()[prop];
-      return typeof val === 'function' ? val.bind(client()) : val;
+      const val = db()[prop];
+      return typeof val === 'function' ? val.bind(db()) : val;
     }
   }
 );

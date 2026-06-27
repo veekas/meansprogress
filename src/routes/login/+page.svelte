@@ -1,7 +1,7 @@
 <script>
   import { enhance } from '$app/forms';
 
-  let { form } = $props();
+  let { data, form } = $props();
 
   let step = $state('phone');
   let sentToPhone = $state('');
@@ -38,6 +38,10 @@
   <div class="card">
     <h1>sign in</h1>
 
+    {#if data.mockMode}
+      <p class="dev-hint">dev mode — any phone works. use code <strong>{data.mockOtp}</strong>.</p>
+    {/if}
+
     {#if step === 'phone'}
       <p class="hint">enter your number to receive a one-time code</p>
       <form method="POST" action="?/sendOtp" use:enhance={handleSendOtp}>
@@ -65,7 +69,12 @@
         </button>
       </form>
     {:else}
-      <p class="hint">enter the 6-digit code sent to {sentToPhone}</p>
+      <p class="hint">
+        enter the 6-digit code sent to {sentToPhone}
+        {#if data.mockMode}
+          <span class="dev-inline">(dev: use {data.mockOtp})</span>
+        {/if}
+      </p>
       <form method="POST" action="?/verifyOtp" use:enhance={handleVerifyOtp}>
         <input type="hidden" name="phone" value={sentToPhone} />
         <label>
@@ -136,6 +145,24 @@
     font-size: 0.85rem;
     margin: 0;
     line-height: 1.6;
+  }
+
+  .dev-hint {
+    color: var(--gold);
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.5;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--surface);
+  }
+
+  .dev-inline {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--gold);
+    font-size: 0.8rem;
   }
 
   form {
