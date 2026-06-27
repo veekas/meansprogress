@@ -1,13 +1,16 @@
-/** Normalize a phone number to E.164 (US numbers default to +1). */
+/** Normalize a phone number to E.164 (+1 US/Canada only). */
 export function normalizePhone(phone) {
   if (!phone) return null;
 
   const trimmed = phone.trim();
   const digits = trimmed.replace(/\D/g, '');
 
-  if (digits.length === 10) return `+1${digits}`;
-  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`;
-  if (trimmed.startsWith('+') && digits.length >= 10) return `+${digits}`;
+  let normalized = null;
+  if (digits.length === 10) normalized = `+1${digits}`;
+  else if (digits.length === 11 && digits.startsWith('1')) normalized = `+${digits}`;
+  else if (trimmed.startsWith('+') && digits.length >= 10) normalized = `+${digits}`;
 
-  return null;
+  if (!normalized || !/^\+1\d{10}$/.test(normalized)) return null;
+
+  return normalized;
 }

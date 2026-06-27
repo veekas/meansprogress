@@ -50,7 +50,7 @@
           <input
             type="tel"
             name="phone"
-            placeholder="+15551234567"
+            placeholder="4805551234"
             autocomplete="tel"
             required
           />

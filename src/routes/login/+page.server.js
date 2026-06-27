@@ -19,7 +19,7 @@ export const actions = {
     const normalized = normalizePhone(phone);
     if (!normalized) {
       return fail(400, {
-        error: 'Use a full phone number with country code, e.g. +14805551234.'
+        error: 'Use a US or Canada phone number, e.g. 4805551234 or +14805551234.'
       });
     }
 

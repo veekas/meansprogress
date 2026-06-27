@@ -203,7 +203,7 @@ export const actions = {
 
     if (!phone) {
       return fail(400, {
-        contactError: 'Phone number must include country code, e.g. +14805551234.',
+        contactError: 'Use a US or Canada phone number, e.g. 4805551234 or +14805551234.',
         ...draft
       });
     }

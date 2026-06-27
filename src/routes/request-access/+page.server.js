@@ -19,7 +19,7 @@ export const actions = {
     if (!rawPhone) return fail(400, { error: 'Phone number is required.' });
     if (!phone) {
       return fail(400, {
-        error: 'Use a full phone number, e.g. +14805551234 or 4805551234.'
+        error: 'Use a US or Canada phone number, e.g. 4805551234 or +14805551234.'
       });
     }
     if (!name) return fail(400, { error: 'Name is required.' });

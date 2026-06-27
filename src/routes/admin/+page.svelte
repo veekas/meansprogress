@@ -443,7 +443,7 @@
   <section>
     <h2>contacts</h2>
     <p class="section-hint">
-      phone numbers in E.164 format, e.g. <code>+15551234567</code>
+      US or Canada numbers only, e.g. <code>4805551234</code> or <code>+14805551234</code>
     </p>
 
     {#if contactListError}
@@ -465,7 +465,7 @@
       <div class="field-row">
         <label>
           phone number
-          <input type="tel" name="phone" placeholder="+15551234567" required bind:value={newContactPhone} />
+          <input type="tel" name="phone" placeholder="4805551234" required bind:value={newContactPhone} />
         </label>
         <label>
           name
