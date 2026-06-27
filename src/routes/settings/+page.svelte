@@ -21,7 +21,7 @@
   <form method="POST" use:enhance class="settings-form">
     <label>
       phone number
-      <input type="tel" name="phone" value={profile.phone} required />
+      <input type="tel" name="phone" value={profile.phone} readonly />
     </label>
     <label>
       email

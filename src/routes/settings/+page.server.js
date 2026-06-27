@@ -1,8 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { isAdminUser } from '$lib/server/admin';
 import { adminSupabase } from '$lib/server/supabase';
-import { normalizePhone } from '$lib/phone';
-import { findWhitelistEntryByPhone, ensureWhitelistEntry } from '$lib/server/whitelist';
+import { ensureWhitelistEntry } from '$lib/server/whitelist';
 
 export const load = async ({ locals: { safeGetSession } }) => {
   const { session, user } = await safeGetSession();
@@ -31,32 +30,16 @@ export const actions = {
     if (!entry) return fail(403, { error: 'Your account was not found.' });
 
     const formData = await request.formData();
-    const rawPhone = formData.get('phone')?.toString().trim();
-    const phone = normalizePhone(rawPhone);
     const email = formData.get('email')?.toString().trim() || '';
     const address = formData.get('address')?.toString().trim() || '';
 
-    if (!rawPhone) return fail(400, { error: 'Phone number is required.' });
-    if (!phone) {
-      return fail(400, {
-        error: 'Use a full phone number with country code, e.g. +14805551234.'
-      });
-    }
-
-    if (phone !== normalizePhone(entry.phone)) {
-      const taken = await findWhitelistEntryByPhone(phone);
-      if (taken && taken.id !== entry.id) {
-        return fail(400, { error: 'That phone number is already in use.' });
-      }
-    }
-
     const { error } = await adminSupabase
       .from('whitelist')
-      .update({ phone, email, address })
+      .update({ email, address })
       .eq('id', entry.id);
 
     if (error) return fail(500, { error: 'Something went wrong. Try again.' });
 
-    return { saved: true, profile: { phone, email, address } };
+    return { saved: true, profile: { phone: entry.phone, email, address } };
   }
 };

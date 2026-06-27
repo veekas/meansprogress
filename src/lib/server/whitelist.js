@@ -9,14 +9,28 @@ export async function findWhitelistEntryByPhone(phone) {
   const normalized = normalizePhone(phone);
   if (!normalized) return null;
 
-  const { data: rows, error } = await adminSupabase.from('whitelist').select('*');
+  let { data: entry, error } = await adminSupabase
+    .from('whitelist')
+    .select('*')
+    .eq('phone', normalized)
+    .maybeSingle();
+
   if (error) return null;
 
-  const entry = (rows || []).find((row) => normalizePhone(row.phone) === normalized);
-  if (entry && entry.phone !== normalized) {
-    await adminSupabase.from('whitelist').update({ phone: normalized }).eq('phone', entry.phone);
-    entry.phone = normalized;
+  if (!entry && phone && phone !== normalized) {
+    const { data: rawEntry, error: rawError } = await adminSupabase
+      .from('whitelist')
+      .select('*')
+      .eq('phone', phone)
+      .maybeSingle();
+
+    if (!rawError && rawEntry) {
+      entry = rawEntry;
+      await adminSupabase.from('whitelist').update({ phone: normalized }).eq('id', entry.id);
+      entry.phone = normalized;
+    }
   }
+
   return entry ?? null;
 }
 
