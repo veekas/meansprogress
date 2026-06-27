@@ -26,3 +26,28 @@ Review: ${adminUrl}`
     console.error('Failed to send access request notification:', err);
   }
 }
+
+/** Email admin when someone submits feedback. No-op if env is unset. */
+export async function notifyFeedback({ type, body, phone, page }) {
+  const apiKey = env.RESEND_API_KEY;
+  const to = env.ACCESS_REQUEST_NOTIFY_EMAIL;
+  if (!apiKey || !to) return;
+
+  const from = env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+  const phoneLine = phone ? `\nFrom: ${phone}` : '';
+  const pageLine = page ? `\nPage: ${page}` : '';
+
+  try {
+    const resend = new Resend(apiKey);
+    await resend.emails.send({
+      from,
+      to,
+      subject: `Feedback: ${type}`,
+      text: `${type}${phoneLine}${pageLine}
+
+${body}`
+    });
+  } catch (err) {
+    console.error('Failed to send feedback notification:', err);
+  }
+}
