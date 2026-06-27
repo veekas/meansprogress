@@ -1,5 +1,4 @@
 <script>
-  import Nav from '$lib/components/Nav.svelte';
   import Pagination from '$lib/components/Pagination.svelte';
 
   let { data } = $props();
@@ -16,8 +15,6 @@
 <svelte:head>
   <title>what i'm up to — veekasmeansprogress.com</title>
 </svelte:head>
-
-<Nav showAdmin={data.isAdmin} />
 
 <main>
   <a href="/feed" class="back-link">← back to feed</a>

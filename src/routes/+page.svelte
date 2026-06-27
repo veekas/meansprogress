@@ -1,6 +1,5 @@
 <script>
   import { fly } from 'svelte/transition';
-  import { onMount } from 'svelte';
   import AudioMessage from '$lib/components/AudioMessage.svelte';
   import {
     links,
@@ -16,9 +15,10 @@
   let ashokaEl;
   let taglineWidth = $state(null);
 
-  onMount(() => {
+  $effect(() => {
+    if (!ashokaEl) return;
     const observer = new ResizeObserver(([entry]) => {
-      taglineWidth = entry.target.getBoundingClientRect().width;
+      taglineWidth = entry.borderBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
     });
     observer.observe(ashokaEl, { box: 'border-box' });
     return () => observer.disconnect();
@@ -46,7 +46,7 @@
         </h1>
 
         <div class="profile-details">
-          <p class="tagline" style:width={taglineWidth ? `${taglineWidth}px` : undefined}>
+          <p class="tagline" style:--tagline-width={taglineWidth ? `${taglineWidth}px` : 'auto'}>
             {tagline}
           </p>
 
@@ -249,6 +249,10 @@
     .tagline,
     .work-link {
       text-align: right;
+    }
+
+    .tagline {
+      width: var(--tagline-width, auto);
     }
 
     .bottom-left {

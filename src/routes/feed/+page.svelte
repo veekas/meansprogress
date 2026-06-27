@@ -1,5 +1,4 @@
 <script>
-  import Nav from '$lib/components/Nav.svelte';
   import SeeMore from '$lib/components/SeeMore.svelte';
 
   let { data } = $props();
@@ -7,7 +6,6 @@
   const {
     content,
     photos,
-    isAdmin,
     latestStatus,
     latestReading,
     statusCount,
@@ -21,8 +19,6 @@
 <svelte:head>
   <title>what's up — veekasmeansprogress.com</title>
 </svelte:head>
-
-<Nav showAdmin={isAdmin} />
 
 <main>
   {#if latestStatus}

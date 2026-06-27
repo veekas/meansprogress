@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS whitelist (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   phone TEXT UNIQUE NOT NULL,   -- E.164 format: +15551234567
   name TEXT,
+  email TEXT NOT NULL DEFAULT '',
+  address TEXT NOT NULL DEFAULT '',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -73,6 +75,7 @@ CREATE TABLE IF NOT EXISTS access_requests (
 );
 
 ALTER TABLE feedback ENABLE ROW LEVEL SECURITY;
+CREATE INDEX IF NOT EXISTS feedback_created_at_idx ON feedback (created_at DESC);
 ALTER TABLE access_requests ENABLE ROW LEVEL SECURITY;
 
 -- Row-level security: all operations go through the service role key server-side,

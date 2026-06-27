@@ -18,13 +18,17 @@
 
   function close() {
     open = false;
-    reset();
+    if (sent) {
+      reset();
+    } else {
+      loading = false;
+      error = '';
+    }
   }
 
   $effect(() => {
     if (!dialogEl) return;
     if (open) {
-      sent = false;
       error = '';
       dialogEl.showModal();
     } else if (dialogEl.open) {
@@ -107,6 +111,7 @@
             rows="5"
             placeholder="what's on your mind?"
             bind:value={body}
+            maxlength="5000"
             required
           ></textarea>
         </label>
@@ -117,7 +122,7 @@
 
         <div class="actions">
           <button type="button" class="btn btn-ghost" onclick={close}>cancel</button>
-          <button type="submit" class="btn" disabled={loading}>
+          <button type="submit" class="btn" disabled={loading || !body.trim()}>
             {loading ? 'sending…' : 'send feedback'}
           </button>
         </div>
