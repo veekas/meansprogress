@@ -31,14 +31,16 @@
     </div>
   </section>
 
-  <section class="projects volunteer">
-    <h2>volunteer</h2>
-    <div class="grid">
-      {#each volunteer as entry}
-        <ProjectCard {...entry} />
-      {/each}
-    </div>
-  </section>
+  {#if volunteer && volunteer.length > 0}
+    <section class="projects volunteer">
+      <h2>volunteer</h2>
+      <div class="grid">
+        {#each volunteer as entry}
+          <ProjectCard {...entry} />
+        {/each}
+      </div>
+    </section>
+  {/if}
 
   <footer>
     <p>

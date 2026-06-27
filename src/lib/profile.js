@@ -69,7 +69,7 @@ export const projects = [
 ];
 
 /** @type {readonly string[]} */
-export const skills = [...new Set(projects.flatMap((project) => project.technologies))];
+export const skills = [...new Set(projects.flatMap((project) => project.technologies ?? []))];
 
 /** @type {readonly { title: string; company: string; period?: string; description: string; technologies: readonly string[]; href?: string }[]} */
 export const volunteer = [
