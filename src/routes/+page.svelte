@@ -1,6 +1,5 @@
 <script>
   import { fly } from 'svelte/transition';
-  import { onMount } from 'svelte';
   import AudioMessage from '$lib/components/AudioMessage.svelte';
   import {
     links,
@@ -16,13 +15,12 @@
   let ashokaEl;
   let taglineWidth = $state(null);
 
-  onMount(() => {
+  $effect(() => {
+    if (!ashokaEl) return;
     const observer = new ResizeObserver(([entry]) => {
       taglineWidth = entry.borderBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
     });
-    if (ashokaEl) {
-      observer.observe(ashokaEl, { box: 'border-box' });
-    }
+    observer.observe(ashokaEl, { box: 'border-box' });
     return () => observer.disconnect();
   });
 </script>
