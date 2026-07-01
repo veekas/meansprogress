@@ -94,7 +94,10 @@ export function createMockDb() {
   /** @type {Map<string, { contentType: string, url: string }>} */
   const storage = new Map([[photoPath, { contentType: 'image/svg+xml', url: PLACEHOLDER_PHOTO }]]);
 
-  return { content, whitelist, status_posts, reading_posts, photos, access_requests, storage };
+  /** @type {Array<{ id: string, post_type: string, post_id: string, user_id: string, user_phone: string | null, body: string, created_at: string }>} */
+  const comments = [];
+
+  return { content, whitelist, status_posts, reading_posts, photos, access_requests, comments, storage };
 }
 
 /** @typedef {ReturnType<typeof createMockDb>} MockDb */

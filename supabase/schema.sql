@@ -74,9 +74,24 @@ CREATE TABLE IF NOT EXISTS access_requests (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Comments on feed posts (status, reading, photo)
+CREATE TABLE IF NOT EXISTS comments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  post_type TEXT NOT NULL CHECK (post_type IN ('status', 'reading', 'photo')),
+  post_id UUID NOT NULL,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_phone TEXT,
+  body TEXT NOT NULL CHECK (char_length(btrim(body)) > 0),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS comments_post_idx ON comments (post_type, post_id, created_at);
+CREATE INDEX IF NOT EXISTS comments_user_idx ON comments (user_id);
+
 ALTER TABLE feedback ENABLE ROW LEVEL SECURITY;
 CREATE INDEX IF NOT EXISTS feedback_created_at_idx ON feedback (created_at DESC);
 ALTER TABLE access_requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
 
 -- Row-level security: all operations go through the service role key server-side,
 -- so enabling RLS here prevents any accidental direct client access.
