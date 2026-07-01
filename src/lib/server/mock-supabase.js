@@ -140,6 +140,9 @@ class SelectQuery {
       case 'access_requests':
         rows = [...this.db.access_requests];
         break;
+      case 'comments':
+        rows = [...this.db.comments];
+        break;
       default:
         rows = [];
     }
@@ -334,6 +337,11 @@ class DeleteQuery {
       return ok(null);
     }
 
+    if (this.table === 'comments') {
+      this.db.comments = this.db.comments.filter((row) => !match(row));
+      return ok(null);
+    }
+
     return ok(null);
   }
 
@@ -420,6 +428,20 @@ class TableQuery {
         created_at: String(saved.created_at)
       });
       return Promise.resolve(ok(saved));
+    }
+
+    if (this.table === 'comments') {
+      const entry = {
+        id: String(saved.id),
+        post_type: String(saved.post_type),
+        post_id: String(saved.post_id),
+        user_id: String(saved.user_id),
+        user_phone: saved.user_phone != null ? String(saved.user_phone) : null,
+        body: String(saved.body),
+        created_at: String(saved.created_at)
+      };
+      this.db.comments.push(entry);
+      return Promise.resolve(ok(entry));
     }
 
     return Promise.resolve(ok(saved));

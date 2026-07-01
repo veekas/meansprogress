@@ -1,5 +1,6 @@
 <script>
   import Pagination from '$lib/components/Pagination.svelte';
+  import Comments from '$lib/components/Comments.svelte';
 
   let { data } = $props();
 
@@ -31,6 +32,7 @@
             <figcaption>{photo.caption}</figcaption>
           {/if}
           <time datetime={photo.created_at}>{formatDate(photo.created_at)}</time>
+          <Comments postId={photo.id} comments={photo.comments} currentUserId={data.user?.id} isAdmin={data.isAdmin} />
         </figure>
       {/each}
     </div>

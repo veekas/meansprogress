@@ -1,5 +1,6 @@
 <script>
   import Pagination from '$lib/components/Pagination.svelte';
+  import Comments from '$lib/components/Comments.svelte';
 
   let { data } = $props();
 
@@ -36,6 +37,7 @@
               <p class="reading-note">{post.note}</p>
             {/if}
           </div>
+          <Comments postId={post.id} comments={post.comments} currentUserId={data.user?.id} isAdmin={data.isAdmin} />
         </li>
       {/each}
     </ol>

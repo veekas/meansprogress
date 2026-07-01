@@ -62,6 +62,40 @@ Review: ${adminUrl}`
   }
 }
 
+const POST_TYPE_LABELS = {
+  status: 'status',
+  reading: 'reading',
+  photo: 'photo'
+};
+
+/** Email admin when someone comments on a post. No-op if env is unset. */
+export async function notifyComment({ postType, body, phone }) {
+  const label = POST_TYPE_LABELS[postType] || postType;
+  const phoneLine = phone ? `\nFrom: ${phone}` : '';
+  const text = `New comment on ${label} post:${phoneLine}\n\n${body}`;
+  await Promise.all([signalNotify(text), whatsappNotify(text)]);
+
+  const apiKey = env.RESEND_API_KEY;
+  const to = env.ACCESS_REQUEST_NOTIFY_EMAIL;
+  if (!apiKey || !to) return;
+
+  const from = env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+
+  try {
+    const resend = new Resend(apiKey);
+    await resend.emails.send({
+      from,
+      to,
+      subject: `New comment on ${label} post`,
+      text: `${phoneLine}
+
+${body}`
+    });
+  } catch (err) {
+    console.error('Failed to send comment notification:', err);
+  }
+}
+
 /** Email admin when someone submits feedback. No-op if env is unset. */
 export async function notifyFeedback({ type, body, phone, page }) {
   const phoneLine = phone ? `\nFrom: ${phone}` : '';
