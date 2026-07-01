@@ -1,10 +1,16 @@
 <script>
+  import { onMount } from 'svelte';
   import { enhance } from '$app/forms';
   import { preserveDraftOnFailure } from '$lib/adminForm';
 
   let { comments = [], currentUserId, isAdmin = false } = $props();
 
   let deleteError = $state(null);
+  let mounted = $state(false);
+
+  onMount(() => {
+    mounted = true;
+  });
 
   const enhanceDelete = preserveDraftOnFailure({
     onSuccess: () => (deleteError = null),
@@ -12,6 +18,7 @@
   });
 
   function formatDate(iso) {
+    if (!mounted) return '';
     return new Date(iso).toLocaleDateString(undefined, {
       year: 'numeric',
       month: 'long',

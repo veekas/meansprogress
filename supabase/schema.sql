@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS comments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   post_type TEXT NOT NULL CHECK (post_type IN ('status', 'reading', 'photo')),
   post_id UUID NOT NULL,
-  user_id UUID NOT NULL,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   user_phone TEXT,
   body TEXT NOT NULL CHECK (char_length(btrim(body)) > 0),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

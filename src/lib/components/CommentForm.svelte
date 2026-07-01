@@ -23,9 +23,10 @@
   class="comment-form"
   use:enhance={() => {
     loading = true;
-    return async (event) => {
+    const callback = enhanceComment();
+    return async (resultEvent) => {
       loading = false;
-      return enhanceComment()(event);
+      if (callback) await callback(resultEvent);
     };
   }}
 >

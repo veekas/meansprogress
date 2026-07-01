@@ -29,6 +29,7 @@ export async function getCommentsForPosts(postType, postIds) {
 
 /** Validate, persist, and notify on a new comment. */
 export async function addComment({ postType, postId, user, body }) {
+  if (!user?.id) return { error: 'Unauthorized.', status: 401 };
   if (!postId) return { error: 'Missing post.', status: 400 };
 
   const message = body?.trim();
@@ -57,6 +58,7 @@ export async function addComment({ postType, postId, user, body }) {
 
 /** Delete a comment if the requester owns it or is the admin. */
 export async function deleteComment({ id, userId, isAdmin }) {
+  if (!userId) return { error: 'Unauthorized.', status: 401 };
   if (!id) return { error: 'Missing comment ID.', status: 400 };
 
   const { data: comment, error: fetchError } = await adminSupabase
