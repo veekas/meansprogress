@@ -1,12 +1,12 @@
 <script>
-  import { fly } from 'svelte/transition';
-  import AudioMessage from '$lib/components/AudioMessage.svelte';
+  import { fly } from "svelte/transition";
+  import AudioMessage from "$lib/components/AudioMessage.svelte";
   import {
     links,
     metaDescription,
     personJsonLd,
-    tagline
-  } from '$lib/profile.js';
+    tagline,
+  } from "$lib/profile.js";
 
   let { data } = $props();
 
@@ -18,9 +18,10 @@
   $effect(() => {
     if (!ashokaEl) return;
     const observer = new ResizeObserver(([entry]) => {
-      taglineWidth = entry.borderBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
+      taglineWidth =
+        entry.borderBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
     });
-    observer.observe(ashokaEl, { box: 'border-box' });
+    observer.observe(ashokaEl, { box: "border-box" });
     return () => observer.disconnect();
   });
 </script>
@@ -37,7 +38,10 @@
     <div class="content-column">
       <div class="name-block">
         <h1>
-          <span class="shift-left" in:fly={{ y: -30, duration: 1200, delay: 100 }}>veekas</span>
+          <span
+            class="shift-left"
+            in:fly={{ y: -30, duration: 1200, delay: 100 }}>veekas</span
+          >
           <span
             class="shift-right"
             bind:this={ashokaEl}
@@ -46,7 +50,10 @@
         </h1>
 
         <div class="profile-details">
-          <p class="tagline" style:--tagline-width={taglineWidth ? `${taglineWidth}px` : 'auto'}>
+          <p
+            class="tagline"
+            style:--tagline-width={taglineWidth ? `${taglineWidth}px` : "auto"}
+          >
             {tagline}
           </p>
 
@@ -60,9 +67,10 @@
         {#each links as link}
           <a
             href={link.href}
-            rel={link.href.startsWith('http') ? 'me noopener' : undefined}
-            target={link.external === false ? undefined : '_blank'}
-          >{link.label}</a>
+            rel={link.href.startsWith("http") ? "me noopener" : undefined}
+            target={link.external === false ? undefined : "_blank"}
+            >{link.label}</a
+          >
         {/each}
 
         <div class="auth-links">
@@ -173,7 +181,7 @@
     border: 1px solid var(--gold);
     color: var(--gold);
     border-radius: 9999px;
-    font-size: clamp(1.2rem, 3.5vh, 1.6rem);
+    font-size: 0.8rem;
     line-height: 1.5;
     padding: 0.1rem 0.9rem;
   }
@@ -185,7 +193,7 @@
 
   .request-link {
     color: var(--muted);
-    font-size: clamp(1.2rem, 3.5vh, 1.6rem);
+    font-size: 0.8rem;
     line-height: 1.5;
   }
 
