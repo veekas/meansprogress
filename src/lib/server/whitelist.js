@@ -54,6 +54,11 @@ async function writeGuestProfileToContent(phone, profile) {
   );
 }
 
+/** @param {string} phone */
+async function deleteGuestProfileFromContent(phone) {
+  return adminSupabase.from('content').delete().eq('key', guestProfileContentKey(phone));
+}
+
 /** @param {string | null | undefined} phone */
 export async function findWhitelistEntryByPhone(phone) {
   const normalized = normalizePhone(phone);
@@ -142,7 +147,10 @@ export async function updateGuestContact(phone, profile) {
     .update({ email, address })
     .eq('phone', entry.phone);
 
-  if (!error) return { ok: true, profile: savedProfile };
+  if (!error) {
+    await deleteGuestProfileFromContent(entry.phone);
+    return { ok: true, profile: savedProfile };
+  }
 
   if (isMissingProfileColumnsError(error)) {
     const { error: contentError } = await writeGuestProfileToContent(entry.phone, { email, address });

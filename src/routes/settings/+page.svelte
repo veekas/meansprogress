@@ -5,9 +5,14 @@
 
   let { data, form } = $props();
 
-  let phone = $state(data.profile.phone || '');
-  let email = $state(data.profile.email || '');
-  let address = $state(data.profile.address || '');
+  const phone = data.profile.phone || '';
+  let email = $state(form?.profile?.email ?? data.profile.email ?? '');
+  let address = $state(form?.profile?.address ?? data.profile.address ?? '');
+
+  $effect(() => {
+    email = form?.profile?.email ?? data.profile.email ?? '';
+    address = form?.profile?.address ?? data.profile.address ?? '';
+  });
 
   const enhanceSettings = preserveDraftOnFailure();
 </script>
