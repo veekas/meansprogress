@@ -57,36 +57,35 @@
             {tagline}
           </p>
 
-          <p class="work-link">
-            <a href="/work">more about his work →</a>
+          <p class="more-about-container">
+            <span class="more-about-prefix">more about his</span>
+            <a href="/work" class="work-link btn">work</a>
+            <a href="/login" class="auth-links btn">life</a>
           </p>
         </div>
       </div>
 
-      <div class="links">
-        {#each links as link}
-          <a
-            href={link.href}
-            rel={link.href.startsWith("http") ? "me noopener" : undefined}
-            target={link.external === false ? undefined : "_blank"}
-            >{link.label}</a
-          >
-        {/each}
-
-        <div class="auth-links">
+      <div class="content-container">
+        <div class="wave-slot">
           {#if data.session}
-            <a href="/feed" class="btn">see what's up →</a>
+            <a href="/feed" class="login-link">check in</a>
           {:else}
-            <a href="/login" class="btn">see more</a>
-            <a href="/request-access" class="request-link">request access</a>
+            <a href="/login" class="login-link">login</a>
           {/if}
+          <AudioMessage />
+        </div>
+        <div class="links">
+          {#each links as link}
+            <a
+              href={link.href}
+              rel={link.href.startsWith("http") ? "me noopener" : undefined}
+              target={link.external === false ? undefined : "_blank"}
+              >{link.label}</a
+            >
+          {/each}
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="wave-slot">
-    <AudioMessage />
   </div>
 </main>
 
@@ -97,6 +96,22 @@
     padding: 8vmin 10vmin 10vmin;
     text-align: right;
     overflow-y: auto;
+  }
+
+  .login-link {
+    /* align-self: flex-end; */
+    opacity: 0.85;
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+  }
+
+  .more-about-prefix {
+    opacity: 0.85;
+  }
+
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
   }
 
   .page-grid {
@@ -147,9 +162,21 @@
     opacity: 0.85;
   }
 
+  .more-about-container {
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+  }
+  .more-about-container a {
+    color: var(--gold);
+  }
+
+  .more-about-container a:hover {
+    color: var(--white);
+  }
+
   .work-link {
     margin: 0.75rem 0 0;
-    font-size: 0.8rem;
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+    display: inline-block;
   }
 
   .work-link a {
@@ -169,15 +196,16 @@
   }
 
   .auth-links {
-    display: flex;
+    /* display: flex;
     align-items: center;
     gap: 0.75rem;
     flex-wrap: wrap;
     justify-content: flex-end;
-    margin-top: 0.75rem;
+    margin-top: 0.75rem; */
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
   }
 
-  .auth-links .btn {
+  .btn {
     border: 1px solid var(--gold);
     color: var(--gold);
     border-radius: 9999px;
@@ -202,9 +230,12 @@
   }
 
   .wave-slot {
-    position: absolute;
-    bottom: 10vmin;
-    left: 10vmin;
+    align-self: flex-end;
+    justify-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
   }
 
   @media (min-width: 768px) {

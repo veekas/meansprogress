@@ -1,5 +1,5 @@
 <script>
-  import SeeMore from '$lib/components/SeeMore.svelte';
+  import SeeMore from "$lib/components/SeeMore.svelte";
 
   let { data } = $props();
 
@@ -10,7 +10,7 @@
     latestReading,
     statusCount,
     readingCount,
-    photoCount
+    photoCount,
   } = data;
 
   const latestPhoto = photos[0] ?? null;
@@ -51,9 +51,13 @@
 
   {#if latestPhoto}
     <section>
-      <h2>proof of life</h2>
+      <h2>photos</h2>
       <figure>
-        <img src={latestPhoto.url} alt={latestPhoto.caption || ''} loading="lazy" />
+        <img
+          src={latestPhoto.url}
+          alt={latestPhoto.caption || ""}
+          loading="lazy"
+        />
         {#if latestPhoto.caption}
           <figcaption>{latestPhoto.caption}</figcaption>
         {/if}

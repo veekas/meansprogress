@@ -1,5 +1,5 @@
 <script>
-  import { enhance } from '$app/forms';
+  import { enhance } from "$app/forms";
   let { data, form } = $props();
   let loading = $state(false);
 </script>
@@ -27,17 +27,26 @@
       </div>
     {:else}
       <p class="hint">
-        if you know veekas, enter your info below to request access to his private feed — a
-        low-key update page for friends, not a social network.
+        if veekas knows you, enter your info below to request access to his
+        private feed. if he doesn't, then feel free to request to add him to
+        your network on linkedin.
       </p>
 
       <div class="feed-preview">
         <p class="feed-preview-label">what's inside</p>
         <ul>
-          <li><strong>what i'm up to</strong> — occasional life and work updates</li>
-          <li><strong>what i'm reading</strong> — books in progress, with notes when there's something worth sharing</li>
-          <li><strong>proof of life</strong> — photos so you know he's still out there</li>
-          <li><strong>contact info</strong> — email, phone, and mailing address for people who should have it</li>
+          <li>
+            <strong>status updates</strong>: like when twitter was fun
+          </li>
+          <li>
+            <strong>reading list</strong>: like when goodreads was fun
+          </li>
+          <li>
+            <strong>recent photos</strong>: like when instagram was fun
+          </li>
+          <li>
+            <strong>contact info</strong>: like when address books... existed
+          </li>
         </ul>
       </div>
 
@@ -64,7 +73,13 @@
         </label>
         <label>
           your name
-          <input type="text" name="name" placeholder="Ozzy" autocomplete="name" required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Ozzy"
+            autocomplete="name"
+            required
+          />
         </label>
         <label>
           note (optional)
@@ -77,14 +92,19 @@
         {#if form?.error}
           <p class="error">{form.error}</p>
           {#if form?.alreadyHasAccess}
-            <a href="/login{data.prefillPhone ? `?phone=${encodeURIComponent(data.prefillPhone)}` : ''}" class="btn">
+            <a
+              href="/login{data.prefillPhone
+                ? `?phone=${encodeURIComponent(data.prefillPhone)}`
+                : ''}"
+              class="btn"
+            >
               sign in →
             </a>
           {/if}
         {/if}
         {#if !form?.alreadyHasAccess}
           <button type="submit" class="btn" disabled={loading}>
-            {loading ? 'sending…' : 'send request →'}
+            {loading ? "sending…" : "send request →"}
           </button>
         {/if}
       </form>

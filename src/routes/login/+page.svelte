@@ -1,10 +1,10 @@
 <script>
-  import { enhance } from '$app/forms';
+  import { enhance } from "$app/forms";
 
   let { data, form } = $props();
 
-  let step = $state('phone');
-  let sentToPhone = $state('');
+  let step = $state("phone");
+  let sentToPhone = $state("");
   let loading = $state(false);
 
   function handleSendOtp({ formData }) {
@@ -12,9 +12,9 @@
     return async ({ result, update }) => {
       loading = false;
       await update({ reset: false });
-      if (result.type === 'success' && result.data?.sent) {
+      if (result.type === "success" && result.data?.sent) {
         sentToPhone = result.data.phone;
-        step = 'otp';
+        step = "otp";
       }
     };
   }
@@ -38,11 +38,18 @@
   <div class="card">
     <h1>sign in</h1>
 
+    <p>
+      don't have access?
+      <a href="/request-access" class="request-top">request it!</a>
+    </p>
+
     {#if data.mockMode}
-      <p class="dev-hint">dev mode — any phone works. use code <strong>{data.mockOtp}</strong>.</p>
+      <p class="dev-hint">
+        dev mode — any phone works. use code <strong>{data.mockOtp}</strong>.
+      </p>
     {/if}
 
-    {#if step === 'phone'}
+    {#if step === "phone"}
       <p class="hint">enter your number to receive a one-time code</p>
       <form method="POST" action="?/sendOtp" use:enhance={handleSendOtp}>
         <label>
@@ -59,13 +66,15 @@
           <p class="error">{form.error}</p>
           {#if form?.notWhitelisted}
             <a
-              href="/request-access?phone={encodeURIComponent(form.rejectedPhone || '')}"
-              class="request-link"
-            >request access →</a>
+              href="/request-access?phone={encodeURIComponent(
+                form.rejectedPhone || '',
+              )}"
+              class="request-link">request access →</a
+            >
           {/if}
         {/if}
         <button type="submit" class="btn" disabled={loading}>
-          {loading ? 'sending…' : 'send code →'}
+          {loading ? "sending…" : "send code →"}
         </button>
       </form>
     {:else}
@@ -93,12 +102,14 @@
           <p class="error">{form.error}</p>
         {/if}
         <button type="submit" class="btn" disabled={loading}>
-          {loading ? 'verifying…' : 'sign in →'}
+          {loading ? "verifying…" : "sign in →"}
         </button>
         <button
           type="button"
           class="btn btn-ghost"
-          onclick={() => { step = 'phone'; }}
+          onclick={() => {
+            step = "phone";
+          }}
         >
           ← use a different number
         </button>
@@ -115,6 +126,14 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
+  }
+
+  .request-top {
+    color: var(--gold);
+  }
+
+  .request-top:hover {
+    color: var(--white);
   }
 
   .back {

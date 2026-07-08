@@ -1,25 +1,25 @@
 <script>
-  import Pagination from '$lib/components/Pagination.svelte';
-  import Comments from '$lib/components/Comments.svelte';
+  import Pagination from "$lib/components/Pagination.svelte";
+  import Comments from "$lib/components/Comments.svelte";
 
   let { data } = $props();
 
   function formatDate(iso) {
     return new Date(iso).toLocaleDateString(undefined, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   }
 </script>
 
 <svelte:head>
-  <title>proof of life — veekasmeansprogress.com</title>
+  <title>photos — veekasmeansprogress.com</title>
 </svelte:head>
 
 <main>
   <a href="/feed" class="back-link">← back to feed</a>
-  <h1>proof of life</h1>
+  <h1>photos</h1>
 
   {#if data.totalCount === 0}
     <p class="empty">nothing here yet.</p>
@@ -27,16 +27,26 @@
     <div class="photo-grid">
       {#each data.photos as photo}
         <figure>
-          <img src={photo.url} alt={photo.caption || ''} loading="lazy" />
+          <img src={photo.url} alt={photo.caption || ""} loading="lazy" />
           {#if photo.caption}
             <figcaption>{photo.caption}</figcaption>
           {/if}
-          <time datetime={photo.created_at}>{formatDate(photo.created_at)}</time>
-          <Comments postId={photo.id} comments={photo.comments} currentUserId={data.user?.id} isAdmin={data.isAdmin} />
+          <time datetime={photo.created_at}>{formatDate(photo.created_at)}</time
+          >
+          <Comments
+            postId={photo.id}
+            comments={photo.comments}
+            currentUserId={data.user?.id}
+            isAdmin={data.isAdmin}
+          />
         </figure>
       {/each}
     </div>
-    <Pagination page={data.page} totalPages={data.totalPages} basePath="/feed/photos" />
+    <Pagination
+      page={data.page}
+      totalPages={data.totalPages}
+      basePath="/feed/photos"
+    />
   {/if}
 </main>
 
