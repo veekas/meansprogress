@@ -1,11 +1,11 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   /** @type {{ size?: 'default' | 'header' }} */
-  let { size = 'default' } = $props();
+  let { size = "default" } = $props();
 
-  const playLabel = 'Play a short voice hello from veekas';
-  const stopLabel = 'Stop voice hello';
+  const playLabel = "Play a short voice hello from veekas";
+  const stopLabel = "Stop voice hello";
 
   let audio = $state(null);
   let playing = $state(false);
@@ -34,21 +34,17 @@
   type="button"
   class="audio-btn"
   class:playing
-  class:header={size === 'header'}
+  class:header={size === "header"}
   onclick={toggle}
   title={playing ? stopLabel : playLabel}
   aria-label={playing ? stopLabel : playLabel}
 >
-  <span
-    class="wave"
-    class:intro-wave={introWaving}
-    aria-hidden="true"
-  >👋🏽</span>
+  <span class="wave" class:intro-wave={introWaving} aria-hidden="true">👋🏽</span>
 </button>
 
 <audio
   bind:this={audio}
-  src="/audio/hello.m4a"
+  src="/audio/hello.mp3"
   preload="metadata"
   onplay={() => (playing = true)}
   onpause={() => (playing = false)}
