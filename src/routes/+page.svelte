@@ -93,7 +93,7 @@
       {#if data.session}
         <a href="/feed" class="btn">see what's up →</a>
       {:else}
-        <a href="/login" class="btn">sign in</a>
+        <a href="/login" class="btn">see more</a>
         <a href="/request-access" class="request-link">request access</a>
       {/if}
     </div>
