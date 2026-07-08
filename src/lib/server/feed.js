@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import { isAdminUser } from '$lib/server/admin';
-import { ensureWhitelistEntry, isProfileIncomplete } from '$lib/server/whitelist';
+import { ensureWhitelistEntry, getGuestContact, isProfileIncomplete } from '$lib/server/whitelist';
 
 /** Redirect to login when there is no session; returns feed layout data. */
 export async function requireFeedSession(safeGetSession) {
@@ -12,7 +12,8 @@ export async function requireFeedSession(safeGetSession) {
 
   if (!isAdmin) {
     const entry = await ensureWhitelistEntry(user?.phone);
-    profileIncomplete = isProfileIncomplete(entry);
+    const contact = await getGuestContact(entry);
+    profileIncomplete = isProfileIncomplete(contact);
   }
 
   return { isAdmin, profileIncomplete };

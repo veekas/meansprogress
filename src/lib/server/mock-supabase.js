@@ -337,6 +337,13 @@ class DeleteQuery {
       return ok(null);
     }
 
+    if (this.table === 'content') {
+      for (const { col, val } of this.filters) {
+        if (col === 'key') this.db.content.delete(String(val));
+      }
+      return ok(null);
+    }
+
     if (this.table === 'comments') {
       this.db.comments = this.db.comments.filter((row) => !match(row));
       return ok(null);

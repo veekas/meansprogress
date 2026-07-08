@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
+import { friendlyDbError } from '$lib/adminForm';
 import { isAdminUser } from '$lib/server/admin';
-import { adminSupabase } from '$lib/server/supabase';
-import { ensureWhitelistEntry } from '$lib/server/whitelist';
+import { ensureWhitelistEntry, getGuestContact, updateGuestContact } from '$lib/server/whitelist';
 
 export const load = async ({ locals: { safeGetSession } }) => {
   const { session, user } = await safeGetSession();
@@ -11,13 +11,10 @@ export const load = async ({ locals: { safeGetSession } }) => {
   const entry = await ensureWhitelistEntry(user?.phone);
   if (!entry) redirect(303, '/feed');
 
-  return {
-    profile: {
-      phone: entry.phone,
-      email: entry.email || '',
-      address: entry.address || ''
-    }
-  };
+  const contact = await getGuestContact(entry);
+  if (!contact) redirect(303, '/feed');
+
+  return { profile: contact };
 };
 
 export const actions = {
@@ -33,13 +30,18 @@ export const actions = {
     const email = formData.get('email')?.toString().trim() || '';
     const address = formData.get('address')?.toString().trim() || '';
 
-    const { error } = await adminSupabase
-      .from('whitelist')
-      .update({ email, address })
-      .eq('id', entry.id);
+    const result = await updateGuestContact(user?.phone, { email, address });
 
-    if (error) return fail(500, { error: 'Something went wrong. Try again.' });
+    if (!result.ok) {
+      if (result.reason === 'not_found') {
+        return fail(403, { error: 'Your account was not found.', profile: { phone: entry.phone, email, address } });
+      }
+      return fail(500, {
+        error: friendlyDbError(result.error),
+        profile: { phone: entry.phone, email, address }
+      });
+    }
 
-    return { saved: true, profile: { phone: entry.phone, email, address } };
+    return { saved: true, profile: result.profile };
   }
 };
