@@ -14,8 +14,6 @@
 
   let ashokaEl;
   let taglineWidth = $state(null);
-  let authFooterEl;
-  let authFooterHeight = $state(0);
 
   $effect(() => {
     if (!ashokaEl) return;
@@ -23,15 +21,6 @@
       taglineWidth = entry.borderBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
     });
     observer.observe(ashokaEl, { box: 'border-box' });
-    return () => observer.disconnect();
-  });
-
-  $effect(() => {
-    if (!authFooterEl) return;
-    const observer = new ResizeObserver(([entry]) => {
-      authFooterHeight = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
-    });
-    observer.observe(authFooterEl, { box: 'border-box' });
     return () => observer.disconnect();
   });
 </script>
@@ -43,68 +32,60 @@
   {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
-<main style:--auth-footer-height="{authFooterHeight}px">
+<main>
   <div class="page-grid">
-    <div class="name-block">
-      <h1>
-        <span class="shift-left" in:fly={{ y: -30, duration: 1200, delay: 100 }}>veekas</span>
-        <span
-          class="shift-right"
-          bind:this={ashokaEl}
-          in:fly={{ y: -75, delay: 1000, duration: 2000 }}>ashoka</span
-        >
-      </h1>
+    <div class="content-column">
+      <div class="name-block">
+        <h1>
+          <span class="shift-left" in:fly={{ y: -30, duration: 1200, delay: 100 }}>veekas</span>
+          <span
+            class="shift-right"
+            bind:this={ashokaEl}
+            in:fly={{ y: -75, delay: 1000, duration: 2000 }}>ashoka</span
+          >
+        </h1>
 
-      <div class="profile-details">
-        <p class="tagline" style:--tagline-width={taglineWidth ? `${taglineWidth}px` : 'auto'}>
-          {tagline}
-        </p>
+        <div class="profile-details">
+          <p class="tagline" style:--tagline-width={taglineWidth ? `${taglineWidth}px` : 'auto'}>
+            {tagline}
+          </p>
 
-        <p class="work-link">
-          <a href="/work">more about my work →</a>
-        </p>
+          <p class="work-link">
+            <a href="/work">more about his work →</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="links">
+        {#each links as link}
+          <a
+            href={link.href}
+            rel={link.href.startsWith('http') ? 'me noopener' : undefined}
+            target={link.external === false ? undefined : '_blank'}
+          >{link.label}</a>
+        {/each}
+
+        <div class="auth-links">
+          {#if data.session}
+            <a href="/feed" class="btn">see what's up →</a>
+          {:else}
+            <a href="/login" class="btn">see more</a>
+            <a href="/request-access" class="request-link">request access</a>
+          {/if}
+        </div>
+      </div>
+
+      <div class="wave-slot">
+        <AudioMessage />
       </div>
     </div>
-
-    <div class="links links--mobile">
-      {#each links as link}
-        <a
-          href={link.href}
-          rel={link.href.startsWith('http') ? 'me noopener' : undefined}
-          target={link.external === false ? undefined : '_blank'}
-        >{link.label}</a>
-      {/each}
-    </div>
-
-    <div class="links links--desktop">
-      {#each links as link}
-        <a
-          href={link.href}
-          rel={link.href.startsWith('http') ? 'me noopener' : undefined}
-          target={link.external === false ? undefined : '_blank'}>{link.label}</a
-        >
-      {/each}
-    </div>
   </div>
-
-  <footer class="auth-footer" bind:this={authFooterEl}>
-    <AudioMessage />
-    <div class="signin">
-      {#if data.session}
-        <a href="/feed" class="btn">see what's up →</a>
-      {:else}
-        <a href="/login" class="btn">see more</a>
-        <a href="/request-access" class="request-link">request access</a>
-      {/if}
-    </div>
-  </footer>
 </main>
 
 <style>
   main {
     min-height: 100vh;
     padding: 8vmin 10vmin 10vmin;
-    padding-bottom: calc(10vmin + var(--auth-footer-height, 0px) + 2rem);
     text-align: right;
     overflow-y: auto;
   }
@@ -113,9 +94,18 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 2rem;
+    min-height: calc(100vh - 8vmin - 10vmin);
     width: 100%;
     overflow-wrap: anywhere;
+  }
+
+  .content-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2rem;
+    width: fit-content;
+    max-width: 100%;
   }
 
   .name-block {
@@ -164,71 +154,63 @@
     gap: 0.25rem;
   }
 
-  .links a {
+  .links > a {
     font-size: clamp(1.2rem, 3.5vh, 1.6rem);
     line-height: 1.5;
   }
 
-  .links--mobile {
-    display: none;
-  }
-
-  .auth-footer {
-    position: fixed;
-    bottom: 10vmin;
-    left: 10vmin;
-    right: 10vmin;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-    pointer-events: none;
-  }
-
-  .auth-footer > * {
-    pointer-events: auto;
-  }
-
-  .signin {
+  .auth-links {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     flex-wrap: wrap;
     justify-content: flex-end;
+    margin-top: 0.75rem;
   }
 
-  .signin .btn {
-    border-color: var(--gold);
+  .auth-links .btn {
+    border: 1px solid var(--gold);
     color: var(--gold);
     border-radius: 9999px;
+    font-size: clamp(1.2rem, 3.5vh, 1.6rem);
+    line-height: 1.5;
+    padding: 0.1rem 0.9rem;
   }
 
-  .signin .btn:hover {
+  .auth-links .btn:hover {
     background: var(--gold);
     color: var(--bg);
   }
 
   .request-link {
     color: var(--muted);
-    font-size: 0.8rem;
+    font-size: clamp(1.2rem, 3.5vh, 1.6rem);
+    line-height: 1.5;
   }
 
   .request-link:hover {
     color: var(--text);
   }
 
+  .wave-slot {
+    align-self: flex-start;
+  }
+
   @media (min-width: 768px) {
     .page-grid {
       display: grid;
-      grid-template-rows: auto 1fr auto;
-      align-items: end;
+      grid-template-rows: 1fr;
+      align-items: stretch;
       justify-items: end;
-      min-height: calc(100vh - 8vmin - 10vmin - var(--auth-footer-height, 0px) - 2rem);
-      row-gap: clamp(1.5rem, 4vh, 3rem);
+    }
+
+    .content-column {
+      min-height: 100%;
+      justify-content: space-between;
+      gap: clamp(1.5rem, 4vh, 3rem);
     }
 
     .name-block {
-      grid-row: 1;
       display: table;
       align-self: stretch;
     }
@@ -246,31 +228,6 @@
 
     .tagline {
       width: var(--tagline-width, auto);
-    }
-
-    .links--desktop {
-      grid-row: 3;
-      flex-shrink: 0;
-    }
-
-    .links--mobile {
-      display: none;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .page-grid {
-      min-height: auto;
-    }
-
-    .links--desktop {
-      display: none;
-    }
-
-    .links--mobile {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
     }
   }
 </style>
