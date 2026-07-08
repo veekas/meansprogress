@@ -74,16 +74,17 @@
           {/if}
         </div>
       </div>
-
-      <div class="wave-slot">
-        <AudioMessage />
-      </div>
     </div>
+  </div>
+
+  <div class="wave-slot">
+    <AudioMessage />
   </div>
 </main>
 
 <style>
   main {
+    position: relative;
     min-height: 100vh;
     padding: 8vmin 10vmin 10vmin;
     text-align: right;
@@ -193,7 +194,9 @@
   }
 
   .wave-slot {
-    align-self: flex-start;
+    position: absolute;
+    bottom: 10vmin;
+    left: 10vmin;
   }
 
   @media (min-width: 768px) {
@@ -206,7 +209,6 @@
 
     .content-column {
       min-height: 100%;
-      justify-content: space-between;
       gap: clamp(1.5rem, 4vh, 3rem);
     }
 
