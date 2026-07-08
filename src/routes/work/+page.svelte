@@ -1,6 +1,12 @@
 <script>
-  import ProjectCard from '$lib/components/ProjectCard.svelte';
-  import { metaDescription, projects, shortBio, skills, volunteer } from '$lib/profile.js';
+  import ProjectCard from "$lib/components/ProjectCard.svelte";
+  import {
+    metaDescription,
+    projects,
+    shortBio,
+    skills,
+    volunteer,
+  } from "$lib/profile.js";
 </script>
 
 <svelte:head>
@@ -44,10 +50,16 @@
 
   <footer>
     <p>
-      full résumé on
-      <a href="https://www.linkedin.com/in/veekas" rel="me noopener" target="_blank">linkedin</a>
-      ·
-      <a href="https://calendly.com/veekas/meet" target="_blank" rel="noopener">grab time on my calendar</a>
+      connect on
+      <a
+        href="https://www.linkedin.com/in/veekas"
+        rel="me noopener"
+        target="_blank">linkedin</a
+      >
+      · or
+      <a href="https://calendly.com/veekas/meet" target="_blank" rel="noopener"
+        >request to meet</a
+      >
     </p>
   </footer>
 </main>

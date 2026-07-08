@@ -2,10 +2,10 @@ export const tagline =
   "Veekas is a software engineer, founder of Allo, and a volunteer EMT. He lives in Beacon, NY, with his young son and old dog.";
 
 export const shortBio =
-  "Senior product engineer at SolarAPP+ and founder of Allo, a coaching app for caregivers of young children. Spent two years at Rewiring America building electrification tools — including the Incentive API and Personal Electrification Planner. Seven years in full-stack TypeScript and React, with roots at Arcadia and The Knot. Board member for the Mid-Hudson Energy Transition HELP Fund since 2024. Volunteer EMT with the Beacon Volunteer Ambulance Corps since 2025.";
+  "Senior software engineer at SolarAPP+ and founder of Allo, a coaching tool for caregivers of young children with speech delays. Seven years in full-stack web development in the climate and health sectors.";
 
 export const metaDescription =
-  "Senior product engineer at SolarAPP+. Founder of Allo. Climate tech and full-stack TypeScript — volunteer EMT in Beacon, NY.";
+  "Senior product engineer at SolarAPP+, founder of Allo, and volunteer EMT in Beacon, NY.";
 
 /** @type {readonly { title: string; company: string; period?: string; description: string; technologies: readonly string[]; href?: string }[]} */
 export const projects = [
