@@ -1,10 +1,15 @@
 <script>
   import { enhance } from '$app/forms';
   import Nav from '$lib/components/Nav.svelte';
+  import { preserveDraftOnFailure } from '$lib/adminForm';
 
   let { data, form } = $props();
 
-  const profile = $derived(form?.profile ?? data.profile);
+  let phone = $state(data.profile.phone || '');
+  let email = $state(data.profile.email || '');
+  let address = $state(data.profile.address || '');
+
+  const enhanceSettings = preserveDraftOnFailure();
 </script>
 
 <svelte:head>
@@ -18,18 +23,18 @@
   <h1>settings</h1>
   <p class="hint">update your contact info so veekas can reach you.</p>
 
-  <form method="POST" use:enhance class="settings-form">
+  <form method="POST" use:enhance={enhanceSettings} class="settings-form">
     <label>
       phone number
-      <input type="tel" name="phone" value={profile.phone} readonly />
+      <input type="tel" name="phone" value={phone} readonly />
     </label>
     <label>
       email
-      <input type="email" name="email" value={profile.email} />
+      <input type="email" name="email" bind:value={email} />
     </label>
     <label>
       mailing address
-      <textarea name="address" rows="3">{profile.address}</textarea>
+      <textarea name="address" rows="3" bind:value={address}></textarea>
     </label>
 
     {#if form?.error}
