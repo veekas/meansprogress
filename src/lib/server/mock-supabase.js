@@ -134,6 +134,9 @@ class SelectQuery {
       case 'reading_posts':
         rows = [...this.db.reading_posts];
         break;
+      case 'music_posts':
+        rows = [...this.db.music_posts];
+        break;
       case 'photos':
         rows = [...this.db.photos];
         break;
@@ -391,6 +394,18 @@ class TableQuery {
         id: String(saved.id),
         title: String(saved.title),
         author: String(saved.author ?? ''),
+        note: String(saved.note ?? ''),
+        created_at: String(saved.created_at)
+      });
+      return Promise.resolve(ok(saved));
+    }
+
+    if (this.table === 'music_posts') {
+      this.db.music_posts.push({
+        id: String(saved.id),
+        title: String(saved.title ?? ''),
+        embed_url: String(saved.embed_url),
+        height: Number(saved.height ?? 450),
         note: String(saved.note ?? ''),
         created_at: String(saved.created_at)
       });

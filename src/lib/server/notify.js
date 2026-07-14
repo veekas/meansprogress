@@ -65,7 +65,8 @@ Review: ${adminUrl}`
 const POST_TYPE_LABELS = {
   status: 'status',
   reading: 'reading',
-  photo: 'photo'
+  photo: 'photo',
+  music: 'music'
 };
 
 /** Email admin when someone comments on a post. No-op if env is unset. */

@@ -10,6 +10,9 @@
   let readingTitle = $state('');
   let readingAuthor = $state('');
   let readingNote = $state('');
+  let musicTitle = $state('');
+  let musicEmbed = $state('');
+  let musicNote = $state('');
   let address = $state('');
   let contactEmail = $state('');
   let contactPhone = $state('');
@@ -20,6 +23,7 @@
   let bioForm;
   let statusForm;
   let readingForm;
+  let musicForm;
   let contactInfoForm;
   let photoForm;
   let addContactForm;
@@ -30,6 +34,8 @@
   let statusSaved = $state(false);
   let readingError = $state(null);
   let readingSaved = $state(false);
+  let musicError = $state(null);
+  let musicSaved = $state(false);
   let contactInfoError = $state(null);
   let contactInfoSaved = $state(false);
   let photoError = $state(null);
@@ -65,6 +71,9 @@
     readingTitle = data.content.reading_title || '';
     readingAuthor = data.content.reading_author || '';
     readingNote = data.content.reading_note || '';
+    musicTitle = data.content.music_title || '';
+    musicEmbed = data.content.music_embed || '';
+    musicNote = data.content.music_note || '';
     address = data.content.address || '';
     contactEmail = data.content.contact_email || '';
     contactPhone = data.content.contact_phone || '';
@@ -109,6 +118,16 @@
       if (payload?.reading_title != null) readingTitle = payload.reading_title;
       if (payload?.reading_author != null) readingAuthor = payload.reading_author;
       if (payload?.reading_note != null) readingNote = payload.reading_note;
+    }
+  });
+
+  const enhanceMusic = preserveDraftOnFailure({
+    onSuccess: handleSuccess((v) => (musicSaved = v), 'musicSaved'),
+    onFailure: (payload) => {
+      musicError = payload?.message || payload?.musicError || 'Save failed. Please try again.';
+      if (payload?.music_title != null) musicTitle = payload.music_title;
+      if (payload?.music_embed != null) musicEmbed = payload.music_embed;
+      if (payload?.music_note != null) musicNote = payload.music_note;
     }
   });
 
@@ -276,6 +295,55 @@
         <p class="success">saved ✓</p>
       {/if}
       <button type="submit" class="btn">save reading</button>
+    </form>
+  </section>
+
+  <!-- ── Music ───────────────────────────────── -->
+  <section>
+    <h2>music</h2>
+    <form
+      bind:this={musicForm}
+      method="POST"
+      action="?/updateMusic"
+      use:enhance={() => {
+        clearFeedback((v) => (musicError = v), (v) => (musicSaved = v));
+        return enhanceMusic();
+      }}
+      class="section-form"
+    >
+      <label>
+        title (optional)
+        <input type="text" name="music_title" bind:value={musicTitle} placeholder="july26, album name, …" />
+      </label>
+      <label>
+        apple music embed or link
+        <textarea
+          name="music_embed"
+          rows="4"
+          placeholder="paste the iframe from Apple Music, or an embed.music.apple.com / music.apple.com link"
+          bind:value={musicEmbed}
+        ></textarea>
+      </label>
+      <label>
+        note (optional)
+        <textarea
+          name="music_note"
+          rows="2"
+          placeholder="saving adds a new entry when the embed or note changes"
+          bind:value={musicNote}
+        ></textarea>
+      </label>
+      {#if musicError}
+        <div class="form-feedback error">
+          <p>{musicError}</p>
+          <button type="button" class="btn btn-ghost retry-btn" onclick={() => submitForm(musicForm)}>
+            retry
+          </button>
+        </div>
+      {:else if musicSaved}
+        <p class="success">saved ✓</p>
+      {/if}
+      <button type="submit" class="btn">save music</button>
     </form>
   </section>
 

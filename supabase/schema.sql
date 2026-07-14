@@ -44,6 +44,16 @@ CREATE TABLE IF NOT EXISTS reading_posts (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Apple Music embeds for the feed
+CREATE TABLE IF NOT EXISTS music_posts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL DEFAULT '',
+  embed_url TEXT NOT NULL,
+  height INTEGER NOT NULL DEFAULT 450,
+  note TEXT NOT NULL DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Photo metadata (files live in Supabase Storage bucket named "photos")
 CREATE TABLE IF NOT EXISTS photos (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -74,10 +84,10 @@ CREATE TABLE IF NOT EXISTS access_requests (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Comments on feed posts (status, reading, photo)
+-- Comments on feed posts (status, reading, photo, music)
 CREATE TABLE IF NOT EXISTS comments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  post_type TEXT NOT NULL CHECK (post_type IN ('status', 'reading', 'photo')),
+  post_type TEXT NOT NULL CHECK (post_type IN ('status', 'reading', 'photo', 'music')),
   post_id UUID NOT NULL,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   user_phone TEXT,
@@ -99,6 +109,7 @@ ALTER TABLE whitelist ENABLE ROW LEVEL SECURITY;
 ALTER TABLE content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE status_posts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reading_posts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE music_posts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE photos ENABLE ROW LEVEL SECURITY;
 
 -- No client-side policies needed — the service role key bypasses RLS entirely.

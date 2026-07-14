@@ -1,5 +1,6 @@
 <script>
   import SeeMore from "$lib/components/SeeMore.svelte";
+  import AppleMusicEmbed from "$lib/components/AppleMusicEmbed.svelte";
 
   let { data } = $props();
 
@@ -8,8 +9,10 @@
     photos,
     latestStatus,
     latestReading,
+    latestMusic,
     statusCount,
     readingCount,
+    musicCount,
     photoCount,
   } = data;
 
@@ -45,6 +48,26 @@
       </div>
       {#if readingCount > 1}
         <SeeMore href="/feed/reading" />
+      {/if}
+    </section>
+  {/if}
+
+  {#if latestMusic}
+    <section>
+      <h2>what i'm listening to</h2>
+      {#if latestMusic.title}
+        <span class="music-title">{latestMusic.title}</span>
+      {/if}
+      {#if latestMusic.note}
+        <p class="music-note">{latestMusic.note}</p>
+      {/if}
+      <AppleMusicEmbed
+        src={latestMusic.embed_url}
+        title={latestMusic.title}
+        height={latestMusic.height}
+      />
+      {#if musicCount > 1}
+        <SeeMore href="/feed/music" />
       {/if}
     </section>
   {/if}
@@ -94,7 +117,7 @@
     </section>
   {/if}
 
-  {#if !latestStatus && !latestReading && !content.address && !latestPhoto}
+  {#if !latestStatus && !latestReading && !latestMusic && !content.address && !latestPhoto}
     <div class="empty">
       <p>nothing here yet.</p>
     </div>
@@ -160,6 +183,19 @@
 
   .reading-note {
     margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .music-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .music-note {
+    margin: 0;
     font-size: 0.9rem;
     color: var(--muted);
     line-height: 1.7;

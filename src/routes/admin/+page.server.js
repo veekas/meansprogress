@@ -4,6 +4,7 @@ import { normalizePhone } from '$lib/phone';
 import { isAdminUser } from '$lib/server/admin';
 import { preparePhotoUpload } from '$lib/server/photos';
 import { friendlyDbError } from '$lib/adminForm';
+import { parseAppleMusicEmbed } from '$lib/appleMusic';
 
 async function requireAdmin(safeGetSession) {
   const { session, user } = await safeGetSession();
@@ -23,7 +24,7 @@ export const load = async ({ locals: { safeGetSession } }) => {
   if (auth.error === 'unauthenticated') redirect(303, '/login');
   if (auth.error === 'forbidden') redirect(303, '/feed');
 
-  const [{ data: contentRows }, { data: whitelist }, { data: photoRows }, { data: requests }, { data: latestStatus }, { data: latestReading }] =
+  const [{ data: contentRows }, { data: whitelist }, { data: photoRows }, { data: requests }, { data: latestStatus }, { data: latestReading }, { data: latestMusic }] =
     await Promise.all([
       adminSupabase.from('content').select('key, value').order('key'),
       adminSupabase.from('whitelist').select('*').order('name'),
@@ -44,6 +45,12 @@ export const load = async ({ locals: { safeGetSession } }) => {
         .select('title, author, note')
         .order('created_at', { ascending: false })
         .limit(1)
+        .maybeSingle(),
+      adminSupabase
+        .from('music_posts')
+        .select('title, embed_url, note')
+        .order('created_at', { ascending: false })
+        .limit(1)
         .maybeSingle()
     ]);
 
@@ -52,6 +59,9 @@ export const load = async ({ locals: { safeGetSession } }) => {
   content.reading_title = latestReading?.title || '';
   content.reading_author = latestReading?.author || '';
   content.reading_note = latestReading?.note || '';
+  content.music_title = latestMusic?.title || '';
+  content.music_embed = latestMusic?.embed_url || '';
+  content.music_note = latestMusic?.note || '';
 
   const photos = await Promise.all(
     (photoRows || []).map(async (photo) => {
@@ -157,6 +167,56 @@ export const actions = {
     }
 
     return { readingSaved: true };
+  },
+
+  updateMusic: async ({ request, locals: { safeGetSession } }) => {
+    const auth = await requireAdmin(safeGetSession);
+    if (auth.error) return unauthorizedFail();
+
+    const formData = await request.formData();
+    const musicTitle = formData.get('music_title')?.toString().trim() || '';
+    const musicEmbed = formData.get('music_embed')?.toString().trim() || '';
+    const musicNote = formData.get('music_note')?.toString().trim() || '';
+    const draft = {
+      music_title: musicTitle,
+      music_embed: musicEmbed,
+      music_note: musicNote
+    };
+
+    if (!musicEmbed) return { musicSaved: true };
+
+    const parsed = parseAppleMusicEmbed(musicEmbed);
+    if (parsed.error) return fail(400, { musicError: parsed.error, ...draft });
+
+    try {
+      const { data: latestMusic, error: fetchError } = await adminSupabase
+        .from('music_posts')
+        .select('title, embed_url, note')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (fetchError) return fail(500, { musicError: friendlyDbError(fetchError), ...draft });
+
+      const musicChanged =
+        parsed.embedUrl !== (latestMusic?.embed_url || '') ||
+        musicTitle !== (latestMusic?.title || '') ||
+        musicNote !== (latestMusic?.note || '');
+
+      if (musicChanged) {
+        const { error: insertError } = await adminSupabase.from('music_posts').insert({
+          title: musicTitle,
+          embed_url: parsed.embedUrl,
+          height: parsed.height,
+          note: musicNote
+        });
+        if (insertError) return fail(500, { musicError: friendlyDbError(insertError), ...draft });
+      }
+    } catch (err) {
+      return fail(500, { musicError: friendlyDbError(err), ...draft });
+    }
+
+    return { musicSaved: true };
   },
 
   updateContact: async ({ request, locals: { safeGetSession } }) => {

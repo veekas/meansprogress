@@ -8,8 +8,10 @@ export const load = async ({ parent }) => {
     { data: photoRows },
     { data: statusPosts },
     { data: readingPosts },
+    { data: musicPosts },
     { count: statusCount },
     { count: readingCount },
+    { count: musicCount },
     { count: photoCount }
   ] = await Promise.all([
     adminSupabase.from('content').select('key, value'),
@@ -28,8 +30,14 @@ export const load = async ({ parent }) => {
       .select('id, title, author, note, created_at')
       .order('created_at', { ascending: false })
       .limit(1),
+    adminSupabase
+      .from('music_posts')
+      .select('id, title, embed_url, height, note, created_at')
+      .order('created_at', { ascending: false })
+      .limit(1),
     adminSupabase.from('status_posts').select('id', { count: 'exact', head: true }),
     adminSupabase.from('reading_posts').select('id', { count: 'exact', head: true }),
+    adminSupabase.from('music_posts').select('id', { count: 'exact', head: true }),
     adminSupabase.from('photos').select('id', { count: 'exact', head: true })
   ]);
 
@@ -50,8 +58,10 @@ export const load = async ({ parent }) => {
     isAdmin,
     latestStatus: statusPosts?.[0] ?? null,
     latestReading: readingPosts?.[0] ?? null,
+    latestMusic: musicPosts?.[0] ?? null,
     statusCount: statusCount ?? 0,
     readingCount: readingCount ?? 0,
+    musicCount: musicCount ?? 0,
     photoCount: photoCount ?? 0
   };
 };
