@@ -12,7 +12,7 @@
 
 <style>
   .comments-section {
-    margin-top: 1rem;
-    padding-top: 0.5rem;
+    margin-bottom: 1rem;
+    /* padding-top: 0.25rem; */
   }
 </style>

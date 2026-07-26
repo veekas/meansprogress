@@ -49,9 +49,14 @@ export function createMockDb() {
   const status_posts = [
     {
       id: id(),
-      body: "working on the feed, drinking coffee, enjoying mock mode.",
-      created_at: now(),
+      body: 'working on the feed, drinking coffee, enjoying mock mode.',
+      created_at: now()
     },
+    {
+      id: id(),
+      body: 'mock mode is fun!',
+      created_at: now()
+    }
   ];
 
   /** @type {Array<{ id: string, title: string, author: string, note: string, created_at: string }>} */
@@ -63,6 +68,13 @@ export function createMockDb() {
       note: "re-reading for the nth time",
       created_at: now(),
     },
+    {
+      id: id(),
+      title: 'Death of a Salesman',
+      author: 'Arthur Miller',
+      note: 're-reading for the nth time',
+      created_at: now()
+    }
   ];
 
   /** @type {Array<{ id: string, title: string, embed_url: string, height: number, note: string, created_at: string }>} */
@@ -88,8 +100,36 @@ export function createMockDb() {
       storage_path: photoPath,
       caption: "proof of mock life",
       sort_order: 0,
-      created_at: now(),
+      created_at: now()
     },
+    {
+      id: id(),
+      storage_path: photoPath,
+      caption: 'another mock photo',
+      sort_order: 1,
+      created_at: now()
+    },
+    {
+      id: id(),
+      storage_path: photoPath,
+      caption: 'yet another mock photo',
+      sort_order: 2,
+      created_at: now()
+    },
+    {
+      id: id(),
+      storage_path: photoPath,
+      caption: 'mock photo 4',
+      sort_order: 3,
+      created_at: now()
+    },
+    {
+      id: id(),
+      storage_path: photoPath,
+      caption: 'mock photo 5',
+      sort_order: 4,
+      created_at: now()
+    }
   ];
 
   /** @type {Array<{ id: string, phone: string, name: string, note: string | null, status: string, created_at: string }>} */

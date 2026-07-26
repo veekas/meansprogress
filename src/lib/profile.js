@@ -42,25 +42,25 @@ export const projects = [
     company: "Self",
     period: "2025–present",
     description:
-      "Lots of AI-driven full-stack web development. Some agentic workflows that saved people time and money. Built and improved the chatbot and provider search experience for a direct-pay healthcare service.",
+      "Lots of AI-driven full-stack web development. Some chatbots and agentic workflows that saved people time and money. Not taking new clients right now.",
     technologies: ["Next.js", "LangGraph", "OpenAI API", "FastAPI", "Netlify"],
-  },
-  {
-    title: "Software Engineer - Personal Electrification Planner",
-    company: "Rewiring America",
-    period: "2024–2025",
-    description:
-      "Built the initial frontend for a tool that uses machine learning models to estimate the upfront costs and savings of home electrification.",
-    technologies: ["TypeScript", "Next.js", "Node.js", "PostgreSQL", "Figma"],
   },
   {
     title: "Software Engineer - Incentives API & Savings Calculator",
     company: "Rewiring America",
-    period: "2023–2024",
+    period: "2024–2025",
     description:
       "Co-managed open-source repos; refactored geolocation models, improved CI/CD data-update workflows, and added endpoints, logging, and analytics.",
     technologies: ["TypeScript", "Node.js", "Terraform", "GCP", "PostgreSQL"],
     href: "https://github.com/rewiring-america",
+  },
+  {
+    title: "Software Engineer - Personal Electrification Planner",
+    company: "Rewiring America",
+    period: "2023–2024",
+    description:
+      "Built the initial frontend for a tool that uses machine learning models to estimate the upfront costs and savings of home electrification.",
+    technologies: ["TypeScript", "Next.js", "Node.js", "PostgreSQL", "Figma"],
   },
   {
     title: "Software Engineer III",
@@ -71,11 +71,26 @@ export const projects = [
     technologies: ["TypeScript", "React", "Next.js", "Ruby on Rails", "AWS"],
   },
   {
-    title: "Software Engineer",
+    title: "Software Engineer: Core Services",
     company: "The Knot",
-    period: "2018–2022",
+    period: "2020–2022",
     description:
-      "Worked on the marketplace team. Co-led development of the company-wide React component library. Built an internal A/B testing service and REST API for experiments and user bucketing.",
+      "Co-led development of the company-wide React component library. Built an internal A/B testing service and REST API for experiments and user bucketing.",
+    technologies: [
+      "React",
+      "Next.js",
+      "Node.js",
+      "Ruby on Rails",
+      "Jenkins",
+      "GraphQL",
+    ],
+  },
+    {
+    title: "Software Engineer: Marketplace",
+    company: "The Knot",
+    period: "2018–2020",
+    description:
+      "Full-stack development of the wedding marketplace, including vendor profiles, search, reviews, and booking.",
     technologies: [
       "React",
       "Next.js",
@@ -110,6 +125,24 @@ export const volunteer = [
       "Board member for a fund that helps low-income Mid-Hudson residents remediate their homes and transition to clean energy. Chair of the Fundraising Committee.",
     technologies: [],
     href: "https://www.investinhelp.org/",
+  },
+  {
+    title: "Founder",
+    company: "Beacon Climate Action Now (BCAN)",
+    period: "2022–2025",
+    description:
+      "Co-founded a local community group that pursued climate justice while providing community care.",
+    technologies: [],
+    href: "https://www.rewiringamerica.org/",
+  },
+  {
+    title: "Member",
+    company: "Sunrise Movement NYC",
+    period: "2019–2024",
+    description:
+      "Leadership team for Sunrise NYC from 2020-2022",
+    technologies: [],
+    href: "https://www.sunrisemovement.org/",
   },
 ];
 
